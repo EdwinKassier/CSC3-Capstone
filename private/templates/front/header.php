@@ -23,7 +23,7 @@
 <meta property="og:description" content="" />
 <!-- <meta property="og:url" content="" /> -->
 <!-- <meta property="og:image" content="" /> -->
-<link rel="shortcut icon" type="image/x-icon" href="../public_html/resources/images/favicon1.ico" />
+<link rel="shortcut icon" type="image/x-icon" href="../public_html/resources/images/favicon.ico" />
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
 <link href="../public_html/resources/css/blackeagle.css" rel="stylesheet">

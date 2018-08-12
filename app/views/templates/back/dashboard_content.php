@@ -77,7 +77,7 @@
     </div>
     <div class="col-lg-4 col-md-6">
         <h4><strong>Registered users: <?php //echo $users; ?></strong></h4>
-        <h4><strong>Registered dresses: <?php// echo $r_dresses; ?></strong></h4>
+        <h4><strong>Registered dresses: <?php //echo $r_dresses; ?></strong></h4>
         <h4><strong>Active dresses: <?php //echo $a_dresses; ?></strong></h4>
         <h4><strong>Amount of orders: <?php //echo $orders; ?></strong></h4>
     </div>

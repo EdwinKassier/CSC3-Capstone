@@ -4,7 +4,6 @@
     <style>
 
     .text-block {
-        text-align: center;
         color: white;
         background-color: rgba(0,0,0,0.7);
         padding: 20px;
@@ -33,23 +32,32 @@
               <div class="container">
                   <h3>Login</h3>
                   <?php //login_user(); ?>
-                  <small style="color:white;">Please fill in this form to log into your account.</small>
                   <hr style="background-color:white;">
                   <div class="form-group">
                     <label for="login_email"><b>Email:</b></label>
                     <input type="email" class="form-control" name="login_email" placeholder="Enter email" required>
                   </div>
                   <div class="form-group">
-                    <label for="login_password"><b>Password:</b></label>
+                    <label style="float: left" for="login_password"><b>Password:</b></label>
+                    <label style="float: right"><a class="text-white" href="<?php echo URLROOT; ?>/pages/forgot_password/<?php //echo uniqid(true); ?>">Forgot password?</a></label>
                     <input type="password" class="form-control" name="login_password" placeholder="Enter password" required>
                   </div>
-                  <div class="form-check">
+                  <!-- <div class="form-check">
                     <label class="form-check-label" style="padding-bottom:10px">
                         <input class="form-check-input" type="checkbox" value="1" name="remember"> Remember me
                     </label>
+                  </div> -->
+                  <div style="text-align: center;">
+                    <button type="submit" name="login" class="col-md-6 btn btn-custom" >Login</button>
                   </div>
-                  <button type="submit" name="login" class="col-md-6 btn btn-custom" >Login</button>
-                  <p class="text-muted" style="padding-top:10px"><a href="forgot.php?forgot=<?php //echo uniqid(true); ?>">Forgot password?</a></p>
+                  <hr style="background-color:white;margin-bottom:0">
+                  <div style="text-align: center;">
+                    <p style="margin:0">New?</p>
+                  </div>
+                  <hr style="background-color:white;margin-top:0">
+                  <div style="text-align: center;">
+                    <button class="col-md-6 btn btn-custom" style="align: center;" onclick="location.href='<?php echo URLROOT; ?>/pages/register'">Sign up</button>
+                  </div>
               </div>
             </form>
           </div>

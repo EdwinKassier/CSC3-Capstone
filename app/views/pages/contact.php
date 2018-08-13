@@ -1,5 +1,3 @@
-<?php require_once("../private/config.php"); ?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,8 +5,8 @@
     <?php include(TEMPLATE_FRONT . DS . "header.php"); ?>
 
     <script src="https://www.google.com/recaptcha/api.js"></script>
-    <script src="resources/recaptcha/validator.js"></script>
-    <script src="resources/recaptcha/contact.js"></script>
+    <script src="<?php echo URLROOT; ?>/resources/recaptcha/validator.js"></script>
+    <script src="<?php echo URLROOT; ?>/resources/recaptcha/contact.js"></script>
     
     <style>
 
@@ -24,7 +22,7 @@
       <div class="container" id="body" >
       <br>
         <div >
-            <form id="contact-form" method="post" action="resources/recaptcha/contact.php" role="form" novalidate="true">
+            <form id="contact-form" method="post" action="<?php echo URLROOT; ?>/resources/recaptcha/contact.php" role="form" novalidate="true">
                 <div class="container customContainer">
                     <h4>Contact Us</h4>
                     <hr>
@@ -69,14 +67,14 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <div class="g-recaptcha" data-sitekey="" data-callback="verifyRecaptchaCallback" data-expired-callback="expiredRecaptchaCallback"></div>
-                                    <input class="form-control d-none" data-recaptcha="true" required data-error="Please complete the Captcha">
-                                <div class="help-block with-errors"></div>
+                                <input class="form-control d-none" data-recaptcha="true">
                             </div>
                         </div>
                     
                         <div class="col-md-12">
-                            <div class="clearfix">
+                            <div class="clearfix" style="float:right">
                                 <button type="submit"  class="btn btn-custom"  id="contactsubmit" >Send message</button>
+                                <button class="btn btn-custom" onclick="location.href='<?php echo URLROOT; ?>'" >Back</button>
                             </div>
                         </div>
                     </div>

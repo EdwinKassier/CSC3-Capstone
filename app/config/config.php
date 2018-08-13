@@ -42,7 +42,7 @@
 
 	//INSERT
 	// $name = 'Karen Williams';
-	// $email = 'kwills@gmail.com';
+	// $email = 'kwills@example.com';
 	// $status = 'guest';
 
 	// $sql = 'INSERT INTO users(name, email, status) VALUES(:name, :email, :status)';

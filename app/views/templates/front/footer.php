@@ -2,7 +2,7 @@
     <div class="col">
         <div class="p-2">
             <p><font color="white">Black Eagle</font></p>
-		<p><a href="..\public_html\resources\files\blackeagle_terms&conditions.pdf" target="_blank"><font color="white">Legal Information</font></a></p>
+		<p><a href="<?php echo URLROOT; ?>\resources\files\blackeagle_terms&conditions.pdf" target="_blank"><font color="white">Legal Information</font></a></p>
         </div>
     </div>
     <div class="col" style="text-align: center;">

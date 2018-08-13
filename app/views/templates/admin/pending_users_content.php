@@ -12,6 +12,6 @@
 
     <div class="row">
     <table class="table table-hover">
-        <?php get_pending_orders(); ?>
+        <?php //get_pending_orders(); ?>
     </table>
 </div>

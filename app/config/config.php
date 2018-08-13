@@ -42,7 +42,7 @@
 
 	//INSERT
 	// $name = 'Karen Williams';
-	// $email = 'kwills@example.com';
+	// $email = '';
 	// $status = 'guest';
 
 	// $sql = 'INSERT INTO users(name, email, status) VALUES(:name, :email, :status)';
@@ -56,6 +56,5 @@
 	//Old way for just mysql
 	// $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-	// require_once("class.site_functions.php");
 
 ?>

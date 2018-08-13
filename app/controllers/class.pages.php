@@ -10,9 +10,10 @@ class Pages extends Controller{
 
     public function about_us(){
         //also test class XD
-        $posts = 'welcome';
-        $data = ['title' => $posts];
+        $data = ['title' => 'About us'];
         $this->view('pages/about_us', $data);
+
+        
     }
 }
 ?>

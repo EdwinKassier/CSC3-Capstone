@@ -1,5 +1,3 @@
-<?php require_once("../private/class.config.php"); ?>
-
 <html lang="en">
   <head>
     <?php include(TEMPLATE_FRONT . DS . "header.php"); ?>

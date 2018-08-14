@@ -25,7 +25,7 @@
       <br>
       <main class="row" id="body">
         <div class="col-md-7" ></div>
-        <div class="col-md-3" style="margin: auto; padding: 120px 0;">
+        <div class="col-md-4" style="margin: auto; padding: 0;">
           <div class="text-block" id="rcorners"> 
             <!-- Login -->
             <form class=""  method="post">
@@ -48,7 +48,7 @@
                     </label>
                   </div> -->
                   <div style="text-align: center;">
-                    <button type="submit" name="login" class="col-md-6 btn btn-custom" >Login</button>
+                    <button type="submit" name="login" class="col-md-5 btn btn-custom" >Login</button>
                   </div>
                   <hr style="background-color:white;margin-bottom:0">
                   <div style="text-align: center;">
@@ -56,7 +56,7 @@
                   </div>
                   <hr style="background-color:white;margin-top:0">
                   <div style="text-align: center;">
-                    <button class="col-md-6 btn btn-custom" style="align: center;" onclick="location.href='<?php echo URLROOT; ?>/pages/register'">Sign up</button>
+                    <button class="col-md-5 btn btn-custom" style="align: center;" onclick="location.href='<?php echo URLROOT; ?>/pages/register'">Sign up</button>
                   </div>
               </div>
             </form>

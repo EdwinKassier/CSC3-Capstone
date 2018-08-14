@@ -53,7 +53,7 @@
                               <select class="form-control" name="register_role" required>
                                 <option selected>Choose...</option>
                                 <option value='0'>Wind Farm</option>
-                                <option value='1'>Ornothologist</option>
+                                <option value='1'>Ornithologist</option>
                               </select>
                           </div>
                         </div>  

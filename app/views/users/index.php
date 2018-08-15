@@ -17,7 +17,7 @@
 
   <body>
     <?php
-      if(isset($_SESSION['user_id'])){
+      if(is_logged_in()){
         if($_SESSION['user_role'] == 0){
           redirect('users/wind_farm_dashboard');
         }
@@ -50,7 +50,7 @@
                 </div>
                 <div class="form-group">
                   <label style="float: left" for="login_password"><b>Password:</b></label>
-                  <label style="float: right"><a class="text-white" href="<?php echo URLROOT; ?>/users/forgot_password/<?php //echo uniqid(true); ?>">Forgot password?</a></label>
+                  <label style="float: right"><a class="text-white" href="<?php echo URLROOT; ?>/users/forgot_password/<?php echo uniqid(true); ?>">Forgot password?</a></label>
                   <input type="password" class="form-control" name="login_password" value="<?php echo $data['password']; ?>"  placeholder="Enter password" required>
                 </div>
                 <!-- <div class="form-check">

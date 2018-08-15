@@ -155,6 +155,18 @@
             }
         }
 
+        public function logout(){
+            unset($_SESSION['user_id']);
+            unset($_SESSION['user_name']);
+            unset($_SESSION['user_surname']);
+            unset($_SESSION['user_email']);
+            unset($_SESSION['user_mobile_number']);
+            unset($_SESSION['user_role']);
+            session_destroy();
+            
+            redirect(URLROOT);
+        }
+
         public function wind_farm_dashboard(){
             $this->view('users/wind_farm_dashboard');
         }
@@ -177,6 +189,10 @@
 
         public function registered(){
             $this->view('users/registered');
+        }
+
+        public function map(){
+            $this->view('users/map');
         }
     }
 ?>

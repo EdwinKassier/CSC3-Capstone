@@ -2,12 +2,11 @@
     //App core class. Creates URL & loads core controller
     
     class Core{
-        protected $current_controller = 'pages';
+        protected $current_controller = 'users';
         protected $current_method = 'index';
         protected $params = [];
 
         public function __construct(){
-            //print_r($this->get_url());
             $url = $this->get_url();
 
             //Look in controllers for first value

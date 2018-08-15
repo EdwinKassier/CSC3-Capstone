@@ -1,10 +1,4 @@
 <?php
-
-	ob_start();
-
-	session_start();
-	// session_destroy();
-
 	define('SITENAME', 'BlackEagle Project');
 	define('APPROOT', dirname(dirname(__FILE__)));
 	define('URLROOT', 'http://localhost/CSC3-Capstone');
@@ -13,6 +7,9 @@
 
 	defined("TEMPLATE_FRONT") ? null : define("TEMPLATE_FRONT", APPROOT . DS . "views/templates/front");
 	defined("TEMPLATE_BACK") ? null : define("TEMPLATE_ADMIN", APPROOT . DS . "views/templates/admin");
+
+	//defined("UPLOAD_DIRECTORY") ? null : define("UPLOAD_DIRECTORY", URLROOT . "/public/resources/user_files"); Switch to this when site goes live
+	defined("UPLOAD_DIRECTORY") ? null : define("UPLOAD_DIRECTORY", "../public/resources/user_files");
 
 	//DB params
 	defined("DB_HOST") ? null : define("DB_HOST", "localhost");

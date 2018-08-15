@@ -109,7 +109,18 @@
 
                 //Ensure error is empty
                 if(empty($data['error'])){
-                    die('SUCCESS');
+                    //Check and set logged in user
+                    $logged_in_user = $this->user_model->login($data);
+
+                    if($logged_in_user){
+                        //Create session
+                        // $_SESSION[''];
+                    }
+                    else{
+                        $data['error'] = "Incorrect password";
+                        //Load view
+                        $this->view('users/index', $data);
+                    }
                 }
                 else{
                     //Load view

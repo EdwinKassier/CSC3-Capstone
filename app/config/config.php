@@ -1,10 +1,4 @@
 <?php
-
-	ob_start();
-
-	session_start();
-	// session_destroy();
-
 	define('SITENAME', 'BlackEagle Project');
 	define('APPROOT', dirname(dirname(__FILE__)));
 	define('URLROOT', 'http://localhost/CSC3-Capstone');

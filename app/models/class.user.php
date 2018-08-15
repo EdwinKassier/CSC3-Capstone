@@ -25,6 +25,21 @@
             }
         }
 
+        //Login user
+        public function login($data){
+            $this->db->query('SELECT * FROM users WHERE user_email = :email');
+            $this->db->bind(':email', $data['email']);
+
+            $row = $this->db->single();
+            $password = crypt($data['password'], $row->user_password);
+            if($password === $row->user_password){
+                return $row;
+            }
+            else{
+                return false;
+            }
+        }
+
         //Find user by email
         public function find_user_by_email($email){
             $this->db->query('SELECT * FROM users WHERE user_email = :email');
@@ -41,7 +56,7 @@
 
         //Get randSalt
         public function get_randSalt(){
-            $this->db->query('SELECT randSalt FROM users');
+            $this->db->query('SELECT randSalt FROM randSalt');
             return $this->db->single();
         }
 

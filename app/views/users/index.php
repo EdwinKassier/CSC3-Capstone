@@ -16,6 +16,16 @@
   </head>
 
   <body>
+    <?php
+      if(isset($_SESSION['user_id'])){
+        if($_SESSION['user_role'] == 0){
+          redirect('users/wind_farm_dashboard');
+        }
+        else if($_SESSION['user_role'] == 1){
+          redirect('users/ornithologist_dashboard');
+        }
+      }
+    ?>
     <div id="wrapper">
 
       <!-- Navbar -->

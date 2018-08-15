@@ -58,7 +58,7 @@
                             mkdir($upload_directory);
                         }  
 
-                        redirect('pages/registered');
+                        redirect('users/registered');
                     }
                     else{
                         die('Something went wrong');
@@ -114,7 +114,7 @@
 
                     if($logged_in_user){
                         //Create session
-                        // $_SESSION[''];
+                        $this->create_user_session($logged_in_user);
                     }
                     else{
                         $data['error'] = "Incorrect password";
@@ -138,6 +138,45 @@
                 //Load view
                 $this->view('users/index', $data);
             }
+        }
+
+        public function create_user_session($user){
+            $_SESSION['user_id'] = $user->user_id;
+            $_SESSION['user_name'] = $user->user_name;
+            $_SESSION['user_surname'] = $user->user_surname;
+            $_SESSION['user_email'] = $user->user_email;
+            $_SESSION['user_mobile_number'] = $user->user_mobile_number;
+            $_SESSION['user_role'] = $user->user_role;
+            if($user->user_role == 0){
+                redirect('users/wind_farm_dashboard');
+            }
+            else if($user->user_role == 1){
+                redirect('users/ornithologist_dashboard');
+            }
+        }
+
+        public function wind_farm_dashboard(){
+            $this->view('users/wind_farm_dashboard');
+        }
+
+        public function ornithologist_dashboard(){
+            $this->view('users/ornithologist_dashboard');
+        }
+
+        public function forgot_password(){
+            $this->view('users/forgot_password');
+        }
+
+        public function reset_password(){
+            $this->view('users/reset_password');
+        }
+
+        public function email_verified(){
+            $this->view('users/email_verified');
+        }
+
+        public function registered(){
+            $this->view('users/registered');
         }
     }
 ?>

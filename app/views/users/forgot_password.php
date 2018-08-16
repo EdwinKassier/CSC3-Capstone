@@ -18,21 +18,21 @@
         <div class="row" >
             <div class="col-md-3"></div>
             <div class="col-md-6 col-md-offset-6 text-center">
-                <?php if(!($email_sent)): ?>
+                <?php if(!($data['email_check'])): ?>
                 <h2 class="text-center">Forgot Password?</h2>
                 <p>You can reset your password here.</p>
                 <div class="panel-body">
                     <form action="<?php echo URLROOT; ?>/users/forgot_password" method="post">
                         <div class="form-group">
                             <div class="input-group">
-                                <input id="email" name="email" placeholder="Enter email" class="form-control"  type="email" required>
+                                <input id="forgot_email" value="<?php echo $data['email']; ?>" name="email" placeholder="Enter email" class="form-control"  type="email" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <input name="recover-submit" class="btn btn-lg btn-custom btn-block" value="Reset Password" type="submit">
+                            <input name="recover_password" class="btn btn-lg btn-custom btn-block" value="Reset Password" type="submit">
                         </div>
                         <div class="form-group">
-                            <button type="button" class="btn btn-lg btn-custom col-md-12 btn-block" onclick="location.href='../login_register'">Back</button>
+                            <button type="button" class="btn btn-lg btn-custom col-md-12 btn-block" onclick="location.href='<?php echo URLROOT; ?>'">Back</button>
                         </div>
 
                         <input type="hidden" class="hide" name="token" id="token" value="">
@@ -40,7 +40,7 @@
                 </div>
                 <?php else: ?>
                 <h3>Please check your inbox and/or junkmail for our email.</h3>
-                <button type="button" class="btn btn-lg btn-custom btn-block" onclick="location.href='../login_register'">Back</button>
+                <button type="button" class="btn btn-lg btn-custom btn-block" onclick="location.href='<?php echo URLROOT; ?>'">Back</button>
                 <?php endif; ?>
             </div>
 

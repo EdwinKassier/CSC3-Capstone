@@ -188,7 +188,7 @@
         }
 
         public function forgot_password(){
-            if(isset($_GET['forgot'])){
+            if(isset($_GET['post'])){
                 //Check for post
                 if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     //Sanitize POST data
@@ -197,6 +197,7 @@
                     //Init data
                     $data =[
                         'email' => trim($_POST['forgot_email']),
+                        'email_check' => false,
                         'error' => '',
                     ];
 
@@ -206,9 +207,7 @@
                     }
 
                     //Ensure error is empty
-                    if(empty($data['error'])){        
-                        $email_sent = false;
-            
+                    if(empty($data['error'])){                    
                         $email = $data['email'];
                         $len = 50;
                         $token = bin2hex(openssl_random_pseudo_bytes($len));
@@ -224,7 +223,7 @@
                                 <p>If the password change was not made by you, this email can be ignored.</p>';
 
                                 if($mail->send()){
-                                    $email_sent = true;      
+                                    $data['email_check'] = true;    
                                     $this->view('users/forgot_password', $data);                        
                                 }
                             }
@@ -239,6 +238,7 @@
                     //Init data
                     $data =[
                         'email' => '',
+                        'email_check' => false,
                         'error' => '',
                     ];
 

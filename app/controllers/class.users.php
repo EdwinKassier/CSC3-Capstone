@@ -1,7 +1,19 @@
 <?php
+    require(APPROOT . "/phpmailer/class.mailconfig.php");
+
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+
+    require APPROOT . '/phpmailer/vendor/phpmailer/phpmailer/src/Exception.php';
+    require APPROOT . '/phpmailer/vendor/phpmailer/phpmailer/src/PHPMailer.php';
+    require APPROOT . '/phpmailer/vendor/phpmailer/phpmailer/src/SMTP.php';
+
     class Users extends Controller{
+            
+
         public function __construct(){
             $this->user_model = $this->model('user');
+            
         }
 
         public function register(){
@@ -155,6 +167,19 @@
             }
         }
 
+        public function logout(){
+            unset($_SESSION['user_id']);
+            unset($_SESSION['user_name']);
+            unset($_SESSION['user_surname']);
+            unset($_SESSION['user_email']);
+            unset($_SESSION['user_mobile_number']);
+            unset($_SESSION['user_role']);
+            unset($_SESSION['code']);
+            session_destroy();
+            
+            redirect(URLROOT);
+        }
+      
         public function ornithologist_dashboard(){
             $this->view('users/ornithologist_dashboard');
         }
@@ -163,12 +188,102 @@
             $this->view('users/wind_farm_dashboard');
         }
 
-        public function nest_map(){
-            $this->view('users/nest_map');
+        public function edit_user(){
+            $this->view('users/edit_user');
         }
 
-        public function forgot_password(){
-            $this->view('users/forgot_password');
+        public function forgot_password($code = null){
+            if(isset($code) && $code == $_SESSION['code']){
+                //Check for post
+                if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                    //Sanitize POST data
+                    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                    //Init data
+                    $data =[
+                        'email' => trim($_POST['forgot_email']),
+                        'email_check' => false,
+                        'error' => '',
+                    ];
+                    $email = $data['email'];
+
+                    //check email does exist in db already
+                    if(empty($data['error']) && !$this->user_model->find_user_by_email($email)){
+                        $data['error'] = "The entered email does not exist.";
+                    }
+
+                    //Ensure error is empty
+                    if(empty($data['error'])){                    
+                        $len = 50;
+                        $token = bin2hex(openssl_random_pseudo_bytes($len));
+
+                        if($this->user_model->set_token($token, $email)){
+
+                            /**
+                             * 
+                             * configure phpmailer
+                             * 
+                             */
+                            $mail = new PHPMailer();
+
+                            $mail->IsSMTP();
+                            //$mail->SMTPDebug = 4;
+                            $mail->Host = MailConfig::SMTP_HOST;
+                            $mail->Username = MailConfig::SMTP_USER;             
+                            $mail->Password = MailConfig::SMTP_PASSWORD;   
+                            $mail->Port = MailConfig::SMTP_PORT;      
+                            //$mail->SMTPAuth = false;
+                            //$mail->SMTPSecure = false;  
+                            $mail->isHTML(true);      
+                            $mail->CharSet = 'UTF-8';    
+                            $mail->SMTPOptions = array(
+                                'ssl' => array(
+                                    'verify_peer' => false,
+                                    'verify_peer_name' => false,
+                                    'allow_self_signed' => true
+                                )
+                            );
+
+                            //might need to remove in upload
+                            $mail->SMTPSecure = 'tls';
+                            $mail->SMTPAuth = true;
+
+                            $mail->SetFrom("no-reply@blackeagleproject.co.za", "BlackEagle Project");
+                            $mail->AddAddress($email);
+
+                            $mail->Subject = "Reset password";
+                            $mail->Body ='<p>Please click on the link to reset your password.</p>
+                            <a href="'.URLROOT.'/users/reset_password/' . $email . '/' . $token . '">RESET PASSWORD</a>
+                            <p>If the password change was not made by you, this email can be ignored.</p>';
+
+                            if($mail->send()){
+                                $data['email_check'] = true;    
+                                $this->view('users/forgot_password', $data);                        
+                            }
+                        }
+                    }
+                    else{
+                        //Load view
+                        $this->view('users/forgot_password', $data);
+                    }
+                }
+                else{
+                    //Init data
+                    $data =[
+                        'email' => '',
+                        'email_check' => false,
+                        'error' => '',
+                    ];
+
+                    //Load view
+                    $this->view('users/forgot_password', $data);
+                }
+            }
+            
+            else{
+                //Load view
+                redirect('');  
+            }
         }
 
         public function reset_password(){
@@ -181,6 +296,10 @@
 
         public function registered(){
             $this->view('users/registered');
+        }
+
+        public function map(){
+            $this->view('users/map');
         }
     }
 ?>

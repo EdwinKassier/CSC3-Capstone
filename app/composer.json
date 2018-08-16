@@ -1,0 +1,19 @@
+{
+    "name": "charl/public",
+    "require": {
+        "phpmailer/phpmailer": "^6.0"
+    },
+
+    "autoload": {
+        "classmap":[
+            "classes"
+        ]
+    },
+
+    "authors": [
+        {
+            "name": "Charl Ritter",
+            "email": "charlritter@hotmail.com"
+        }
+    ]
+}

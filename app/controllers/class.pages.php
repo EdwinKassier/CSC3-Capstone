@@ -11,10 +11,5 @@
         public function contact(){
             $this->view('pages/contact');
         }
-
-
-        public function admin(){
-            $this->view('admin/');
-        }
     }
 ?>

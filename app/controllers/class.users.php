@@ -155,12 +155,16 @@
             }
         }
 
+        public function ornithologist_dashboard(){
+            $this->view('users/ornithologist_dashboard');
+        }
+
         public function wind_farm_dashboard(){
             $this->view('users/wind_farm_dashboard');
         }
 
-        public function ornithologist_dashboard(){
-            $this->view('users/ornithologist_dashboard');
+        public function nest_map(){
+            $this->view('users/nest_map');
         }
 
         public function forgot_password(){

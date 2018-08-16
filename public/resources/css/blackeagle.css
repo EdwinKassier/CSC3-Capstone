@@ -9,8 +9,8 @@ body {
 }
 
 #body {
-    padding-top: 115px; 
-    padding-bottom: 125px; 
+    padding-top: 50px;
+    padding-bottom: 80px;
 }
 
 #rcorners {
@@ -18,14 +18,13 @@ body {
 }
 
 #wrapper {
-    min-height: 100%;
+    /*min-height: 100%;*/
     position:relative;
     min-width: 1000px;
 }
 
 /*========================= Footer =========================*/
 .footer {
-    padding-top: 100px;
     line-height: 0px;
     position: fixed;
     bottom: 0;

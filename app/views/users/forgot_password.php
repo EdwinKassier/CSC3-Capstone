@@ -13,7 +13,7 @@
         <br>
         <main role="main" class="container" id="body">
         <br>
-        <div class="alert-danger text-center"><?php display_message(); ?></div>
+        <div class="alert-danger text-center"><?php echo $data['error']; ?></div>
         <br>       
         <div class="row" >
             <div class="col-md-3"></div>
@@ -22,10 +22,10 @@
                 <h2 class="text-center">Forgot Password?</h2>
                 <p>You can reset your password here.</p>
                 <div class="panel-body">
-                    <form action="<?php echo URLROOT; ?>/users/forgot_password" method="post">
+                    <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post">
                         <div class="form-group">
                             <div class="input-group">
-                                <input id="forgot_email" value="<?php echo $data['email']; ?>" name="email" placeholder="Enter email" class="form-control"  type="email" required>
+                                <input id="forgot_email" value="<?php echo $data['email']; ?>" name="forgot_email" placeholder="Enter email" class="form-control"  type="email" required>
                             </div>
                         </div>
                         <div class="form-group">

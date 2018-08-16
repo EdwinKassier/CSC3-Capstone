@@ -25,6 +25,9 @@
           redirect('users/ornithologist_dashboard');
         }
       }
+      else{
+        $_SESSION['code'] = uniqid(true);
+      }
     ?>
     <div id="wrapper">
 
@@ -50,7 +53,7 @@
                 </div>
                 <div class="form-group">
                   <label style="float: left" for="login_password"><b>Password:</b></label>
-                  <label style="float: right"><a class="text-white" href="<?php echo URLROOT; ?>/users/forgot_password?post=<?php echo uniqid(true); ?>">Forgot password?</a></label>
+                  <label style="float: right"><a class="text-white" href="<?php echo URLROOT; ?>/users/forgot_password/<?php echo $_SESSION['code']; ?>">Forgot password?</a></label>
                   <input type="password" class="form-control" name="login_password" value="<?php echo $data['password']; ?>" placeholder="Enter password" required>
                 </div>
                 <!-- <div class="form-check">

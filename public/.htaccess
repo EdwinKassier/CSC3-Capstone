@@ -6,5 +6,5 @@
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteRule  ^(.+)$ index.php?url=$1 [QSA,L]
 
-  RewriteRule ^../(\d+)$ ?post=$1 [NC,L]
+  RewriteRule ^forgot_password/(\d+)$ forgot_password?post=$1 [NC,L]
 </IfModule>

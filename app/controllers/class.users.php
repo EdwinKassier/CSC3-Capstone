@@ -174,6 +174,7 @@
             unset($_SESSION['user_email']);
             unset($_SESSION['user_mobile_number']);
             unset($_SESSION['user_role']);
+            unset($_SESSION['code']);
             session_destroy();
             
             redirect(URLROOT);
@@ -187,8 +188,8 @@
             $this->view('users/ornithologist_dashboard');
         }
 
-        public function forgot_password(){
-            if(isset($_GET['post'])){
+        public function forgot_password($code = null){
+            if(isset($code) && $code == $_SESSION['code']){
                 //Check for post
                 if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     //Sanitize POST data
@@ -200,32 +201,60 @@
                         'email_check' => false,
                         'error' => '',
                     ];
+                    $email = $data['email'];
 
                     //check email does exist in db already
-                    if(empty($data['error']) && !$this->user_model->find_user_by_email($data['email'])){
+                    if(empty($data['error']) && !$this->user_model->find_user_by_email($email)){
                         $data['error'] = "The entered email does not exist.";
                     }
 
                     //Ensure error is empty
                     if(empty($data['error'])){                    
-                        $email = $data['email'];
                         $len = 50;
                         $token = bin2hex(openssl_random_pseudo_bytes($len));
 
-                        if($this->user_model->find_user_by_email($email)){
-                            if($this->user_model->set_token($token, $email)){
+                        if($this->user_model->set_token($token, $email)){
 
-                                include(TEMPLATE_FRONT . DS . "phpmailer.php");
+                            /**
+                             * 
+                             * configure phpmailer
+                             * 
+                             */
+                            $mail = new PHPMailer();
 
-                                $mail->Subject = "Reset password";
-                                $mail->Body ='<p>Please click on the link to reset your password.</p>
-                                <a href="'.URLROOT.'/users/reset_password.php?email=' . $email . '&token=' . $token . '">RESET PASSWORD</a>
-                                <p>If the password change was not made by you, this email can be ignored.</p>';
+                            $mail->IsSMTP();
+                            //$mail->SMTPDebug = 4;
+                            $mail->Host = MailConfig::SMTP_HOST;
+                            $mail->Username = MailConfig::SMTP_USER;             
+                            $mail->Password = MailConfig::SMTP_PASSWORD;   
+                            $mail->Port = MailConfig::SMTP_PORT;      
+                            //$mail->SMTPAuth = false;
+                            //$mail->SMTPSecure = false;  
+                            $mail->isHTML(true);      
+                            $mail->CharSet = 'UTF-8';    
+                            $mail->SMTPOptions = array(
+                                'ssl' => array(
+                                    'verify_peer' => false,
+                                    'verify_peer_name' => false,
+                                    'allow_self_signed' => true
+                                )
+                            );
 
-                                if($mail->send()){
-                                    $data['email_check'] = true;    
-                                    $this->view('users/forgot_password', $data);                        
-                                }
+                            //might need to remove in upload
+                            $mail->SMTPSecure = 'tls';
+                            $mail->SMTPAuth = true;
+
+                            $mail->SetFrom("no-reply@blackeagleproject.co.za", "BlackEagle Project");
+                            $mail->AddAddress($email);
+
+                            $mail->Subject = "Reset password";
+                            $mail->Body ='<p>Please click on the link to reset your password.</p>
+                            <a href="'.URLROOT.'/users/reset_password/' . $email . '/' . $token . '">RESET PASSWORD</a>
+                            <p>If the password change was not made by you, this email can be ignored.</p>';
+
+                            if($mail->send()){
+                                $data['email_check'] = true;    
+                                $this->view('users/forgot_password', $data);                        
                             }
                         }
                     }
@@ -246,9 +275,10 @@
                     $this->view('users/forgot_password', $data);
                 }
             }
+            
             else{
                 //Load view
-                $this->view(URLROOT);  
+                redirect('');  
             }
         }
 

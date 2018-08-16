@@ -68,7 +68,7 @@
 
         //Set the user token for resetting password
         public function set_token($token, $email){
-            $this->db->query('UPDATE users SET token= :token WHERE email= :email" ');
+            $this->db->query('UPDATE users SET token= :token WHERE user_email= :email');
             $this->db->bind(':token', $token);
             $this->db->bind(':email', $email);
 

@@ -29,14 +29,6 @@
                 }
             }
 
-            //Check second part of URL
-            // if(isset($url[2])){
-            //     if(method_exists($this->current_controller, $url[1])){
-            //         //$this->current_method = $url[2];
-            //         unset($url[2]);
-            //     }
-            // }
-
             //Get params
             $this->params = $url ? array_values($url) : [];
 

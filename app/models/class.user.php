@@ -65,5 +65,19 @@
             $this->db->query('SHOW TABLE STATUS LIKE "users"');
             return $this->db->single();
         }
+
+        //Set the user token for resetting password
+        public function set_token($token, $email){
+            $this->db->query('UPDATE users SET token= :token WHERE email= :email" ');
+            $this->db->bind(':token', $token);
+            $this->db->bind(':email', $email);
+
+            if($this->db->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
     }
 ?>

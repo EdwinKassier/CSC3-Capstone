@@ -17,12 +17,12 @@
 
       <!-- Navbar -->
       <?php include(TEMPLATE_FRONT . DS . "navbar.php"); ?>
+        <br>
 
       <!-- Main Body -->
       <div class="container" id="body" >
-      <br>
         <div >
-            <form id="contact-form" method="post" action="<?php echo URLROOT; ?>/resources/recaptcha/contact.php" role="form" novalidate="true">
+            <form id="contact-form" style="padding:50px;" method="post" action="<?php echo URLROOT; ?>/resources/recaptcha/contact.php" role="form" novalidate="true">
                 <div class="container customContainer">
                     <h4>Contact Us</h4>
                     <hr>

@@ -179,13 +179,17 @@
             
             redirect(URLROOT);
         }
+      
+        public function ornithologist_dashboard(){
+            $this->view('users/ornithologist_dashboard');
+        }
 
         public function wind_farm_dashboard(){
             $this->view('users/wind_farm_dashboard');
         }
 
-        public function ornithologist_dashboard(){
-            $this->view('users/ornithologist_dashboard');
+        public function edit_user(){
+            $this->view('users/edit_user');
         }
 
         public function forgot_password($code = null){

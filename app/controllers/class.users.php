@@ -177,7 +177,7 @@
             unset($_SESSION['code']);
             session_destroy();
             
-            redirect(URLROOT);
+            redirect('');
         }
       
         public function ornithologist_dashboard(){
@@ -296,10 +296,6 @@
 
         public function registered(){
             $this->view('users/registered');
-        }
-
-        public function map(){
-            $this->view('users/map');
         }
     }
 ?>

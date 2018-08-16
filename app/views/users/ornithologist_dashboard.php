@@ -1,88 +1,68 @@
 <html lang="en">
-<head>
-    <?php include(TEMPLATE_FRONT . DS . "header.php"); ?>
-</head>
-<style>
-    * {
-        box-sizing: border-box
-    }
+    <head>
+        <?php include(TEMPLATE_FRONT . DS . "header.php"); ?>
+    </head>
 
-    body {
-        font-family: "Lato", sans-serif;
-    }
+    <body>
 
-</style>
-<body>
-<div id="wrapper">
+    <?php
+        if(!is_logged_in()){
+        redirect('');
+        }
+    ?>
 
-    <!-- Navbar -->
-    <?php include(TEMPLATE_FRONT . DS . "navbar.php"); ?>
+    <div id="wrapper">
 
-    <!-- Main Body -->
-    <br>
-    <main role="main" id="body">
+        <!-- Navbar -->
+        <?php include(TEMPLATE_FRONT . DS . "navbar.php"); ?>
 
-        <div id="Account settings">
-
-            <form class="" method="post">
-                <div class="container customContainer">
-                    <?php //register_user(); ?>
-                    <h3>Edit details</h3>
-                    <hr>
-                    <div class="row">
-                        <div class="form-group col-md-6 mb-3">
-                            <label for="register_first_name"><b>First name</b></label>
-                            <input type="text" class="form-control" name="register_first_name"
-                                   placeholder="Enter first name" required>
-                        </div>
-                        <div class="form-group col-md-6 mb-3">
-                            <label for="register_last_name"><b>Last name</b></label>
-                            <input type="text" class="form-control" name="register_last_name"
-                                   placeholder="Enter last name" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-6 mb-3">
-                            <label for="register_password"><b>Password:</b></label>
-                            <input type="password" class="form-control" name="register_password"
-                                   placeholder="Enter password" required>
-                        </div>
-                        <div class="form-group col-md-6 mb-3">
-                            <label for="cpassword"><b>Confirm password:</b></label>
-                            <input type="password" class="form-control" name="cpassword" placeholder="Re-Enter password"
-                                   required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-6 mb-3">
-                            <label for="register_mobile_number"><b>Mobile number</b></label>
-                            <input type="text" class="form-control" name="register_mobile_number"
-                                   placeholder="012 345 6789" required>
-                        </div>
-                        <div class="form-group col-md-6 mb-3">
-                            <label for="register_email"><b>Email:</b></label>
-                            <input type="email" class="form-control" name="register_email" placeholder="Enter email"
-                                   required>
-                        </div>
-                    </div>
-                    <div style="float:right;">
-                        <button type="submit" name="register" class="btn btn-custom">Clear</button>
-                        <button type="submit" name="register" class="btn btn-custom">Update</button>
-                    </div>
+        <!-- Main Body -->
+        <br>
+        <main role="main" class="row" id="body">
+            <div class="col-md-3" style="padding-left:30px;">
+                <h3>My scouting locations</h3>
+                <hr>
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action">Scouting location 1 - (lat,long)</a>
+                    <a href="#" class="list-group-item list-group-item-action">Scouting location 2 - (lat,long) </a>
+                    <a href="#" class="list-group-item list-group-item-action">Scouting location 3 - (lat,long)</a>
+                    <a href="#" class="list-group-item list-group-item-action">Scouting location 4 - (lat,long)</a>
                 </div>
-            </form>
-        </div>
+                <hr>
+                <h3>Add sites</h3>
+                <hr>
+                <button type="button" style="margin-bottom:10px;" class="col-md-12 btn btn-custom">Add scouting site  <i class="fas fa-flag" style="color:red;"></i></button>
+                <button type="button" style="margin-bottom:10px;" class="col-md-12 btn btn-custom">Add nest site  <i class="fas fa-map-pin" style="color:red;"></i></button>
+            </div>
+            <div class="col-md-9"  style="padding-right:30px;">
+                <div id="googleMap" class="z-depth-1" style="height:76%;"></div>
+            </div>
+        </main>
+        <br>
 
-    </main>
-    <br>
+        <!-- Footer -->
+        <?php include(TEMPLATE_FRONT . DS . "footer.php"); ?>
 
-    <!-- Footer -->
-    <?php include(TEMPLATE_FRONT . DS . "footer.php"); ?>
+    </div>
+    <!-- Javascript -->
+    <script>
+        function myMap() {
+            var var_location = new google.maps.LatLng(-33.958732, 18.460068);
 
-</div>
-<!-- Javascript -->
-<script>
+            var var_mapoptions = {
+                center: var_location,
+                zoom: 8,
+                mapTypeId: 'satellite'
+            };
 
-</script>
-</body>
+            var map = new google.maps.Map(document.getElementById("googleMap"),var_mapoptions);
+
+
+        }
+
+        // Initialize maps
+        google.maps.event.addDomListener(window, 'load', myMap);
+
+    </script>
+    </body>
 </html>

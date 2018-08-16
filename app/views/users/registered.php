@@ -2,8 +2,14 @@
     <head>
         <?php include(TEMPLATE_FRONT . DS . "header.php"); ?>
     </head>
-
     <body>
+
+    <?php
+        if(!isset($_SESSION['registered']) || $_SESSION['registered'] != true){
+        redirect('');
+        }
+    ?>
+
         <br><br><br><br>
         <div class="container">
             <div class="row" >

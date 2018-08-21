@@ -70,6 +70,7 @@
                             mkdir($upload_directory);
                         }  
 
+                        $_SESSION['registered'] = true;
                         redirect('users/registered');
                     }
                     else{

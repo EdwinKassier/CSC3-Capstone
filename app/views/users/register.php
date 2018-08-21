@@ -4,6 +4,13 @@
   </head>
 
   <body>
+
+    <?php
+        if(is_logged_in()){
+        redirect('');
+        }
+    ?>
+
     <div id="wrapper">
 
       <!-- Navbar -->

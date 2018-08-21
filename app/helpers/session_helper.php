@@ -2,7 +2,7 @@
     ob_start();
 
     session_start();    
-    // session_destroy();
+    //session_destroy();
 
     //Flash message helper
     //EXAMPLE - flash('register_error', 'You are not registered', 'alert alert-success'); 

@@ -25,7 +25,7 @@
           redirect('users/ornithologist_dashboard');
         }
       }
-      else{
+      else if(!$_SESSION['code']){
         $_SESSION['code'] = uniqid(true);
       }
     ?>

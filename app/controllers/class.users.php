@@ -279,10 +279,9 @@
                     $this->view('users/forgot_password', $data);
                 }
             }
-            
             else{
                 //Load view
-                redirect('');  
+                redirect('');
             }
         }
 

@@ -30,4 +30,5 @@
 <link rel="shortcut icon" type="image/x-icon" href="<?php echo URLROOT; ?>/resources/images/favicon.ico" />
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 <link href="<?php echo URLROOT; ?>/resources/css/blackeagle.css" rel="stylesheet">

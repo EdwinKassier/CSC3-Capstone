@@ -10,7 +10,8 @@
     }
 
     body {
-        background-image: url('<?php echo URLROOT; ?>/public/resources/images/homepage.png');        
+        background-image: url('<?php echo URLROOT; ?>/public/resources/images/homepage.png');
+        overflow-x: hidden;
     }
     </style>
   </head>

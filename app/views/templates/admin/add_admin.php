@@ -1,9 +1,8 @@
 <form class="" method="post">
     <div class="container customContainer">
         <?php
-        admin();
         
-        if(isset($_GET['edit_admin'])){
+        if($data['view'] == 'edit_admin'){
             $id = escape_string($_GET['edit_admin']);
             $query = query("SELECT * FROM admin WHERE admin_id = '{$id}' ");
             confirm($query);
@@ -67,6 +66,6 @@
         </div>
         <button type="submit" name="add_admin" class="btn btn-primary">Submit</button>
         <?php }?>        
-        <button type="button" class="btn btn-danger" onclick="location.href='index.php?admin'">Back</button>
+        <button type="button" class="btn btn-danger" onclick="location.href='<?php echo URLROOT; ?>/admins/admin'">Back</button>
     </div>
 </form>

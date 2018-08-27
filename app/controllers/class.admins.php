@@ -4,8 +4,13 @@
             
         }
 
-        public function admin(){
-            $this->view('admin/');
+        public function index($view = null){
+            //Init data
+            $data =[
+                'view' => $view
+            ];
+
+            $this->view('admin/index', $data);
         }
     }
 ?>

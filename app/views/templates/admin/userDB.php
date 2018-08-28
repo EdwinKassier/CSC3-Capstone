@@ -1,4 +1,4 @@
-<h3>Pending users</h3>
+<h3>User Database</h3>
 <hr>
 <table class="table table-striped" id="pendinguserTable">
     <thead style="background-color:lightgray">
@@ -21,7 +21,6 @@
         <td>
             <div class="col" style="float:right;padding-bottom:5px;">
                 <button type="button" class="btn btn-danger" onclick="location.href='<?php echo URLROOT; ?>/admins/remove_admin/{$id}'">Delete</button>
-                <button type="submit" class="btn btn-success" onclick="location.href='<?php echo URLROOT; ?>/admins/edit_admin/{$id}'">Validate</button>
             </div>
         </td>
     </tr>

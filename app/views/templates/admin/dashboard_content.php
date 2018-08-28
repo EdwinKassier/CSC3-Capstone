@@ -1,7 +1,7 @@
 <!-- Page Heading -->
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Dashboard <small>Statistics Overview</small></h1>
+        <h1 class="page-header">Black Eagle Project admin Dashboard</h1>
         <ol class="breadcrumb">
             <li class="active"><i class="fa fa-dashboard"></i> Dashboard</li>
         </ol>
@@ -36,7 +36,7 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-shopping-cart fa-5x"></i>
+                        <i class="fa fa-fw fa-users fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge"><?php //echo $p_orders; ?></div>
@@ -54,67 +54,9 @@
         </div>
     </div>
     <div class="col-lg-4 col-md-6">
-        <div class="panel panel-red">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <i class="fa fa-tasks fa-5x"></i>
-                    </div>
-                    <div class="col-xs-9 text-right">
-                        <div class="huge"><?php //echo $p_dresses; ?></div>
-                        <div>Alerts</div>
-                    </div>
-                </div>
-            </div>
-            <a href="index.php?alerts">
-                <div class="panel-footer">
-                    <span class="pull-left">View</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                    <div class="clearfix"></div>
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-6">
         <!-- Put some project relevent metrics here. Like amount users of each type, amount nest, etc. -->
-        <h4><strong>Registered users: <?php //echo $users; ?></strong></h4>
-        <h4><strong>Registered dresses: <?php //echo $r_dresses; ?></strong></h4>
-        <h4><strong>Active dresses: <?php //echo $a_dresses; ?></strong></h4>
-        <h4><strong>Amount of orders: <?php //echo $orders; ?></strong></h4>
+        <h4><strong>Registered ornothologists: <?php //echo $users; ?></strong></h4>
+        <h4><strong>Registered wind farms: <?php //echo $r_dresses; ?></strong></h4>
+        <h4><strong>Registered admin: <?php //echo $a_dresses; ?></strong></h4>
     </div>
-</div>
-
-<!-- SECOND ROW WITH TABLES-->
-<div class="row">
-    <div class="col">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-money fa-fw"></i> 10 Most Recent Alerts</h3>
-            </div>
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover table-striped">
-                        <thead  style="background-color:lightgray">
-                            <tr>
-                            <!-- Put some project relevent names here. All depending on what's in an alert. -->
-                            <th>Order ID</th>
-                            <th>Renter ID</th>
-                            <th>Amount of dresses</th>
-                            <th>Amount (ZAR)</th>
-                            <th>Order date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Alerts go here -->
-                        </tbody>
-                    </table>
-                </div>
-                    <a href="<?php echo URLROOT; ?>/admins/alerts">
-                        <div class="panel-footer text-right">
-                            <span>View All Alerts <i class="fa fa-arrow-circle-right"></i></span>
-                        </div>
-                    </a>
-            </div>
-        </div>
-    </div>    
 </div>

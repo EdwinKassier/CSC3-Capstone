@@ -1,13 +1,4 @@
 <?php
-    require(APPROOT . "/phpmailer/class.mailconfig.php");
-
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
-
-    require APPROOT . '/phpmailer/vendor/phpmailer/phpmailer/src/Exception.php';
-    require APPROOT . '/phpmailer/vendor/phpmailer/phpmailer/src/PHPMailer.php';
-    require APPROOT . '/phpmailer/vendor/phpmailer/phpmailer/src/SMTP.php';
-
     class Users extends Controller{
             
 
@@ -46,7 +37,7 @@
 
                 //check passwords match or if too short
                 if(empty($data['error']) && strlen($data['password']) < 6){
-                    $data['error'] = "Your password is too short.";
+                    $data['error'] = "Your password is too short. Passwords must at least be 6 characters long.";
                 }
                 else if(empty($data['error']) && $data['password'] != $data['confirm_password']){
                     $data['error'] = 'Your passwords do not match.';
@@ -70,8 +61,19 @@
                             mkdir($upload_directory);
                         }  
 
-                        $_SESSION['registered'] = true;
-                        redirect('users/registered');
+                        
+                        $mail = mail_config();
+                        $mail->AddAddress($email);
+
+                        $mail->Subject = "Verify email";
+                        $mail->Body ='<p>Welcome to the BlackEagle community.</p>
+                        <p>Please click on the link to verify your email.</p>
+                        <a href="'.URLROOT.'/users/verify_email/' . $email . '/' . $token . '">VERIFY EMAIL</a>';
+
+                        if($mail->send()){
+                            $_SESSION['registered'] = true;
+                            redirect('users/registered');                      
+                        }
                     }
                     else{
                         die('Something went wrong');
@@ -219,37 +221,7 @@
                         $token = bin2hex(openssl_random_pseudo_bytes($len));
 
                         if($this->user_model->set_token($token, $email)){
-
-                            /**
-                             * 
-                             * configure phpmailer
-                             * 
-                             */
-                            $mail = new PHPMailer();
-
-                            $mail->IsSMTP();
-                            //$mail->SMTPDebug = 4;
-                            $mail->Host = MailConfig::SMTP_HOST;
-                            $mail->Username = MailConfig::SMTP_USER;             
-                            $mail->Password = MailConfig::SMTP_PASSWORD;   
-                            $mail->Port = MailConfig::SMTP_PORT;      
-                            //$mail->SMTPAuth = false;
-                            //$mail->SMTPSecure = false;  
-                            $mail->isHTML(true);      
-                            $mail->CharSet = 'UTF-8';    
-                            $mail->SMTPOptions = array(
-                                'ssl' => array(
-                                    'verify_peer' => false,
-                                    'verify_peer_name' => false,
-                                    'allow_self_signed' => true
-                                )
-                            );
-
-                            //might need to remove in upload
-                            $mail->SMTPSecure = 'tls';
-                            $mail->SMTPAuth = true;
-
-                            $mail->SetFrom("no-reply@blackeagleproject.co.za", "BlackEagle Project");
+                            $mail = mail_config();
                             $mail->AddAddress($email);
 
                             $mail->Subject = "Reset password";
@@ -286,8 +258,65 @@
             }
         }
 
-        public function reset_password(){
-            $this->view('users/reset_password');
+        //This class will check that the correct params are recieved. If yes then the password can be updated. Also updates password.
+        public function reset_password($email = null, $token = null){
+            if(isset($email) && isset($token) && $this->user_model->check_token($token, $email)){
+
+                //Check for post
+                if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+                    //Sanitize POST data
+                    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                    //Init data
+                    $data =[
+                        'password_check' => false,
+                        'error' => '',
+                    ];
+                    $password = $_POST['password'];
+                    $confirm_password = $_POST['confirm_password'];
+
+                    //check passwords match or if too short
+                    if(strlen($password) < 6){
+                        $data['error'] = "Your password is too short. Passwords must at least be 6 characters long.";
+                        $this->view('users/reset_password', $data);
+                    }
+                    else if($password !== $confirm_password){
+                        $data['error'] ="The passwords do not match.";
+                        $this->view('users/reset_password', $data);
+                    }
+
+                    //Ensure error is empty
+                    if(empty($data['error'])){   
+                        //Hash password
+                        $row = $this->user_model->get_randSalt();
+                        $salt = $row->randSalt;
+                        $password = crypt($password, $salt);
+
+                        if($this->user_model->update_password($password, $email)){
+                            $data['password_check'] = true;    
+                            $this->view('users/reset_password', $data);  
+                        }
+                        else{
+                            die('Something went wrong');
+                        }
+                    }
+                }   
+                else{
+                    //Init data
+                    $data =[
+                        'password_check' => false,
+                        'error' => '',
+                    ];
+
+                    //Load view
+                    $this->view('users/reset_password', $data);
+                }
+            }
+            else{
+                //Load view
+                redirect('');
+            }
         }
 
         public function email_verified(){

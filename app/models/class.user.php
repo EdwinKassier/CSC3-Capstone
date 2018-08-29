@@ -79,5 +79,34 @@
                 return false;
             }
         }
+
+        //Check that the user exists & that tokens match
+        public function check_token($token, $email){
+            $this->db->query('SELECT * FROM users WHERE token= :token AND user_email= :email');
+            $this->db->bind(':token', $token);
+            $this->db->bind(':email', $email);
+            $row = $this->db->single();
+
+            if($this->db->row_count() > 0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        
+        //Update the user's password
+        public function update_password($password, $email){
+            $this->db->query('UPDATE users SET user_password= :password WHERE user_email= :email');
+            $this->db->bind(':password', $password);
+            $this->db->bind(':email', $email);
+
+            if($this->db->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
     }
 ?>

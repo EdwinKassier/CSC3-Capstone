@@ -61,18 +61,23 @@
                             mkdir($upload_directory);
                         }  
 
-                        
-                        $mail = mail_config();
-                        $mail->AddAddress($email);
+                        $len = 50;
+                        $email = $data['email'];
+                        $token = bin2hex(openssl_random_pseudo_bytes($len));
 
-                        $mail->Subject = "Verify email";
-                        $mail->Body ='<p>Welcome to the BlackEagle community.</p>
-                        <p>Please click on the link to verify your email.</p>
-                        <a href="'.URLROOT.'/users/verify_email/' . $email . '/' . $token . '">VERIFY EMAIL</a>';
+                        if($this->user_model->set_token($token, $email)){
+                            $mail = mail_config();
+                            $mail->AddAddress($email);
 
-                        if($mail->send()){
-                            $_SESSION['registered'] = true;
-                            redirect('users/registered');                      
+                            $mail->Subject = "Verify email";
+                            $mail->Body ='<p>Welcome to the BlackEagle community.</p>
+                            <p>Please click on the link to verify your email.</p>
+                            <a href="'.URLROOT.'/users/email_verified/' . $email . '/' . $token . '">VERIFY EMAIL</a>';
+
+                            if($mail->send()){
+                                $_SESSION['registered'] = true;
+                                redirect('users/registered');                      
+                            }
                         }
                     }
                     else{
@@ -83,8 +88,6 @@
                     //Load view
                     $this->view('users/register', $data);
                 }
-
-
             }
             else{
                 //Init data
@@ -121,6 +124,16 @@
                 if(empty($data['error']) && !$this->user_model->find_user_by_email($data['email'])){
                     $data['error'] = "The entered email does not exist.";
                 }
+
+                //check email verified
+                if(empty($data['error']) && !$this->user_model->check_verified($data['email'])){
+                    $data['error'] = "The entered email has not been verified yet. Please check your inbox and verify your email.";
+                }
+
+                //check user approved
+                // if(empty($data['error']) && !$this->user_model->check_approved($data['email'])){
+                //     $data['error'] = "Your account has not been approved by an admin yet. We will email you when your account has been approved/rejected.";
+                // }
 
                 //Ensure error is empty
                 if(empty($data['error'])){
@@ -295,6 +308,7 @@
 
                         if($this->user_model->update_password($password, $email)){
                             $data['password_check'] = true;    
+                            $this->user_model->remove_token($email);
                             $this->view('users/reset_password', $data);  
                         }
                         else{
@@ -319,8 +333,20 @@
             }
         }
 
-        public function email_verified(){
-            $this->view('users/email_verified');
+        public function email_verified($email = null, $token = null){
+            if(isset($email) && isset($token) && $this->user_model->check_token($token, $email)){
+                if($this->user_model->email_verified($email)){
+                    $this->user_model->remove_token($email);
+                    $this->view('users/email_verified');  
+                }
+                else{
+                    die('Something went wrong');
+                }
+            }
+            else{
+                //Load view
+                redirect('');
+            }
         }
 
         public function registered(){

@@ -66,10 +66,23 @@
             return $this->db->single();
         }
 
-        //Set the user token for resetting password
+        //Set the user token for resetting password and verifying email
         public function set_token($token, $email){
             $this->db->query('UPDATE users SET token= :token WHERE user_email= :email');
             $this->db->bind(':token', $token);
+            $this->db->bind(':email', $email);
+
+            if($this->db->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        //remove the user token
+        public function remove_token($email){
+            $this->db->query('UPDATE users SET token= "" WHERE user_email= :email');
             $this->db->bind(':email', $email);
 
             if($this->db->execute()){
@@ -102,6 +115,47 @@
             $this->db->bind(':email', $email);
 
             if($this->db->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        //Update the user's verified status
+        public function email_verified($email){
+            $this->db->query('UPDATE users SET verified= "1" WHERE user_email= :email');
+            $this->db->bind(':email', $email);
+
+            if($this->db->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        //check email verified
+        public function check_verified($email){
+            $this->db->query('SELECT * FROM users WHERE verified= "1" AND user_email= :email');
+            $this->db->bind(':email', $email);
+            $row = $this->db->single();
+
+            if($this->db->row_count() > 0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        //check user approved
+        public function check_approved($email){
+            $this->db->query('SELECT * FROM users WHERE approved= "1" AND user_email= :email');
+            $this->db->bind(':email', $email);
+            $row = $this->db->single();
+
+            if($this->db->row_count() > 0){
                 return true;
             }
             else{

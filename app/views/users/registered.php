@@ -6,7 +6,7 @@
 
     <?php
         if(!isset($_SESSION['registered']) || $_SESSION['registered'] != true){
-        redirect('');
+            redirect('');
         }
     ?>
 

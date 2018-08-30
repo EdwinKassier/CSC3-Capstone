@@ -1,10 +1,8 @@
 <?php
     class Users extends Controller{
             
-
         public function __construct(){
             $this->user_model = $this->model('user');
-            
         }
 
         public function register(){
@@ -119,6 +117,13 @@
                     'password' => trim($_POST['login_password']),
                     'error' => '',
                 ];
+
+                //check if admin
+                if(strpos($data['email'], '@blackeagleadmin.co.za') !== false){
+                    $_SESSION['data'] = $data;
+                    //Load view
+                    redirect('admins/login');
+                }
 
                 //check email does exist in db already
                 if(empty($data['error']) && !$this->user_model->find_user_by_email($data['email'])){
@@ -269,10 +274,6 @@
 
         public function create_user_session($user){
             $_SESSION['user_id'] = $user->user_id;
-            // $_SESSION['user_name'] = $user->user_name;
-            // $_SESSION['user_surname'] = $user->user_surname;
-            // $_SESSION['user_email'] = $user->user_email;
-            // $_SESSION['user_mobile_number'] = $user->user_mobile_number;
             $_SESSION['user_role'] = $user->user_role;
             if($user->user_role == 0){
                 redirect('users/wind_farm_dashboard');
@@ -282,12 +283,9 @@
             }
         }
 
+        //Logs user out
         public function logout(){
             unset($_SESSION['user_id']);
-            unset($_SESSION['user_name']);
-            unset($_SESSION['user_surname']);
-            unset($_SESSION['user_email']);
-            unset($_SESSION['user_mobile_number']);
             unset($_SESSION['user_role']);
             unset($_SESSION['code']);
             session_destroy();

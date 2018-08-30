@@ -18,7 +18,7 @@
 
   <body>
     <?php
-      if(is_logged_in()){
+      if(is_user_logged_in()){
         if($_SESSION['user_role'] == 0){
           redirect('users/wind_farm_dashboard');
         }
@@ -28,6 +28,9 @@
       }
       else if(!$_SESSION['code']){
         $_SESSION['code'] = uniqid(true);
+      }
+      else if(is_admin_logged_in()){
+        redirect('admins');
       }
     ?>
     <div id="wrapper">

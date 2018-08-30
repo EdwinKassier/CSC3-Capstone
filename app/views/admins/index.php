@@ -6,9 +6,9 @@
 <body>
 
     <?php
-        // if(!isset($_SESSION['admin_id'])){
-        //     redirect("../");
-        // }
+        if(!is_admin_logged_in()){
+            redirect('');
+        }
     ?>
 
     <div id="wrapper">

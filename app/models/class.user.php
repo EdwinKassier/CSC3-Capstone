@@ -181,7 +181,7 @@
         }
 
         //Update the user's verified status
-        public function email_unverified(){
+        public function email_unverified($email){
             $this->db->query('UPDATE users SET verified= "0" WHERE user_email= :email');
             $this->db->bind(':email', $email);
 

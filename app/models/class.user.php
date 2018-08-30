@@ -40,6 +40,19 @@
             }
         }
 
+        //Get a users data
+        public function get_user_data(){
+            $this->db->query('SELECT * FROM users WHERE user_id = :id');
+            $this->db->bind(':id', $_SESSION['user_id']);
+
+            if($row = $this->db->single()){
+                return $row;
+            }
+            else{
+                return false;
+            }
+        }
+
         //Find user by email
         public function find_user_by_email($email){
             $this->db->query('SELECT * FROM users WHERE user_email = :email');

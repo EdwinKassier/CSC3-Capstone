@@ -168,6 +168,105 @@
             }
         }
 
+        //Edits user details
+        public function edit_user(){
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                //Sanitize POST data
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                //Init data
+                $data =[
+                    'name' => ucwords(trim($_POST['update_first_name'])),
+                    'surname' => ucwords(trim($_POST['update_last_name'])),
+                    'email' => trim($_POST['update_email']),
+                    'mobile_number' => trim(str_replace(' ','',$_POST['update_mobile_number'])),
+                    'password' => trim($_POST['update_password']),
+                    'confirm_password' => trim($_POST['update_confirm_password']),
+                    'error' => '',
+                ];
+            
+                $name = ucwords($data['name']);
+                $surname = ucwords($data['surname']);
+                $mobile_number = $data['mobile_number'];
+                $email = $data['email'];
+                $password = $data['password'];
+                $confirm_password = $data['confirm_password'];
+    
+                if(strlen($mobile_number) != 10){
+                    $data['error'] = "Mobile number must be an actual number.";
+                    $this->view('users/edit_user', $data);
+                }
+                if($password !== $confirm_password){
+                    $data['error'] = "The entered passwords do not match.";
+                    $this->view('users/edit_user', $data);
+                    if(strlen($password) < 6){
+                        $data['error'] = "Your password is too short. Passwords must at least be 6 characters long.";
+                        $this->view('users/edit_user', $data);
+                    }
+                }
+
+                $row = $this->user_model->check_new_email_vs_old_email($email);
+                if($row != 'true' && $this->user_model->find_user_by_email($email)){
+                    $data['error'] = "Your new email address is already registered.";
+                    $this->view('users/edit_user', $data);
+                }
+                
+                if(empty($data['error'])){
+                    if($row != 'true' && !$this->user_model->find_user_by_email($email)){
+                        $len = 50;
+                        $token = bin2hex(openssl_random_pseudo_bytes($len));
+
+                        $this->user_model->set_token($token, $row);
+                        $mail = mail_config();
+                        $mail->AddAddress($email);
+
+                        $mail->Subject = "Verify email";
+                        $mail->Body ='<p>Welcome to the BlackEagle community.</p>
+                        <p>Please click on the link to verify your email.</p>
+                        <a href="'.URLROOT.'/users/email_verified/' . $email . '/' . $token . '">VERIFY EMAIL</a>';
+
+                        $mail->send();
+                        $this->user_model->email_unverified($row);
+                    }
+
+                    if($this->user_model->edit_user($data)){
+                        if(!empty($password) && !empty($confirm_password)){
+                            //Hash password
+                            $row = $this->user_model->get_randSalt();
+                            $salt = $row->randSalt;
+                            $password = crypt($password, $salt);
+
+                            $this->user_model->update_password($password, $email);
+                        }
+                        set_message("Your details have been updated. If you changed your email, an email has been sent to you to verify your new email.");
+                        $data['password'] = '';
+                        $data['confirm_password'] = '';
+                        $this->view('users/edit_user', $data);
+                    }
+                    else{
+                        die('Something went wrong.');
+                    }
+                }
+            }
+            else{
+                $row = $this->user_model->get_user_data();
+                if($row){
+                    //Init data
+                    $data =[
+                        'name' => $row->user_name,
+                        'surname' => $row->user_surname,
+                        'email' => $row->user_email,
+                        'mobile_number' => $row->user_mobile_number,
+                        'password' => '',
+                        'confirm_password' => '',
+                        'error' => '',
+                    ];
+                }
+                
+                $this->view('users/edit_user', $data);
+            }
+        }
+
         public function create_user_session($user){
             $_SESSION['user_id'] = $user->user_id;
             // $_SESSION['user_name'] = $user->user_name;
@@ -202,126 +301,6 @@
 
         public function wind_farm_dashboard(){
             $this->view('users/wind_farm_dashboard');
-        }
-
-        public function edit_user(){
-            if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                //Sanitize POST data
-                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-                //Init data
-                $data =[
-                    'name' => trim($_POST['update_first_name']),
-                    'surname' => trim($_POST['update_last_name']),
-                    'email' => trim($_POST['update_email']),
-                    'mobile_number' => trim($_POST['update_mobile_number']),
-                    'password' => trim($_POST['update_password']),
-                    'confirm_password' => trim($_POST['update_confirm_password']),
-                    'error' => '',
-                ];
-			
-                // $name = ucwords(escape_string($_POST['firstName']));
-                // $surname = ucwords(escape_string($_POST['lastName']));
-                // $mobile_number = str_replace(' ','', escape_string($_POST['mobileNumber']));
-                // $email = escape_string($_POST['email']);
-                // $password = escape_string($_POST['newPassword']);
-                // $confirm_password = escape_string($_POST['retypePassword']);
-                
-                // $query = query("SELECT password FROM users WHERE user_id =" . $_SESSION['user_id'] . " ");
-                // confirm($query);
-        
-                // while($row = fetch_array($query)){
-                //     $old_password_check = $row['password'];
-                //     $old_password = crypt($old_pass, $row['password']);
-                // }
-        
-                // if(empty($name) && empty($surname) && empty($gender) && empty($mobile_number) && empty($email) && empty($re_email) && empty($old_pass) && empty($new_pass) && empty($re_pass)){
-                        
-                //     set_message("Nothing to be changed was found.");
-                //     redirect("edit_account");
-                // }
-                // else{
-        
-                //     $query = "UPDATE users SET";
-        
-                //         if(!empty($name)){
-                //             $query .= ", user_name = '{$name}' ";
-                //         }
-        
-                //         if(!empty($surname)){
-                //             $query .= ", user_surname = '{$surname}' ";
-                //         }
-        
-                //         if(!empty($gender)){
-                //             $query .= ", gender = '{$gender}' ";
-                //         }
-        
-                //         if(!empty($mobile_number)){
-                //             if(!ctype_digit($mobile_number) || strlen($mobile_number) !== 10){
-                //                 set_message("Mobile number must be an actual number.");
-                //                 redirect("edit_account");
-                //             }
-                //             else{
-                //                 $query .= ", mobile_number = '{$mobile_number}' ";  
-                //             }
-                //         }
-        
-                //         if(!empty($email) && !empty($re_email)){
-                //             if($email === $re_email){
-                //                 $query .= ", email = '{$email}' ";
-                //             }
-                //             else{
-                //                 set_message("The entered emails do not match.");
-                //                 redirect("edit_account");
-                //             }
-                //         }
-        
-                //         if(!empty($old_pass) && !empty($new_pass) && !empty($re_pass)){
-                //             if($old_password === $old_password_check && $new_pass === $re_pass){
-                //                 $salt_query = query("SELECT randSalt FROM users");
-                //                 confirm($salt_query);
-        
-                //                 $row = fetch_array($salt_query);
-                //                 $salt = $row['randSalt'];
-        
-                //                 $password = crypt($new_pass, $salt);
-                //                 $query .= ", password = '{$password}' ";
-                //                 }
-                //             else if($old_password !== $_SESSION['user_password']){
-                //                 set_message("The entered old password is incorrect.");
-                //                 redirect("edit_account");
-                //             }
-                //             else{
-                //                 set_message("The entered new passwords do not match.");
-                //                 redirect("edit_account");
-                //             }
-                //         }
-        
-                //         $query .= "WHERE user_id = '{$_SESSION['user_id']}' ";
-                //         $query = query(checked($query));
-                //         confirm($query);
-        
-                //         set_message("Your details have been updated.");
-                //         redirect("account");
-                // }
-            }
-            else{
-                $row = $this->user_model->get_user_data();
-                if($row){
-                    //Init data
-                    $data =[
-                        'name' => $row->user_name,
-                        'surname' => $row->user_surname,
-                        'email' => $row->user_email,
-                        'mobile_number' => $row->user_mobile_number,
-                        'password' => '',
-                        'confirm_password' => '',
-                        'error' => '',
-                    ];
-                }
-                
-                $this->view('users/edit_user', $data);
-            }
         }
 
         public function forgot_password($code = null){

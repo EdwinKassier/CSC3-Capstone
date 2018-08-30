@@ -20,6 +20,10 @@
         <!-- Main Body -->
         <br>
         <main role="main"  class="container" id="body">
+        <br>
+        <div class="alert-success text-center"><?php display_message(); ?></div>
+        <div class="alert-danger text-center"><?php echo $data['error']; ?></div>
+        <br>
             <form action="<?php echo URLROOT; ?>/users/edit_user" method="post">
                 <h3>Edit account</h3>
                 <hr>
@@ -36,11 +40,11 @@
                 <div class="row">
                     <div class="form-group col-md-6 mb-3">
                         <label for="update_password"><b>Password:</b></label>
-                        <input type="password" class="form-control" name="update_password" value="<?php echo $data['password']; ?>" placeholder="Enter password" required>
+                        <input type="password" class="form-control" name="update_password" value="<?php echo $data['password']; ?>" placeholder="Enter password">
                     </div>
                     <div class="form-group col-md-6 mb-3">
                         <label for="update_confirm_password"><b>Confirm password:</b></label>
-                        <input type="password" class="form-control" name="update_confirm_password" value="<?php echo $data['confirm_password']; ?>" placeholder="Re-enter password" required>
+                        <input type="password" class="form-control" name="update_confirm_password" value="<?php echo $data['confirm_password']; ?>" placeholder="Re-enter password">
                     </div>
                 </div>
                 <div class="row">

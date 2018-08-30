@@ -20,37 +20,41 @@
         <!-- Main Body -->
         <br>
         <main role="main"  class="container" id="body">
+        <br>
+        <div class="alert-success text-center"><?php display_message(); ?></div>
+        <div class="alert-danger text-center"><?php echo $data['error']; ?></div>
+        <br>
             <form action="<?php echo URLROOT; ?>/users/edit_user" method="post">
                 <h3>Edit account</h3>
                 <hr>
                 <div class="row">
                     <div class="form-group col-md-6 mb-3">
                         <label for="update_first_name"><b>First name</b></label>
-                        <input type="text" class="form-control" name="update_first_name" placeholder="Enter first name" required>
+                        <input type="text" class="form-control" name="update_first_name" value="<?php echo $data['name']; ?>" placeholder="Enter first name" required>
                     </div>
                     <div class="form-group col-md-6 mb-3">
                         <label for="update_last_name"><b>Last name</b></label>
-                        <input type="text" class="form-control" name="update_last_name" placeholder="Enter last name" required>
+                        <input type="text" class="form-control" name="update_last_name" value="<?php echo $data['surname']; ?>" placeholder="Enter last name" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6 mb-3">
                         <label for="update_password"><b>Password:</b></label>
-                        <input type="password" class="form-control" name="update_password" placeholder="Enter password" required>
+                        <input type="password" class="form-control" name="update_password" value="<?php echo $data['password']; ?>" placeholder="Enter password">
                     </div>
                     <div class="form-group col-md-6 mb-3">
                         <label for="update_confirm_password"><b>Confirm password:</b></label>
-                        <input type="password" class="form-control" name="update_confirm_password" placeholder="Re-enter password" required>
+                        <input type="password" class="form-control" name="update_confirm_password" value="<?php echo $data['confirm_password']; ?>" placeholder="Re-enter password">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6 mb-3">
                         <label for="update_mobile_number"><b>Mobile number</b></label>
-                        <input type="text" class="form-control" name="update_mobile_number" placeholder="012 345 6789" required>
+                        <input type="text" class="form-control" name="update_mobile_number" value="<?php echo substr_replace(substr_replace($data['mobile_number'], ' ', 6, 0), ' ', 3, 0); ?>" placeholder="012 345 6789" required>
                     </div>
                     <div class="form-group col-md-6 mb-3">
                         <label for="update_email"><b>Email:</b></label>
-                        <input type="email" class="form-control" name="update_email" placeholder="Enter email" required>
+                        <input type="email" class="form-control" name="update_email" value="<?php echo $data['email']; ?>" placeholder="Enter email" required>
                     </div>
                 </div>
                 <div style="float:right;">

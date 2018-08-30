@@ -40,17 +40,62 @@
             }
         }
 
+        //Edit user
+        public function edit_user($data){
+            $this->db->query("UPDATE users SET user_name = :name, user_surname = :surname, user_mobile_number = :mobile_number, user_email = :email WHERE user_id = :id");
+            $this->db->bind(':name', $data['name']);
+            $this->db->bind(':surname', $data['surname']);
+            $this->db->bind(':email', $data['email']);
+            $this->db->bind(':mobile_number', $data['mobile_number']);
+            $this->db->bind(':id', $_SESSION['user_id']);
+
+            //execute
+            if($this->db->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        //Get a users data
+        public function get_user_data(){
+            $this->db->query('SELECT * FROM users WHERE user_id = :id');
+            $this->db->bind(':id', $_SESSION['user_id']);
+
+            if($row = $this->db->single()){
+                return $row;
+            }
+            else{
+                return false;
+            }
+        }
+
         //Find user by email
         public function find_user_by_email($email){
             $this->db->query('SELECT * FROM users WHERE user_email = :email');
             $this->db->bind(':email', $email);
-            $row = $this->db->single();
+            $this->db->single();
 
             if($this->db->row_count() > 0){
                 return true;
             }
             else{
                 return false;
+            }
+        }
+
+        //Check if the new email is the same as the old email.
+        public function check_new_email_vs_old_email($email){
+            $this->db->query('SELECT * FROM users WHERE user_id = :id');
+            $this->db->bind(':id', $_SESSION['user_id']);
+            $row = $this->db->single();
+
+            if($row->user_email === $email){
+                return 'true';
+            }
+            else{
+                return $row->user_email;
             }
         }
 
@@ -125,6 +170,19 @@
         //Update the user's verified status
         public function email_verified($email){
             $this->db->query('UPDATE users SET verified= "1" WHERE user_email= :email');
+            $this->db->bind(':email', $email);
+
+            if($this->db->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        //Update the user's verified status
+        public function email_unverified($email){
+            $this->db->query('UPDATE users SET verified= "0" WHERE user_email= :email');
             $this->db->bind(':email', $email);
 
             if($this->db->execute()){

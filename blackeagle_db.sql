@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2018 at 09:31 PM
+-- Generation Time: Aug 30, 2018 at 05:14 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -35,6 +35,20 @@ CREATE TABLE `admins` (
   `admin_email` varchar(255) NOT NULL,
   `admin_password` varchar(255) NOT NULL,
   `admin_mobile_number` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pins`
+--
+
+CREATE TABLE `pins` (
+  `pin_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `latitude` int(11) NOT NULL,
+  `longitude` int(11) NOT NULL,
+  `role` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -81,7 +95,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `user_name`, `user_surname`, `user_password`, `user_role`, `user_email`, `user_mobile_number`, `verified`, `approved`, `removed`, `token`) VALUES
 (3, 'Second', 'Test', '$2y$10$hsicaqpj419dsg7wd7s3wuksoJ7VW17s1n.hnmg0gCfqvF1ZZHU3O', 1, 'second@test.com', '0123456789', 1, 0, 0, ''),
 (4, 'Third', 'Test', '$2y$10$hsicaqpj419dsg7wd7s3wuY1gTcsW56Kun0BDirNszH.lo6syWyo2', 1, 'third@test.com', '0123456789', 1, 0, 0, ''),
-(11, 'Fourth', 'Test', '$1$vO5ynJUY$cSww5ry2bOL5Fm9RBIMTz.', 0, 'fourth@test.com', '0123456789', 1, 0, 0, ''),
+(11, 'Fourth', 'Test', '$2y$10$hsicaqpj419dsg7wd7s3wuJXtr9WMF8kA6LlOFgx4EZtLM8cnZfwi', 0, 'fourth@tester.com', '0123456780', 1, 0, 0, ''),
 (15, 'Charl', 'Ritter', '$2y$10$hsicaqpj419dsg7wd7s3wuM.eqKG8Np5YxA5u.9j1kMufs3oiVynK', 1, 'charl@test.com', '0827269552', 1, 0, 0, '');
 
 --
@@ -93,6 +107,12 @@ INSERT INTO `users` (`user_id`, `user_name`, `user_surname`, `user_password`, `u
 --
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`admin_id`);
+
+--
+-- Indexes for table `pins`
+--
+ALTER TABLE `pins`
+  ADD PRIMARY KEY (`pin_id`);
 
 --
 -- Indexes for table `users`
@@ -109,6 +129,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `admins`
   MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pins`
+--
+ALTER TABLE `pins`
+  MODIFY `pin_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`

@@ -122,7 +122,7 @@
                 <button type="button" style="margin-bottom:10px;" class="col-md-12 btn btn-custom" data-toggle="modal" data-target="#NestModal">Add nest site  <i class="fa fa-map-pin" style="color:red;"></i></button>
             </div>
             <div class="col-md-9"  style="padding-right:30px;">
-                <div id="googleMap" class="z-depth-1" style="height:110%;"></div>
+                <div id="googleMap" class="z-depth-1" style="height:90%;"></div>
             </div>
 
             <div class="modal fade" id="NestModal">
@@ -246,6 +246,15 @@
 
             var map = new google.maps.Map(document.getElementById("googleMap"),var_mapoptions);
 
+            <?php
+            $nest_site_array = array("51.3000,-0.120850", "52.3000,-0.120850","53.3000,-0.120850","54.3000,-0.120850");
+            if(sizeof($nest_site_array)!=0) {
+                for ($x = 0; $x <= sizeof($nest_site_array) - 1; $x++) {
+                    echo 'new google.maps.Marker({position:new google.maps.LatLng(' . $nest_site_array[$x][0] . ',' . $nest_site_array[$x][1] . ' )}).setMap(map);';
+                }
+            }
+            ?>
+
 
         }
 
@@ -268,6 +277,10 @@
         }
         // Initialize maps
         google.maps.event.addDomListener(window, 'load', myMap);
+
+        //Code for dynamically adding nest site markers
+
+
 
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip();

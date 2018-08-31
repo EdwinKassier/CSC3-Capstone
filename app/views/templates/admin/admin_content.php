@@ -4,17 +4,17 @@
             <h1>Admins</h1>
         </div>
         <div class="col-md-4">
-            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+            <br>
+            <input type="text" id="myInput" onkeyup="admin_filter()" placeholder="Search for names.." title="Type in a name">
         </div>
         <div class="col-md-2">
+            <br>
             <p></p>
-            <button type="button" class="btn btn-primary" onclick="location.href='<?php echo URLROOT; ?>/admins/add_admin'"><span>Add admin</span></button>
+            <button type="button" class="btn btn-primary" style="float: right;" onclick="location.href='<?php echo URLROOT; ?>/admins/add_admin'"><span>Add admin</span></button>
         </div>
     </div>
 
     <hr>
-
-    <div class="col-md-12">
         <table class="table table-striped" id="adminTable">
         <thead style="background-color:lightgray">
                  <tr>
@@ -42,11 +42,9 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-</div>
 
     <script>
-        function myFunction() {
+        function admin_filter() {
             var input, filter, table, tr, td, i;
             input = document.getElementById("myInput");
             filter = input.value.toUpperCase();

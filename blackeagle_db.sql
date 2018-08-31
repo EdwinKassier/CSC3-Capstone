@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 30, 2018 at 11:16 PM
+-- Generation Time: Aug 31, 2018 at 07:05 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -54,10 +54,26 @@ INSERT INTO `admins` (`admin_id`, `admin_name`, `admin_surname`, `admin_username
 CREATE TABLE `pins` (
   `pin_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `latitude` int(11) NOT NULL,
-  `longitude` int(11) NOT NULL,
-  `role` tinyint(4) NOT NULL
+  `latitude` varchar(255) NOT NULL,
+  `longitude` varchar(255) NOT NULL,
+  `role` tinyint(4) NOT NULL,
+  `name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pins`
+--
+
+INSERT INTO `pins` (`pin_id`, `user_id`, `latitude`, `longitude`, `role`, `name`) VALUES
+(1, 4, '51.3000', '-0.120850', 0, NULL),
+(2, 4, '52.3000', '-0.120850', 0, NULL),
+(3, 4, '53.3000', '-0.120850', 0, NULL),
+(4, 4, '54.3000', '-0.120850', 0, NULL),
+(5, 4, '54.5000', '-0.120850', 0, NULL),
+(6, 4, '54.5000', '-0.120850', 0, NULL),
+(7, 4, '52.3000', '-0.120850', 1, 'England'),
+(12, 4, '54.5000', '-0.120850', 1, 'England 2'),
+(14, 4, '54.5000', '-0.120850', 1, 'England 3');
 
 -- --------------------------------------------------------
 
@@ -90,6 +106,8 @@ CREATE TABLE `users` (
   `user_role` tinyint(4) DEFAULT NULL,
   `user_email` varchar(255) NOT NULL,
   `user_mobile_number` varchar(255) NOT NULL,
+  `user_organization_name` varchar(255) NOT NULL,
+  `user_organization_number` varchar(255) NOT NULL,
   `verified` tinyint(4) NOT NULL DEFAULT '0',
   `approved` tinyint(4) NOT NULL DEFAULT '0',
   `removed` tinyint(4) NOT NULL DEFAULT '0',
@@ -100,11 +118,10 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `user_name`, `user_surname`, `user_password`, `user_role`, `user_email`, `user_mobile_number`, `verified`, `approved`, `removed`, `token`) VALUES
-(3, 'Second', 'Test', '$2y$10$hsicaqpj419dsg7wd7s3wuksoJ7VW17s1n.hnmg0gCfqvF1ZZHU3O', 1, 'second@test.com', '0123456789', 1, 0, 0, ''),
-(4, 'Third', 'Test', '$2y$10$hsicaqpj419dsg7wd7s3wuY1gTcsW56Kun0BDirNszH.lo6syWyo2', 1, 'third@test.com', '0123456789', 1, 0, 0, ''),
-(11, 'Fourth', 'Test', '$2y$10$hsicaqpj419dsg7wd7s3wuJXtr9WMF8kA6LlOFgx4EZtLM8cnZfwi', 0, 'fourth@test.com', '0123456789', 1, 0, 0, ''),
-(15, 'Charl', 'Ritter', '$2y$10$hsicaqpj419dsg7wd7s3wuM.eqKG8Np5YxA5u.9j1kMufs3oiVynK', 1, 'charl@test.com', '0827269552', 1, 0, 0, '');
+INSERT INTO `users` (`user_id`, `user_name`, `user_surname`, `user_password`, `user_role`, `user_email`, `user_mobile_number`, `user_organization_name`, `user_organization_number`, `verified`, `approved`, `removed`, `token`) VALUES
+(4, 'Second', 'Test', '$2y$10$hsicaqpj419dsg7wd7s3wuksoJ7VW17s1n.hnmg0gCfqvF1ZZHU3O', 1, 'second@test.com', '0123456789', '', '', 1, 1, 0, ''),
+(11, 'Fourth', 'Test', '$2y$10$hsicaqpj419dsg7wd7s3wuJXtr9WMF8kA6LlOFgx4EZtLM8cnZfwi', 0, 'fourth@test.com', '0123456789', '', '', 1, 1, 0, ''),
+(15, 'Charl', 'Ritter', '$2y$10$hsicaqpj419dsg7wd7s3wuM.eqKG8Np5YxA5u.9j1kMufs3oiVynK', 1, 'charl@test.com', '0827269552', '', '', 1, 1, 0, '');
 
 --
 -- Indexes for dumped tables
@@ -142,7 +159,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `pins`
 --
 ALTER TABLE `pins`
-  MODIFY `pin_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `pin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `users`

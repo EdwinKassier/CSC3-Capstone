@@ -6,7 +6,7 @@
     <style>
     tbody {
         display:block;
-        height:300px;
+        height:200px;
         overflow:auto;
     }
     </style>

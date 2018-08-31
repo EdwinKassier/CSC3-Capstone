@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 31, 2018 at 07:05 PM
+-- Generation Time: Aug 31, 2018 at 11:46 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -43,7 +43,8 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`admin_id`, `admin_name`, `admin_surname`, `admin_username`, `admin_email`, `admin_password`, `admin_mobile_number`) VALUES
-(1, 'Fourth', 'Tester', 'fourth@blackeagleadmin.co.za', 'fourth@test.com', '$2y$10$hsicaqpj419dsg7wd7s3wuJXtr9WMF8kA6LlOFgx4EZtLM8cnZfwi', '0123456789');
+(1, 'Fourth', 'Tester', 'fourthtester@blackeagleadmin.co.za', 'fourth@test.com', '$2y$10$hsicaqpj419dsg7wd7s3wuJXtr9WMF8kA6LlOFgx4EZtLM8cnZfwi', '0123456789'),
+(2, 'Charl', 'Ritter', 'charlritter@blackeagleadmin.co.za', 'charlritter@hotmail.com', '$2y$10$hsicaqpj419dsg7wd7s3wuM.eqKG8Np5YxA5u.9j1kMufs3oiVynK', '0827269552');
 
 -- --------------------------------------------------------
 
@@ -153,7 +154,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pins`

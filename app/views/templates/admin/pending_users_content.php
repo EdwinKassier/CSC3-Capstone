@@ -29,7 +29,7 @@
         <td>
             <div class="col" style="float:right;padding-bottom:5px;">
                 <button type="submit" class="btn btn-primary" onclick="location.href='<?php echo URLROOT; ?>/admins/validate_user/<?php echo $row->user_id; ?>'">Validate</button>
-                <button type="button" class="btn btn-danger" onclick="location.href='<?php echo URLROOT; ?>/admins/remove_user/<?php echo $row->user_id; ?>'">Remove</button>
+                <button type="button" class="btn btn-danger" onclick="location.href='<?php echo URLROOT; ?>/admins/reject_user/<?php echo $row->user_id; ?>'">Remove</button>
             </div>
         </td>
     </tr>

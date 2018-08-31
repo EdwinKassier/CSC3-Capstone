@@ -8,21 +8,33 @@
         <th>Surname</th>
         <th>Email</th>
         <th>Mobile number</th>
+        <th>Company/organization name</th>
+        <th>Company/organization number</th>
         <th></th>
     </tr>
-    </thead>
+    </thead> 
     <tbody>
+    <?php 
+    if(!empty($data['users'])):
+        foreach ($data['users'] as $row):
+    ?>
     <tr>
-        <td>{$id}</td>
-        <td>{$firstname}</td>
-        <td>{$lastname}</td>
-        <td>{$email}</td>
-        <td>{$mobile_number}</td>
+        <td><?php echo $row->user_id; ?></td>
+        <td><?php echo $row->user_name; ?></td>
+        <td><?php echo $row->user_surname; ?></td>
+        <td><?php echo $row->user_email; ?></td>
+        <td><?php echo $row->user_mobile_number; ?></td>
+        <td><?php echo $row->user_organization_name; ?></td>
+        <td><?php echo $row->user_organization_number; ?></td>
         <td>
             <div class="col" style="float:right;padding-bottom:5px;">
-                <button type="button" class="btn btn-danger" onclick="location.href='<?php echo URLROOT; ?>/admins/remove_admin/{$id}'">Delete</button>
+                <button type="button" class="btn btn-danger" onclick="location.href='<?php echo URLROOT; ?>/admins/remove_user/<?php echo $row->user_id; ?>'">Remove</button>
             </div>
         </td>
     </tr>
+    <?php
+        endforeach;
+    endif;
+    ?>
     </tbody>
 </table>

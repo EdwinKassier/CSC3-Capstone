@@ -42,7 +42,7 @@
                     <td>
                         <div class="col" style="float:right;padding-bottom:5px;">
                             <button type="submit" class="btn btn-primary" onclick="location.href='<?php echo URLROOT; ?>/admins/edit_admin/<?php echo $row->admin_id; ?>'">Edit</button>
-                            <button type="button" class="btn btn-danger" onclick="location.href='<?php echo URLROOT; ?>/admins/remove_admin/<?php echo $row->admin_id; ?>'">Delete</button>
+                            <button type="button" class="btn btn-danger" onclick="location.href='<?php echo URLROOT; ?>/admins/remove_admin/<?php echo $row->admin_id; ?>'" <?php if($row->admin_id == $_SESSION['admin_id']){echo 'style="display: none;"';} ?>>Delete</button>
                         </div>
                     </td>
                 </tr>

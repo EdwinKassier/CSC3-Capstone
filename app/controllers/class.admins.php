@@ -117,5 +117,13 @@
             set_message('User removed succesfully.');
             redirect('/admins/users_content');
         }
+
+        //remove a user
+        public function remove_admin($admin){
+            $this->admin_model->remove_admin($admin);
+            
+            set_message('Admin removed succesfully.');
+            redirect('/admins/admin');
+        }
     }
 ?>

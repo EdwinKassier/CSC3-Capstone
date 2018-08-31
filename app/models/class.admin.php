@@ -210,5 +210,19 @@
                 return false;
             }
         }
+
+        //removes a admin
+        public function remove_admin($admin){
+            $this->db->query("DELETE FROM admins WHERE admin_id = :id");
+            $this->db->bind(':id', $admin);
+
+            //execute
+            if($this->db->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
     }
 ?>

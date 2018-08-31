@@ -2,8 +2,8 @@
 <html>
     <body>
 
-    <div>
-        <div id="googleMap" style="height:500px;"></div>
+    <div class ="row" style="width:100%;height:100%;">
+        <div id="googleMap" style="width:103%;height:88vh;"></div>
     </div>
 
     <script>

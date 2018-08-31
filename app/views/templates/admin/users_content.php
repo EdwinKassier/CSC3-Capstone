@@ -1,6 +1,15 @@
-<h3>User Database</h3>
+<div class="row">
+    <div class="col-md-6">
+        <h1>Users</h1>
+    </div>
+    <div class="col-md-6">
+        <br>
+        <input type="text" id="myInput" onkeyup="users_filter()" placeholder="Search for names.." title="Type in a name">
+    </div>
+
+</div>
 <hr>
-<table class="table table-striped" id="pendinguserTable">
+<table class="table table-striped" id="user_Table">
     <thead style="background-color:lightgray">
     <tr>
         <th>ID</th>
@@ -38,3 +47,24 @@
     ?>
     </tbody>
 </table>
+
+<script>
+    function users_filter() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("user_Table");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+</script>

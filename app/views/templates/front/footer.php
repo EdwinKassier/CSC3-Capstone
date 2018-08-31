@@ -3,6 +3,7 @@
         <div class="p-2">
             <p><a href="<?php echo URLROOT; ?>/pages/about"><font color="white">About us</font></a></p>
             <p><a href="<?php echo URLROOT; ?>/pages/contact"><font color="white">Contact us</font></a></p>
+            <p><a href="<?php echo URLROOT; ?>/pages/FAQ"><font color="white">FAQ</font></a></p>
 		    <p><a href="<?php echo URLROOT; ?>\resources\files\blackeagle_terms&conditions.pdf" target="_blank"><font color="white">Legal Information</font></a></p>
         </div>
     </div>

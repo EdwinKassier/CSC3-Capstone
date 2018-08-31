@@ -11,5 +11,9 @@
         public function contact(){
             $this->view('pages/contact');
         }
+
+        public function FAQ(){
+            $this->view('pages/FAQ');
+        }
     }
 ?>

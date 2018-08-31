@@ -2,23 +2,16 @@
 <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
         <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
     </button>
     <a href="<?php echo URLROOT . '/admins'; ?>" class="navbar-brand">BlackEagle Project Admin</a>
 </div>
 
 <!-- Top Menu Items -->
 <ul class="nav navbar-right top-nav">
-    <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i><?php echo " " . $_SESSION['admin_name'] . " " . $_SESSION['admin_surname'] . " "; ?><b class="caret"></b></a>
-        <ul class="dropdown-menu">
-            
-            <li class="divider"></li>
-            <li>
-                <a href="<?php echo URLROOT; ?>/admins/logout"><i class="fas fa-power-off"></i> Log Out</a>
-            </li>
-        </ul>
+    <li>
+        <a><i class="fas fa-user"></i><?php echo " " . $_SESSION['admin_name'] . " " . $_SESSION['admin_surname'] . " "; ?></a>
+    </li>
+    <li>
+        <a href="<?php echo URLROOT; ?>/admins/logout"><i class="fas fa-power-off"></i> Log Out</a>
     </li>
 </ul>

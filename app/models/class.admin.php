@@ -6,24 +6,70 @@
             $this->db = new Database;
         }
 
-        // //Register admin
-        // public function register($data){
-        //     $this->db->query("INSERT INTO admins (admin_name, admin_surname, admin_password, admin_email, admin_mobile_number, admin_username) VALUES(:name, :surname, :password, :email, :mobile_number, :username)");
-        //     $this->db->bind(':name', $data['name']);
-        //     $this->db->bind(':surname', $data['surname']);
-        //     $this->db->bind(':password', $data['password']);
-        //     $this->db->bind(':email', $data['email']);
-        //     $this->db->bind(':mobile_number', $data['mobile_number']);
-        //     $this->db->bind(':username', $data['username']);
+        //Register admin
+        public function register($data){
+            $this->db->query("INSERT INTO admins (admin_name, admin_surname, admin_password, admin_email, admin_mobile_number, admin_username) VALUES(:name, :surname, :password, :email, :mobile_number, :username)");
+            $this->db->bind(':name', $data['name']);
+            $this->db->bind(':surname', $data['surname']);
+            $this->db->bind(':password', $data['password']);
+            $this->db->bind(':email', $data['email']);
+            $this->db->bind(':mobile_number', $data['mobile_number']);
+            $this->db->bind(':username', $data['username']);
 
-        //     //execute
-        //     if($this->db->execute()){
-        //         return true;
-        //     }
-        //     else{
-        //         return false;
-        //     }
-        // }
+            //execute
+            if($this->db->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        
+        //Edit admin
+        public function edit_admin($data){
+            $this->db->query("UPDATE admins SET admin_name = :name, admin_surname = :surname, admin_mobile_number = :mobile_number, admin_email = :email, admin_username = :username WHERE admin_id = :id");
+            $this->db->bind(':name', $data['name']);
+            $this->db->bind(':surname', $data['surname']);
+            $this->db->bind(':email', $data['email']);
+            $this->db->bind(':mobile_number', $data['mobile_number']);
+            $this->db->bind(':id', $data['id']);
+            $this->db->bind(':username', $data['username']);
+
+            //execute
+            if($this->db->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        //Update the admin's password
+        public function update_password($password, $username){
+            $this->db->query('UPDATE admins SET admin_password= :password WHERE admin_username= :username');
+            $this->db->bind(':password', $password);
+            $this->db->bind(':username', $username);
+
+            if($this->db->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        //Get a admin data
+        public function get_admin_data($admin_id){
+            $this->db->query('SELECT * FROM admins WHERE admin_id = :id');
+            $this->db->bind(':id', $admin_id);
+
+            if($row = $this->db->single()){
+                return $row;
+            }
+            else{
+                return false;
+            }
+        }
 
         //Login admin
         public function login($data){
@@ -40,10 +86,10 @@
             }
         }
 
-        //Find admin by email
-        public function find_admin_by_email($email){
-            $this->db->query('SELECT * FROM admins WHERE admin_username = :email');
-            $this->db->bind(':email', $email);
+        //Find admin by username
+        public function find_admin_by_username($username){
+            $this->db->query('SELECT * FROM admins WHERE admin_username = :username');
+            $this->db->bind(':username', $username);
             $this->db->single(); 
 
             if($this->db->row_count() > 0){
@@ -51,6 +97,20 @@
             }
             else{
                 return false;
+            }
+        }
+
+        //Check if the new username is the same as the old username.
+        public function check_new_username_vs_old_username($username, $admin_id){
+            $this->db->query('SELECT * FROM admins WHERE admin_id = :id');
+            $this->db->bind(':id', $admin_id);
+            $row = $this->db->single();
+
+            if($row->admin_username === $username){
+                return 'true';
+            }
+            else{
+                return $row->admin_username;
             }
         }
 
@@ -219,6 +279,19 @@
             //execute
             if($this->db->execute()){
                 return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        //get all nests of a user
+        public function get_nests(){
+            $this->db->query('SELECT * FROM pins WHERE role= :role');
+            $this->db->bind(':role', '0');
+
+            if($row = $this->db->result_set()){
+                return $row;
             }
             else{
                 return false;

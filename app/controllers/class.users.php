@@ -99,6 +99,8 @@
                     'password' => '',
                     'confirm_password' => '',
                     'role' => '',
+                    'organization_name' => '',
+                    'organization_number' => '',
                     'error' => '',
                 ];
 

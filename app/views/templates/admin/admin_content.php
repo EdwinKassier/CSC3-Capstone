@@ -19,9 +19,9 @@
             <thead style="background-color:lightgray">
                     <tr>
                         <th>ID</th>
-                        <th>Username</th>
                         <th>Name</th>
                         <th>Surname</th>
+                        <th>Username</th>
                         <th>Email</th>
                         <th>Mobile number</th>
                         <th></th>
@@ -34,9 +34,9 @@
             ?>
                 <tr>
                     <td><?php echo $row->admin_id; ?></td>
-                    <td><?php echo $row->admin_username; ?></td>
                     <td><?php echo $row->admin_name; ?></td>
                     <td><?php echo $row->admin_surname; ?></td>
+                    <td><?php echo $row->admin_username; ?></td>
                     <td><?php echo $row->admin_email; ?></td>
                     <td><?php echo $row->admin_mobile_number; ?></td>
                     <td>

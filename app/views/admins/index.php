@@ -42,8 +42,11 @@
                 else if($data['view'] == 'admin'){
                     include(TEMPLATE_ADMIN . DS ."admin_content.php");
                 }      
-                else if($data['view'] == 'add_admin' || $data['view'] == 'edit_admin'){
+                else if($data['view'] == 'add_admin'){
                     include(TEMPLATE_ADMIN . DS ."add_admin.php");
+                } 
+                else if($data['view'] == 'edit_admin'){
+                    include(TEMPLATE_ADMIN . DS ."edit_admin.php");
                 }           
                 ?>
 

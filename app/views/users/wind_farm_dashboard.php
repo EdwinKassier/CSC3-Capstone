@@ -1,53 +1,13 @@
 <html lang="en">
-
-
 <head>
     <?php include(TEMPLATE_FRONT . DS . "header.php"); ?>
 </head>
 <style>
-    * {
-        box-sizing: border-box
-    }
-    body {
-        overflow-x: hidden;
-    }
-
-    #myInput {
-        width: 40%;
-        font-size: 16px;
-        padding: 12px 20px 12px 40px;
-        border: 1px solid #ddd;
-        margin-bottom: 12px;
-        border-radius: 20px;
-    }
-
-    #myInput:focus{
-        outline:0;
-        border:1px solid deepskyblue;
-    }
-
     tbody {
         display:block;
         height:300px;
         overflow:auto;
     }
-    thead, tbody tr {
-        display:table;
-        width:100%;
-        table-layout:fixed;
-    }
-    thead {
-        width: calc( 100% - 1em )
-    }
-
-    .modal-container {
-        max-width: 100%;
-        position: relative;
-        margin: auto;
-        height: 70%;
-    }
-
-
 </style>
 <body>
 
@@ -65,10 +25,15 @@
     <!-- Main Body -->
     <br>
     <main role="main" class="container" id="body">
-
-        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#Modal"
-                style="width:20%; float:right;">Add <i class="fas fa-plus"></i></button>
+        
+        <div class="row">
+            <div class="col-md-8">
+                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="col-md-4 btn btn-custom" data-toggle="modal" data-target="#Modal" style="float:right;">Add <i class="fas fa-plus"></i></button>
+            </div>
+        </div>
         <br>
         <br>
         <div class="container">

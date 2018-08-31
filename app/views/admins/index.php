@@ -36,8 +36,8 @@
                 else if($data['view'] == 'users'){
                     include(TEMPLATE_ADMIN . DS ."pending_users_content.php");
                 }
-                else if($data['view'] == 'userDB'){
-                    include(TEMPLATE_ADMIN . DS ."userDB.php");
+                else if($data['view'] == 'users_content'){
+                    include(TEMPLATE_ADMIN . DS ."users_content.php");
                 }
                 else if($data['view'] == 'admin'){
                     include(TEMPLATE_ADMIN . DS ."admin_content.php");

@@ -44,7 +44,7 @@
         public function find_admin_by_email($email){
             $this->db->query('SELECT * FROM admins WHERE admin_username = :email');
             $this->db->bind(':email', $email);
-            $row = $this->db->single();
+            $this->db->single(); 
 
             if($this->db->row_count() > 0){
                 return true;
@@ -58,6 +58,117 @@
         public function get_randSalt(){
             $this->db->query('SELECT randSalt FROM randSalt');
             return $this->db->single();
+        }
+
+        //Return pending users
+        public function get_pending_users(){
+            $this->db->query('SELECT * FROM users WHERE approved = :number');
+            $this->db->bind(':number', '0');
+
+            if($row = $this->db->result_set()){
+                return $row;
+            }
+            else{
+                return false;
+            }
+        }
+
+        //Return amount of pending users
+        public function amount_pending_users(){
+            $this->db->query('SELECT * FROM users WHERE approved = :number');
+            $this->db->bind(':number', '0');
+            $this->db->single();
+
+            if($this->db->row_count() > 0){
+                return $this->db->row_count();
+            }
+            else{
+                return "0";
+            }
+        }
+
+        //Return amount of nests
+        public function amount_nests(){
+            $this->db->query('SELECT * FROM pins WHERE role = :number');
+            $this->db->bind(':number', '0');
+            $this->db->single();
+
+            if($this->db->row_count() > 0){
+                return $this->db->row_count();
+            }
+            else{
+                return "0";
+            }
+        }
+
+        //Return amount of ornothologists
+        public function amount_ornothologists(){
+            $this->db->query('SELECT * FROM users WHERE user_role = :number');
+            $this->db->bind(':number', '1');
+            $this->db->single();
+
+            if($this->db->row_count() > 0){
+                return $this->db->row_count();
+            }
+            else{
+                return "0";
+            }
+        }
+
+        //Return amount of wind farms
+        public function amount_wind_farms(){
+            $this->db->query('SELECT * FROM users WHERE user_role = :number');
+            $this->db->bind(':number', '0');
+            $this->db->single();
+
+            if($this->db->row_count() > 0){
+                return $this->db->row_count();
+            }
+            else{
+                return "0";
+            }
+        }
+
+        //Return amount of admins
+        public function amount_admins(){
+            $this->db->query('SELECT * FROM admins');
+            $this->db->single();
+
+            if($this->db->row_count() > 0){
+                return $this->db->row_count();
+            }
+            else{
+                return "0";
+            }
+        }
+
+        //validates a user
+        public function validate_user($user){
+            $this->db->query("UPDATE users SET approved = :approved WHERE user_id = :id");
+            $this->db->bind(':approved', '1');
+            $this->db->bind(':id', $user);
+
+            //execute
+            if($this->db->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        //rejects a user
+        public function remove_user($user){
+            $this->db->query("DELETE FROM users WHERE user_id = :id");
+            $this->db->bind(':id', $user);
+
+            //execute
+            if($this->db->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
     }
 ?>

@@ -1,69 +1,15 @@
 <html lang="en">
     <head>
         <?php include(TEMPLATE_FRONT . DS . "header.php"); ?>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4O-eDAp4dKR7U4E3hnxCO2psx7xnnzUU&callback=myMap"></script>
     </head>
-
     <style>
-        body{
-            overflow-x: hidden;
-            overflow-y: scroll;
-        }
-        .list-group{
-            max-height: 300px;
-            margin-bottom: 10px;
-            overflow:scroll;
-            overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        #myInput {
-            width: 100%;
-            font-size: 16px;
-            padding: 12px 20px 12px 40px;
-            border: 1px solid #ddd;
-            margin-bottom: 12px;
-            border-radius: 20px;
-        }
-
-        #myInput:focus{
-            outline:0;
-            border:1px solid deepskyblue;
-        }
-
-        tbody {
-            display:block;
-            height:200px;
-            overflow:auto;
-        }
-        thead, tbody tr {
-            display:table;
-            width:100%;
-            table-layout:fixed;
-        }
-        thead {
-            width: calc( 100% - 1em )
-        }
-
-        .button-table {
-            background-color: transparent; /* Green */
-            border: none;
-            color: black;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-        }
-        .button-table:hover{
-            color:deepskyblue;
-        }
-
-        .button-table:focus {
-            outline:0;
-            color:deepskyblue;
-        }
-
+    tbody {
+        display:block;
+        height:300px;
+        overflow:auto;
+    }
     </style>
-
     <body>
 
     <?php
@@ -81,7 +27,7 @@
         <br>
         <main role="main" class="row" id="body">
             <div class="col-md-3" style="padding-left:50px;">
-                    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+                    <input type="text" id="myInput" onkeyup="tableFilter()" placeholder="Search for names.." title="Type in a name">
                     <table class="table table-striped" id="siteTable">
                         <thead>
                         <tr class = "header">
@@ -121,8 +67,8 @@
                 <button type="button" style="margin-bottom:10px;" class="col-md-12 btn btn-custom" data-toggle="modal" data-target="#ScoutModal">Add scouting site  <i class="fas fa-flag" style="color:red;"></i></button>
                 <button type="button" style="margin-bottom:10px;" class="col-md-12 btn btn-custom" data-toggle="modal" data-target="#NestModal">Add nest site  <i class="fa fa-map-pin" style="color:red;"></i></button>
             </div>
-            <div class="col-md-9"  style="padding-right:30px;">
-                <div id="googleMap" class="z-depth-1" style="height:110%;"></div>
+            <div class="col-md-9" style="padding-right:30px;">
+                <div id="googleMap" style="height:90%;"></div>
             </div>
 
             <div class="modal fade" id="NestModal">
@@ -145,7 +91,6 @@
                                     <br><br>
                                     </form>
                                 </div>
-
                                 <div class="col-md-6">
                                     <h5>One</h5>
                                     <div class="form-group">
@@ -156,18 +101,14 @@
                                         <input type="text" class="form-control" id="lat" placeholder="Longitude"
                                                style="width:100%;">
                                     </div>
-
                                 </div>
-
                             </div>
                         </div>
-
                         <div class="modal-footer" style="height: 100%;">
                             <i class="fas fa-info-circle" data-toggle="tooltip" title="Need some help? You can find it in the FAQ section!" id='example' style=" position: absolute; left: 30;"></i>
                             <button type="button" class="btn btn-custom" data-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-custom" data-dismiss="modal">Upload</button>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -192,7 +133,6 @@
                                     <br><br>
                                     </form>
                                 </div>
-
                                 <div class="col-md-6">
                                     <h5>One</h5>
                                     <div class="form-group">
@@ -203,9 +143,7 @@
                                         <input type="text" class="form-control" id="lat" placeholder="Longitude"
                                                style="width:100%;">
                                     </div>
-
                                 </div>
-
                             </div>
                         </div>
 
@@ -249,7 +187,7 @@
 
         }
 
-        function myFunction() {
+        function tableFilter() {
             var input, filter, table, tr, td, i;
             input = document.getElementById("myInput");
             filter = input.value.toUpperCase();
@@ -266,6 +204,7 @@
                 }
             }
         }
+
         // Initialize maps
         google.maps.event.addDomListener(window, 'load', myMap);
 

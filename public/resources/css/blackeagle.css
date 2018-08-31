@@ -99,7 +99,60 @@ input[type=text], input[type=password], input[type=number] {
     max-width: 100%;
     position: relative;
     margin: auto;
-    height: 40vh;
+    height: 70%;
+}
+
+/*========================= User pages =========================*/
+
+#myInput {
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+    border-radius: 20px;
+}
+
+#myInput:focus{
+    outline:0;
+    border:1px solid deepskyblue;
+}
+
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
+
+thead {
+    width: calc( 100% - 1em )
+}
+
+.list-group{
+    max-height: 300px;
+    margin-bottom: 10px;
+    overflow:scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+.button-table {
+    background-color: transparent; /* Green */
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.button-table:hover{
+    color:deepskyblue;
+}
+
+.button-table:focus {
+    outline:0;
+    color:deepskyblue;
 }
 
 /*=========================  =========================*/

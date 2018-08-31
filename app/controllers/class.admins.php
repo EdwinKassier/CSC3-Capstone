@@ -5,11 +5,46 @@
         }
 
         public function index($view = null){
-            //Init data
-            $data =[
-                'view' => $view
-            ];
+            if($view == 'map'){
+                //Init data
+                $data =[
+                    'view' => $view,
 
+                ];  
+            }
+            else if($view == 'users'){
+                //Init data
+                $data =[
+                    'view' => $view,
+                    'pending_users' => $this->admin_model->get_pending_users(),
+                ];  
+            }
+            else if($view == 'users_content'){
+                //Init data
+                $data =[
+                    'view' => $view,
+
+                ];  
+            }
+            else if($view == 'admin'){
+                //Init data
+                $data =[
+                    'view' => $view,
+
+                ];  
+            }
+            else{
+                //Init data
+                $data =[
+                    'view' => $view,
+                    'amount_pending_users' => $this->admin_model->amount_pending_users(),
+                    'amount_nests' => $this->admin_model->amount_nests(),
+                    'amount_ornothologists' => $this->admin_model->amount_ornothologists(),
+                    'amount_wind_farms' => $this->admin_model->amount_wind_farms(),
+                    'amount_admins' => $this->admin_model->amount_admins(),
+                ];  
+            }
+            
             $this->view('admins/index', $data);
         }
 
@@ -57,6 +92,22 @@
             session_destroy();
             
             redirect('');
+        }
+
+        //validates a user
+        public function validate_user($user){
+            $this->admin_model->validate_user($user);
+            
+            set_message('User approved succesfully.');
+            redirect('/admins/users');
+        }
+
+        //rejects a user
+        public function remove_user($user){
+            $this->admin_model->remove_user($user);
+            
+            set_message('User rejected succesfully.');
+            redirect('/admins/users');
         }
     }
 ?>

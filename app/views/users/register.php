@@ -64,7 +64,17 @@
                     <option value='1' <?php if($data['role'] == '1'){echo 'selected';} ?>>Ornithologist</option>
                   </select>
                 </div>
-              </div>  
+              </div> 
+              <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                  <label for="register_organization_name"><b>Company or organization name:</b></label>
+                  <input type="text" class="form-control" name="register_orginization_name" value="<?php echo $data['organization_name']; ?>" placeholder="Enter company/organization name" required>
+                </div>
+                <div class="form-group col-md-6 mb-3">
+                  <label for="register_organization_number"><b>Your company or organization number:</b></label>
+                  <input type="text" class="form-control" name="register_orginization_number" value="<?php echo $data['organization_number']; ?>" placeholder="Enter company/organization number"required>
+                </div>
+              </div> 
               <div style="float:right">
                 <button type="submit" name="register" class="btn btn-custom">Sign up</button>
                 <button type="reset" class="btn btn-custom" onclick="location.href='<?php echo URLROOT; ?>/'" >Back</button>

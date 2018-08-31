@@ -20,6 +20,8 @@
                     'password' => trim($_POST['register_password']),
                     'confirm_password' => trim($_POST['register_confirm_password']),
                     'role' => $_POST['register_role'],
+                    'organization_name' => trim($_POST['register_organization_name']),
+                    'organization_number' => trim($_POST['register_organization_number']),
                     'error' => '',
                 ];
 
@@ -136,9 +138,9 @@
                 }
 
                 //check user approved
-                // if(empty($data['error']) && !$this->user_model->check_approved($data['email'])){
-                //     $data['error'] = "Your account has not been approved by an admin yet. We will email you when your account has been approved/rejected.";
-                // }
+                if(empty($data['error']) && !$this->user_model->check_approved($data['email'])){
+                    $data['error'] = "Your account has not been approved by an admin yet. We will email you when your account has been approved/rejected.";
+                }
 
                 //Ensure error is empty
                 if(empty($data['error'])){

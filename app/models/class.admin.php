@@ -73,9 +73,34 @@
             }
         }
 
+        //Return all admins
+        public function get_all_admins(){
+            $this->db->query('SELECT * FROM admins');
+
+            if($row = $this->db->result_set()){
+                return $row;
+            }
+            else{
+                return false;
+            }
+        }
+        
+        //Return all users
+        public function get_all_users(){
+            $this->db->query('SELECT * FROM users WHERE removed = :number');
+            $this->db->bind(':number', '0');
+
+            if($row = $this->db->result_set()){
+                return $row;
+            }
+            else{
+                return false;
+            }
+        }
+
         //Return amount of pending users
         public function amount_pending_users(){
-            $this->db->query('SELECT * FROM users WHERE approved = :number');
+            $this->db->query('SELECT * FROM users WHERE approved = :number AND removed = :number');
             $this->db->bind(':number', '0');
             $this->db->single();
 
@@ -103,7 +128,7 @@
 
         //Return amount of ornothologists
         public function amount_ornothologists(){
-            $this->db->query('SELECT * FROM users WHERE user_role = :number');
+            $this->db->query('SELECT * FROM users WHERE user_role = :number AND removed != :number');
             $this->db->bind(':number', '1');
             $this->db->single();
 
@@ -117,7 +142,7 @@
 
         //Return amount of wind farms
         public function amount_wind_farms(){
-            $this->db->query('SELECT * FROM users WHERE user_role = :number');
+            $this->db->query('SELECT * FROM users WHERE user_role = :number AND removed = :number');
             $this->db->bind(':number', '0');
             $this->db->single();
 
@@ -158,8 +183,23 @@
         }
 
         //rejects a user
-        public function remove_user($user){
+        public function reject_user($user){
             $this->db->query("DELETE FROM users WHERE user_id = :id");
+            $this->db->bind(':id', $user);
+
+            //execute
+            if($this->db->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        //removes a user
+        public function remove_user($user){
+            $this->db->query("UPDATE users SET removed = :removed WHERE user_id = :id");
+            $this->db->bind(':removed', '1');
             $this->db->bind(':id', $user);
 
             //execute

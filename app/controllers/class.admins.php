@@ -23,14 +23,14 @@
                 //Init data
                 $data =[
                     'view' => $view,
-
+                    'users' => $this->admin_model->get_all_users(),
                 ];  
             }
             else if($view == 'admin'){
                 //Init data
                 $data =[
                     'view' => $view,
-
+                    'admins' => $this->admin_model->get_all_admins(),
                 ];  
             }
             else{
@@ -103,11 +103,19 @@
         }
 
         //rejects a user
-        public function remove_user($user){
-            $this->admin_model->remove_user($user);
+        public function reject_user($user){
+            $this->admin_model->reject_user($user);
             
             set_message('User rejected succesfully.');
             redirect('/admins/users');
+        }
+
+        //remove a user
+        public function remove_user($user){
+            $this->admin_model->remove_user($user);
+            
+            set_message('User removed succesfully.');
+            redirect('/admins/users_content');
         }
     }
 ?>

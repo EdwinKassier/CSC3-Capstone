@@ -2,7 +2,7 @@
 <html>
     <body>
 
-    <div style="padding-right:30px;" >
+    <div>
         <div id="googleMap" style="height:500px;"></div>
     </div>
 

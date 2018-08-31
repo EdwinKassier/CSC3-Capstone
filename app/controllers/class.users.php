@@ -447,5 +447,51 @@
         public function registered(){
             $this->view('users/registered');
         }
+
+        //create dress ad
+        function upload_csv($role){
+
+            if(isset($_POST['submit_csv'])){
+                $query = query("SHOW TABLE STATUS LIKE 'dresses'");
+                confirm($query);
+
+                while($row = fetch_array($query)){
+                    $max = $row['Auto_increment'];
+                }
+
+                $upload_directory = $_SESSION['user_id'] . DS . $max . DS;
+
+
+                if($_FILES['csvFile1']['size'] !== 0 && $_FILES['csvFile1']['error'] === 0){
+                    $file_name1 = $_FILES['csvFile1']["name"];
+                    $file_size1 = $_FILES['csvFile1']["size"];
+                    $file_tmp_name1 = $_FILES['csvFile1']["tmp_name"];
+
+                }
+                else if($_FILES['csvFile1']['error'] === 1 || $_FILES['csvFile1']['error'] === 2 ) {
+                    set_message("CSV file 1 is larger than 2MB. Please upload an image smaller than 2MB.");
+                    redirect("lease_dress");
+                }
+
+
+
+                else{
+
+                    $tmpName = $_FILES['csv']['tmp_name'];
+                    $csvAsArray = array_map('str_getcsv', file($tmpName));
+
+                    for ($x = 1; $x <= sizeof($csvAsArray) - 1; $x++) {
+                        /* $query = "INSERT INTO sites (user_id, latitude, longitude, role) ";
+                         $query .= "VALUES('{$_SESSION['user_id']}','{$csvAsArray[$x][0]}','{$csvAsArray[$x][0]}','{$role}')";
+                         $query = query($query);
+                         confirm($query);*/
+                    }
+
+                    set_message("Your csv was successfull uploaded and is now being processed.");
+                    redirect("dress_email_function.php?page=1");
+                }
+
+            }
+        }
     }
 ?>

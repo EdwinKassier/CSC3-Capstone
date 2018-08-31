@@ -16,30 +16,40 @@
 
     <hr>
         <table class="table table-striped" id="adminTable">
-        <thead style="background-color:lightgray">
-                 <tr>
-                     <th>ID</th>
-                     <th>Name</th>
-                     <th>Surname</th>
-                     <th>Email</th>
-                     <th>Mobile number</th>
-                     <th></th>
-                 </tr>
-             </thead>
-             <tbody>
-                 <tr>
-                     <td>{$id}</td>
-                     <td>{$firstname}</td>
-                     <td>{$lastname}</td>
-                     <td>{$email}</td>
-                     <td>{$mobile_number}</td>
-                     <td>
+            <thead style="background-color:lightgray">
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Email</th>
+                        <th>Mobile number</th>
+                        <th></th>
+                    </tr>
+            </thead>
+            <tbody>
+            <?php 
+            if(!empty($data['admins'])):
+                foreach ($data['admins'] as $row):
+            ?>
+                <tr>
+                    <td><?php echo $row->admin_id; ?></td>
+                    <td><?php echo $row->admin_username; ?></td>
+                    <td><?php echo $row->admin_name; ?></td>
+                    <td><?php echo $row->admin_surname; ?></td>
+                    <td><?php echo $row->admin_email; ?></td>
+                    <td><?php echo $row->admin_mobile_number; ?></td>
+                    <td>
                         <div class="col" style="float:right;padding-bottom:5px;">
-                            <button type="submit" class="btn btn-primary" onclick="location.href='<?php echo URLROOT; ?>/admins/edit_admin/{$id}'">Edit</button>
-                            <button type="button" class="btn btn-danger" onclick="location.href='<?php echo URLROOT; ?>/admins/remove_admin/{$id}'">Delete</button>
+                            <button type="submit" class="btn btn-primary" onclick="location.href='<?php echo URLROOT; ?>/admins/edit_admin/<?php echo $row->admin_id; ?>'">Edit</button>
+                            <button type="button" class="btn btn-danger" onclick="location.href='<?php echo URLROOT; ?>/admins/remove_admin/<?php echo $row->admin_id; ?>'" <?php if($row->admin_id == $_SESSION['admin_id']){echo 'style="display: none;"';} ?>>Delete</button>
                         </div>
                     </td>
                 </tr>
+                <?php
+                    endforeach;
+                endif;
+                ?>
             </tbody>
         </table>
 

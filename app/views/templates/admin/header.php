@@ -6,7 +6,8 @@
     <link href="<?php echo URLROOT; ?>/resources/admin/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo URLROOT; ?>/resources/admin/css/sb-admin.css" rel="stylesheet">
     <link href="<?php echo URLROOT; ?>/resources/admin/css/plugins/morris.css" rel="stylesheet">
-    <link href="<?php echo URLROOT; ?>/resources/admin/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" crossorigin="anonymous">
+    <link href="<?php echo URLROOT; ?>/resources/css/blackeagle.css" rel="stylesheet">
     <script src="<?php echo URLROOT; ?>/resources/admin/js/jquery.js"></script>
     <script src="<?php echo URLROOT; ?>/resources/admin/js/bootstrap.min.js"></script>
     <script src="<?php echo URLROOT; ?>/resources/admin/js/plugins/morris/raphael.min.js"></script>
@@ -18,20 +19,3 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4O-eDAp4dKR7U4E3hnxCO2psx7xnnzUU&callback=myMap"></script>
-
-    <style>
-        #myInput {
-            width: 100%;
-            font-size: 16px;
-            padding: 12px 20px 12px 40px;
-            border: 1px solid #ddd;
-            margin-bottom: 12px;
-            border-radius: 20px;
-        }
-
-        #myInput:focus{
-            outline:0;
-            border:1px solid deepskyblue;
-        }
-    </style>

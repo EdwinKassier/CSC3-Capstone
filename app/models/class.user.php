@@ -222,5 +222,36 @@
                 return false;
             }
         }
+
+        //add a pin to the database
+        public function add_pin($role, $latitude, $longitude, $name){
+            $this->db->query('INSERT INTO pins (user_id, latitude, longitude, role, name) VALUES(:id,:latitude,:longitude,:role, :name)');
+            $this->db->bind(':id', $_SESSION['user_id']);
+            $this->db->bind(':latitude', $latitude);
+            $this->db->bind(':longitude', $longitude);
+            $this->db->bind(':role', $role);
+            $this->db->bind(':name', $name);
+
+            if($this->db->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        //get all pins of a user
+        public function get_pins($role){
+            $this->db->query('SELECT * FROM pins WHERE role= :role AND user_id= :id');
+            $this->db->bind(':id', $_SESSION['user_id']);
+            $this->db->bind(':role', $role);
+
+            if($row = $this->db->result_set()){
+                return $row;
+            }
+            else{
+                return false;
+            }
+        }
     }
 ?>

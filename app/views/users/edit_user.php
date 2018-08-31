@@ -59,7 +59,6 @@
                 </div>
                 <div style="float:right;">
                     <button type="submit" name="update" class="btn btn-custom">Update</button>
-                    <button class="btn btn-custom" onclick="location.href='<?php if($_SESSION['user_role'] == 0){ echo URLROOT . '/users/wind_farm_dashboard'; }else if($_SESSION['user_role'] == 1){echo URLROOT . '/users/ornithologist_dashboard';} ?>'" >Back</button>
                 </div>
             </form>
         </main>

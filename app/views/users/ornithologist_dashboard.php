@@ -6,7 +6,7 @@
     <style>
     tbody {
         display:block;
-        height:200px;
+        height:43vh;
         overflow:auto;
     }
     </style>
@@ -30,134 +30,125 @@
                     <input type="text" id="myInput" onkeyup="tableFilter()" placeholder="Search for names.." title="Type in a name">
                     <table class="table table-striped" id="siteTable">
                         <thead>
-                        <tr class = "header">
-                            <td>Site name</td>
-                        </tr>
+                            <tr class = "header">
+                                <td><h4>Site name</h4></td>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td><button class="button-table">Site #1</button></td>
-                        </tr>
-                        <tr>
-                            <td><button class="button-table">Site #2</button></td>
-                        </tr>
-                        <tr>
-                            <td><button class="button-table">Site #3</button></td>
-                        </tr>
-                        <tr>
-                            <td><button class="button-table">Site #4</button></td>
-                        </tr>
-                        <tr>
-                            <td><button class="button-table">Site #5</button></td>
-                        </tr>
-                        <tr>
-                            <td><button class="button-table">Site #6</button></td>
-                        </tr>
-                        <tr>
-                            <td><button class="button-table">Site #7</button></td>
-                        </tr>
-                        <tr>
-                            <td><button class="button-table">Site #8</button></td>
-                        </tr>
+                        <?php 
+                        if(!empty($data['sites'])):
+                            foreach ($data['sites'] as $row):
+                        ?>
+                            <tr>
+                                <td><button class="button-table"><?php echo $row->name; ?></button></td>
+                            </tr>
+                        <?php 
+                            endforeach;
+                        endif;    
+                        ?>
                         </tbody>
                     </table>
                 <hr>
                 <h3>Add sites</h3>
                 <hr>
-                <button type="button" style="margin-bottom:10px;" class="col-md-12 btn btn-custom" data-toggle="modal" data-target="#ScoutModal">Add scouting site  <i class="fas fa-flag" style="color:red;"></i></button>
-                <button type="button" style="margin-bottom:10px;" class="col-md-12 btn btn-custom" data-toggle="modal" data-target="#NestModal">Add nest site  <i class="fa fa-map-pin" style="color:red;"></i></button>
+                <button type="button" style="margin-bottom:10px;" class="col-md-12 btn btn-custom" data-toggle="modal" data-target="#ScoutModal">Add scouting site <i class="fas fa-flag" style="color:red;"></i></button>
+                <button type="button" style="margin-bottom:10px;" class="col-md-12 btn btn-custom" data-toggle="modal" data-target="#NestModal">Add nest site <i class="fa fa-map-pin" style="color:red;"></i></button>
             </div>
             <div class="col-md-9" style="padding-right:30px;">
                 <div id="googleMap" style="height:90%;"></div>
             </div>
 
             <div class="modal fade" id="NestModal">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content" style="height:70vh;">
+                <form action="<?php echo URLROOT; ?>/users/ornithologist_dashboard/0" method="post" enctype="multipart/form-data">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content" style="height:70vh;">
 
-                        <div class="modal-header" style="height: 100%;">
-                            <h4 class="modal-title">Add nest site</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
+                            <div class="modal-header" style="height: 100%;">
+                                <h4 class="modal-title">Add nest site</h4>
+                                <button type="reset" class="close" data-dismiss="modal">&times;</button>
+                            </div>
 
-                        <div class="modal-body">
-                            <div class="row modal-container">
-                                <div class="col-md-6">
-                                    <h5>Many</h5>
-                                    <div class="custom-file" style="padding: 30px;">
-                                        <input id="nests" type="file" accept=".xls,.xlsx,.csv" class="custom-file-input">
-                                        <label for="nests" class="custom-file-label text-truncate">Choose file...(.xls,.xslx,.csv)</label>
+                            <div class="modal-body">
+                                <div class="row modal-container">
+                                    <div class="col-md-6">
+                                        <h5>Many</h5>
+                                        <div class="custom-file" style="padding: 30px;">
+                                            <input name="pins" id="pins" type="file" accept=".csv" class="custom-file-input">
+                                            <label for="pins" class="custom-file-label text-truncate">Choose file...(.csv)</label>
+                                        </div>
+                                        <br><br>
                                     </div>
-                                    <br><br>
-                                    </form>
-                                </div>
-                                <div class="col-md-6">
-                                    <h5>One</h5>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="lat" placeholder="Latitude"
-                                               style="width:100%;">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="lat" placeholder="Longitude"
-                                               style="width:100%;">
+                                    <div class="col-md-6">
+                                        <h5>One</h5>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="latitude" placeholder="Latitude" style="width:100%;">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="longitude" placeholder="Longitude" style="width:100%;">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer" style="height: 100%;">
-                            <i class="fas fa-info-circle" data-toggle="tooltip" title="Need some help? You can find it in the FAQ section!" id='example' style=" position: absolute; left: 30;"></i>
-                            <button type="button" class="btn btn-custom" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-custom" data-dismiss="modal">Upload</button>
+                            <div class="modal-footer" style="height: 100%;">
+                                <i class="fas fa-info-circle" data-toggle="tooltip" title="Need some help? You can find it in the FAQ section!" id='example' style=" position: absolute; left: 30;"></i>
+                                <button type="reset" class="btn btn-custom" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-custom">Upload</button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form> 
             </div>
+            
 
             <div class="modal fade" id="ScoutModal">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content" style="height:70vh;">
+                <form action="<?php echo URLROOT; ?>/users/ornithologist_dashboard/1" method="post" enctype="multipart/form-data">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content" style="height:70vh;">
 
-                        <div class="modal-header" style="height: 100%;">
-                            <h4 class="modal-title">Add scouting site</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="row modal-container">
-                                <div class="col-md-6">
-                                    <h5>Many</h5>
-                                    <div class="custom-file" style="padding: 30px;">
-                                        <input id="scoutings" type="file" accept=".xls,.xlsx,.csv" class="custom-file-input">
-                                        <label for="scoutings" class="custom-file-label text-truncate">Choose file...(.xls,.xslx,.csv)</label>
+                            <div class="modal-header" style="height: 100%;">
+                                <h4 class="modal-title">Add scouting site</h4>
+                                <button type="reset" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="modal-container">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h5>Site name</h5>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="name" placeholder="Site name" style="width:100%;" required>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <br><br>
-                                    </form>
-                                </div>
-                                <div class="col-md-6">
-                                    <h5>One</h5>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="lat" placeholder="Latitude"
-                                               style="width:100%;">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="lat" placeholder="Longitude"
-                                               style="width:100%;">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h5>Many</h5>
+                                            <div class="custom-file" style="padding: 30px;">
+                                                <input name="pins" id="pins" type="file" accept=".csv" class="custom-file-input">
+                                                <label for="pins" class="custom-file-label text-truncate">Choose file...(.csv)</label>
+                                            </div>
+                                            <br><br>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h5>One</h5>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="latitude" placeholder="Latitude" style="width:100%;">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="longitude" placeholder="Longitude" style="width:100%;">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="modal-footer" style="height: 100%;">
+                                <i class="fas fa-info-circle" data-toggle="tooltip" title="Need some help? You can find it in the FAQ section!" id='example' style=" position: absolute; left: 30;"></i>
+                                <button type="reset" class="btn btn-custom" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-custom">Upload</button>
+                            </div>
                         </div>
-
-                        <div class="modal-footer" style="height: 100%;">
-                            <i class="fas fa-info-circle" data-toggle="tooltip" title="Need some help? You can find it in the FAQ section!" id='example' style=" position: absolute; left: 30;"></i>
-                            <button type="button" class="btn btn-custom" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-custom" data-dismiss="modal">Upload</button>
-                        </div>
-
                     </div>
-                </div>
+                </form> 
             </div>
-
-
 
         </main>
         <br>
@@ -185,15 +176,12 @@
             var map = new google.maps.Map(document.getElementById("googleMap"),var_mapoptions);
 
             <?php
-            $nest_site_array = array("51.3000,-0.120850", "52.3000,-0.120850","53.3000,-0.120850","54.3000,-0.120850");
-            if(sizeof($nest_site_array)!=0) {
-                for ($x = 0; $x <= sizeof($nest_site_array) - 1; $x++) {
-                    echo 'new google.maps.Marker({position:new google.maps.LatLng(' . $nest_site_array[$x][0] . ',' . $nest_site_array[$x][1] . ' )}).setMap(map);';
+            if(!empty($data['nests'])) {
+                foreach ($data['nests'] as $row) {
+                    echo 'new google.maps.Marker({position:new google.maps.LatLng(' . $row->latitude . ',' . $row->longitude . ' )}).setMap(map);';
                 }
             }
             ?>
-
-
         }
 
         function tableFilter() {

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
-    <body>
+    <body style="overflow-y:hidden">
 
-    <div class ="row" style="width:100%;height:100%;">
-        <div id="googleMap" style="width:103%;height:88vh;"></div>
+    <div class ="row" style="width:100%;height:90vh;">
+        <div id="googleMap" style="width:102%;height:100%;"></div>
     </div>
 
     <script>

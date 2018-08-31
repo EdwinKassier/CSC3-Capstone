@@ -10,7 +10,7 @@
         overflow:auto;
     }
     </style>
-    <body>
+    <body style="overflow-y:hidden">
 
     <?php
         if(!is_user_logged_in()){

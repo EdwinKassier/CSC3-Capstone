@@ -3,13 +3,13 @@
     <?php include(TEMPLATE_FRONT . DS . "header.php"); ?>
 </head>
 <style>
-    tbody {
+    table {
         display:block;
-        height:300px;
+        height:70%;
         overflow:auto;
     }
 </style>
-<body>
+<body style="overflow-y:hidden">
 
 <?php
     if(!is_user_logged_in()){
@@ -28,7 +28,7 @@
         
         <div class="row">
             <div class="col-md-8">
-                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+                <input type="text" id="myInput" onkeyup="tableFilter()" placeholder="Search for names.." title="Type in a name">
             </div>
             <div class="col-md-4">
                 <button type="button" class="col-md-4 btn btn-custom" data-toggle="modal" data-target="#Modal" style="float:right;">Add <i class="fas fa-plus"></i></button>
@@ -39,60 +39,26 @@
         <div class="container">
             <table class="table table-striped" id="siteTable">
                 <thead>
-                <tr class = "header">
-                    <td>Site name</td>
-                    <td></td>
-                </tr>
+                    <tr class="header">
+                        <td><h4>Site name</h4></td>
+                        <td></td>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Site #1</td>
-                    <td>
-                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#alertModal" style="float:right;">Generate report</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Site #2</td>
-                    <td>
-                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#alertModal" style="float:right;">Generate report</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Site #3</td>
-                    <td>
-                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#alertModal" style="float:right;">Generate report</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Site #4</td>
-                    <td>
-                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#alertModal" style="float:right;">Generate report</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Site #5</td>
-                    <td>
-                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#alertModal" style="float:right;">Generate report</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Site #6</td>
-                    <td>
-                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#alertModal" style="float:right;">Generate report</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Site #7</td>
-                    <td>
-                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#alertModal" style="float:right;">Generate report</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Site #8</td>
-                    <td>
-                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#alertModal" style="float:right;">Generate report</button>
-                    </td>
-                </tr>
+                <?php 
+                if(!empty($data['reports'])):
+                    foreach ($data['reports'] as $row):
+                ?>
+                    <tr>
+                        <td><?php echo $row->report_name; ?></td>
+                        <td>
+                            <button onclick="location.href='<?php echo URLROOT; ?>/users/download_report/<?php echo $row->report_id; ?>'" type="button" class="btn btn-custom" data-toggle="modal" data-target="#alertModal" style="float:right;">Generate report</button>
+                        </td>
+                    </tr>
+                <?php 
+                    endforeach;
+                endif;    
+                ?>
                 </tbody>
             </table>
             <hr>
@@ -195,7 +161,7 @@
         $(this).next('.custom-file-label').addClass("selected").html(fileName);
     });
 
-    function myFunction() {
+    function tableFilter() {
         var input, filter, table, tr, td, i;
         input = document.getElementById("myInput");
         filter = input.value.toUpperCase();

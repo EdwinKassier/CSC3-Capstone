@@ -365,7 +365,21 @@
         }
 
         public function wind_farm_dashboard(){
-            $this->view('users/wind_farm_dashboard');
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                
+                $data =[
+                    'reports' => $this->user_model->get_reports(),
+                ];
+
+                //Sanitize POST data
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            }
+            else{
+                $data =[
+                    'reports' => $this->user_model->get_reports(),
+                ];
+                $this->view('users/wind_farm_dashboard');
+            }
         }
 
         public function forgot_password($code = null){

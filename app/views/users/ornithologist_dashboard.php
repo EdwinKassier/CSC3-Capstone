@@ -4,9 +4,9 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4O-eDAp4dKR7U4E3hnxCO2psx7xnnzUU&callback=myMap"></script>
     </head>
     <style>
-    tbody {
+    table {
         display:block;
-        height:43vh;
+        height:55%;
         overflow:auto;
     }
     </style>

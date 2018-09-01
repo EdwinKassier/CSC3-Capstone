@@ -253,5 +253,18 @@
                 return false;
             }
         }
+
+        //get all reports of a user
+        public function get_reports(){
+            $this->db->query('SELECT * FROM reports WHERE user_id= :id');
+            $this->db->bind(':id', $_SESSION['user_id']);
+
+            if($row = $this->db->result_set()){
+                return $row;
+            }
+            else{
+                return false;
+            }
+        }
     }
 ?>

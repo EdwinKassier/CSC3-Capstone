@@ -12,8 +12,9 @@
     <!-- Main Body -->
     <br>
     <main role="main" class="container" id="body">
-        <h3 class="card-title">About the Black Eagle Project</h3>
-        <div class="card card-body" style="text-align: justify;">              
+        <h4>About the Black Eagle Project</h4>
+        <hr>
+        <div style="text-align: justify;">              
             <p>
                 The Black Eagle Project was established in 2011 in collaboration with the Animal
                 Demography Unit at the University of Cape Town. The CLT provided a 2year scholarship to PhD
@@ -49,7 +50,7 @@
             </p>
             <p>For more information, please visit our <a href="http://blackeagleproject.blogspot.com/" target="_blank">blogspot website.</a></p>
         </div>
-        <br>
+        <hr>
         <button class="btn btn-custom" style="float:right" onclick="location.href='<?php echo URLROOT; ?>'">Back</button>
     </main>
     <br>

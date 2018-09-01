@@ -184,15 +184,55 @@
                 }
             }
             else{
-                //Init data
-                $data =[
-                    'view' => $view,
-                    'amount_pending_users' => $this->admin_model->amount_pending_users(),
-                    'amount_nests' => $this->admin_model->amount_nests(),
-                    'amount_ornothologists' => $this->admin_model->amount_ornothologists(),
-                    'amount_wind_farms' => $this->admin_model->amount_wind_farms(),
-                    'amount_admins' => $this->admin_model->amount_admins(),
-                ];  
+                if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                    //Sanitize POST data
+                    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+                    $file = 'model';
+    
+                    //Init data
+                    $data =[
+                        'view' => $view,
+                        'amount_pending_users' => $this->admin_model->amount_pending_users(),
+                        'amount_nests' => $this->admin_model->amount_nests(),
+                        'amount_ornothologists' => $this->admin_model->amount_ornothologists(),
+                        'amount_wind_farms' => $this->admin_model->amount_wind_farms(),
+                        'amount_admins' => $this->admin_model->amount_admins(),
+                    ];
+
+                    if(empty($data['error']) && $_FILES[$file]['size'] == 0){
+                        $data['error'] = "Please choose a file.";
+                    }
+
+                    if(empty($data['error']) && $_FILES[$file]['size'] > 2000000){
+                        $data['error'] = "The chosen file is too large.";
+                    }
+                    
+                    if(empty($data['error'])){   
+                        $file_name = $_FILES['model']["name"];
+                        $file_tmp_name = $_FILES['model']["tmp_name"];
+                        $file_extension = strtolower(end(explode('.', $file_name)));
+                        $upload = URLROOT . DS . "resources/user_files/model/model." . $file_extension;
+
+                        if(file_exists($upload)){
+                            unlink($upload);
+                        }
+                        move_uploaded_file($file_tmp_name, $upload);
+
+                        set_message("The model has been changed succesfully.");
+                        redirect('admins/admin');
+                    }
+                }
+                else{
+                    //Init data
+                    $data =[
+                        'view' => $view,
+                        'amount_pending_users' => $this->admin_model->amount_pending_users(),
+                        'amount_nests' => $this->admin_model->amount_nests(),
+                        'amount_ornothologists' => $this->admin_model->amount_ornothologists(),
+                        'amount_wind_farms' => $this->admin_model->amount_wind_farms(),
+                        'amount_admins' => $this->admin_model->amount_admins(),
+                    ];
+                }
             }
             
             $this->view('admins/index', $data);
@@ -202,7 +242,7 @@
             $data = $_SESSION['data'];
             unset($_SESSION['data']);
             //check email does exist in db already
-            if(empty($data['error']) && !$this->admin_model->find_admin_by_email($data['email'])){
+            if(empty($data['error']) && !$this->admin_model->find_admin_by_username($data['email'])){
                 $data['error'] = "The entered email does not exist.";
             }
 
@@ -274,6 +314,13 @@
             
             set_message('Admin removed succesfully.');
             redirect('/admins/admin');
+        }
+
+        //Changes the saved model
+        public function change_model(){
+            
+            set_message('Model changed succesfully.');
+            redirect('/admins');
         }
     }
 ?>

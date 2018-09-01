@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 31, 2018 at 11:46 PM
+-- Generation Time: Sep 01, 2018 at 03:34 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -96,6 +96,19 @@ INSERT INTO `randsalt` (`randSalt`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `reports`
+--
+
+CREATE TABLE `reports` (
+  `report_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `report_name` varchar(255) NOT NULL,
+  `report_path` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -141,6 +154,12 @@ ALTER TABLE `pins`
   ADD PRIMARY KEY (`pin_id`);
 
 --
+-- Indexes for table `reports`
+--
+ALTER TABLE `reports`
+  ADD PRIMARY KEY (`report_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -161,6 +180,12 @@ ALTER TABLE `admins`
 --
 ALTER TABLE `pins`
   MODIFY `pin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `reports`
+--
+ALTER TABLE `reports`
+  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`

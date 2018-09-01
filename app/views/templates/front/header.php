@@ -18,16 +18,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?php echo SITENAME; ?></title>
-<meta name="description" content="">
-<meta name="keywords" content="">
+<meta name="description" content="The Black Eagle Project aims to assess the effects of land use, in particular agriculture, on the diet and hunting habits of the Black eagle.">
+<meta name="keywords" content="Black Eagle, BlackEagle Project, South Africa, Subsaharan Africa, Verreaux’s eagle, Aquila verreauxii">
 <meta name="author" content="Charl Ritter, Edwin Kassier & Josh Redelinghuys">
 <meta property="og:title" content="<?php echo SITENAME; ?>" />
-<meta property="og:description" content="" />
-<!-- <meta property="og:url" content="" /> -->
-<!-- <meta property="og:image" content="" /> -->
+<meta property="og:description" content="The Black Eagle Project aims to assess the effects of land use, in particular agriculture, on the diet and hunting habits of the Black eagle." />
+<meta property="og:url" content="<?php echo URLROOT; ?>" />
+<meta property="og:image" content="<?php echo URLROOT; ?>/resources/images/square_logo.jpg" />
 
 <link rel="shortcut icon" type="image/x-icon" href="<?php echo URLROOT; ?>/resources/images/favicon.ico" />
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-<link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" crossorigin="anonymous">
 <link href="<?php echo URLROOT; ?>/resources/css/blackeagle.css" rel="stylesheet">

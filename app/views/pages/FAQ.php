@@ -12,6 +12,9 @@
     <!-- Main Body -->
     <br>
     <main role="main" class="container" id="body">
+        <h4>FAQ</h4>
+        <hr>
+        <br><br>
         <h3 class="card-title">How do i use the add scouting/nest site functionality?</h3>
         <div class="card card-body" style="text-align: justify;">
             <p>
@@ -34,6 +37,7 @@
 
         </div>
 
+        <br><br>
         <h3 class="card-title">How do edit my user details?</h3>
         <div class="card card-body" style="text-align: justify;">
             <p>
@@ -55,7 +59,6 @@
             <img src="<?php echo URLROOT; ?>/resources/images/excel_example.png" alt="Modal example">
 
         </div>
-
     </main>
     <br>
 

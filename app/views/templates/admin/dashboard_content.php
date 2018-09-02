@@ -84,20 +84,17 @@
     <hr>
     <h2>Update the model</h2>
     <hr>
-    <h4 class="alert-danger" style="text-align:center;">WARNING: Every time you upload a new model the previous one will
-        be overwritten</h4>
+    <h4 class="alert-danger" style="text-align:center;">WARNING: Every time you upload a new model the previous one will be overwritten</h4>
     <form action="<?php echo URLROOT; ?>/admins/dashboard_content" method="post" enctype="multipart/form-data">
-        <div class="input-group">
+        <div class="col-md-6 input-group">
             <label class="input-group-btn">
-                    <span class="btn btn-primary">
-                        Browse&hellip; <input type="file" style="display: none;" multiple>
-                    </span>
+                    <span class="btn btn-primary">Browse&hellip; <input type="file" accept=".rdt"  style="display: none;" multiple></span>
             </label>
-            <input type="text" id="model" class="form-control" readonly>
+            <input type="text" name="model" id="model" class="form-control" readonly>
         </div>
         <br>
-        <div>
-            <button type="submit" class="btn btn-success" style="width:10%;">Upload</button>
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-success">Upload</button>
         </div>
     </form>
 </div>

@@ -53,20 +53,18 @@
                     ];
 
                     //check username doesn't exist in db already
-                    if(empty($data['error']) && $this->admin_model->find_admin_by_username($data['username'])){
+                    if($this->admin_model->find_admin_by_username($data['username'])){
                         $data['error'] = "The entered username already exists.";
                     }
-
                     //check mobile number is the correct length
-                    if(empty($data['error']) && strlen($data['mobile_number']) != 10){
+                    else if(strlen($data['mobile_number']) != 10){
                         $data['error'] = 'The mobile number is not the correct amount of numbers.';
                     }
-
                     //check passwords match or if too short
-                    if(empty($data['error']) && strlen($data['password']) < 6){
+                    else if(strlen($data['password']) < 6){
                         $data['error'] = "The password is too short. Passwords must at least be 6 characters long.";
                     }
-                    else if(empty($data['error']) && $data['password'] != $data['confirm_password']){
+                    else if($data['password'] != $data['confirm_password']){
                         $data['error'] = 'The passwords do not match.';
                     }
 
@@ -129,10 +127,10 @@
                     $confirm_password = $data['confirm_password'];
                     $username = $data['username'];
         
-                    if(empty($data['error']) && strlen($mobile_number) != 10){
+                    if(strlen($mobile_number) != 10){
                         $data['error'] = "Mobile number must be an actual number.";
                     }
-                    if(empty($data['error']) && $password !== $confirm_password){
+                    else if($password !== $confirm_password){
                         $data['error'] = "The entered passwords do not match.";
                         if(strlen($password) < 6){
                             $data['error'] = "Your password is too short. Passwords must at least be 6 characters long.";
@@ -140,7 +138,7 @@
                     }
     
                     $row = $this->admin_model->check_new_username_vs_old_username($username, $data['id']);
-                    if(empty($data['error']) && $row != 'true' && $this->admin_model->find_admin_by_username($username)){
+                    if($row != 'true' && $this->admin_model->find_admin_by_username($username)){
                         $data['error'] = "Your new username address is already registered.";
                     }
                     
@@ -199,18 +197,25 @@
                         'amount_admins' => $this->admin_model->amount_admins(),
                     ];
 
-                    if(empty($data['error']) && $_FILES[$file]['size'] == 0){
-                        $data['error'] = "Please choose a file.";
+                    $file_extensions = ['rdt'];
+
+                    if($_FILES[$file]['size'] !== 0 && $_FILES[$file]['error'] === 0){
+                        $file_extension = strtolower(end(explode('.', $file_name)));
                     }
 
-                    if(empty($data['error']) && $_FILES[$file]['size'] > 2000000){
-                        $data['error'] = "The chosen file is too large.";
+                    if($_FILES[$file]['size'] == 0){
+                        $data['error'] = "Please choose a file.";
+                    }
+                    else if($_FILES[$file]['error'] === 1 || $_FILES[$file]['error'] === 2 ){
+                        $data['error'] = "The chosen file is larger than 2MB. Please upload a file smaller than 2MB.";
+                    }
+                    else if(!in_array($file_extension, $file_extensions)) {
+                        $data['error'] = "The file has an extension which is not allowed. Please upload an rdt file.";
                     }
                     
                     if(empty($data['error'])){   
                         $file_name = $_FILES['model']["name"];
                         $file_tmp_name = $_FILES['model']["tmp_name"];
-                        $file_extension = strtolower(end(explode('.', $file_name)));
                         $upload = URLROOT . DS . "resources/user_files/model/riskmod." . $file_extension;
 
                         if(file_exists($upload)){
@@ -242,7 +247,7 @@
             $data = $_SESSION['data'];
             unset($_SESSION['data']);
             //check email does exist in db already
-            if(empty($data['error']) && !$this->admin_model->find_admin_by_username($data['email'])){
+            if(!$this->admin_model->find_admin_by_username($data['email'])){
                 $data['error'] = "The entered email does not exist.";
             }
 

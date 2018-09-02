@@ -26,20 +26,18 @@
                 ];
 
                 //check email doesn't exist in db already
-                if(empty($data['error']) && $this->user_model->find_user_by_email($data['email'])){
+                if($this->user_model->find_user_by_email($data['email'])){
                    $data['error'] = "The entered email already exists.";
                 }
-
                 //check mobile number is the correct length
-                if(empty($data['error']) && strlen($data['mobile_number']) != 10){
+                else if(strlen($data['mobile_number']) != 10){
                     $data['error'] = 'Your mobile number is not the correct amount of numbers.';
                 }
-
                 //check passwords match or if too short
-                if(empty($data['error']) && strlen($data['password']) < 6){
+                else if(strlen($data['password']) < 6){
                     $data['error'] = "Your password is too short. Passwords must at least be 6 characters long.";
                 }
-                else if(empty($data['error']) && $data['password'] != $data['confirm_password']){
+                else if($data['password'] != $data['confirm_password']){
                     $data['error'] = 'Your passwords do not match.';
                 }
 
@@ -132,17 +130,15 @@
                 }
 
                 //check email does exist in db already
-                if(empty($data['error']) && !$this->user_model->find_user_by_email($data['email'])){
+                if(!$this->user_model->find_user_by_email($data['email'])){
                     $data['error'] = "The entered email does not exist.";
                 }
-
                 //check email verified
-                if(empty($data['error']) && !$this->user_model->check_verified($data['email'])){
+                else if(!$this->user_model->check_verified($data['email'])){
                     $data['error'] = "The entered email has not been verified yet. Please check your inbox and verify your email.";
                 }
-
                 //check user approved
-                if(empty($data['error']) && !$this->user_model->check_approved($data['email'])){
+                else if(!$this->user_model->check_approved($data['email'])){
                     $data['error'] = "Your account has not been approved by an admin yet. We will email you when your account has been approved/rejected.";
                 }
 
@@ -321,7 +317,6 @@
                     $name = null;
                 }
                 
-
                 if($_FILES[$file]['size'] == 0 && empty($latitude) && empty($longitude)){
                     set_message('Please enter either a csv or the latitude and longitude.');
                     $this->view('users/ornithologist_dashboard', $data);
@@ -337,9 +332,19 @@
                         set_message("Your pin was successfully uploaded.");
                         redirect('users/ornithologist_dashboard', $data);
                     }
-                    else if($_FILES[$file]['size'] !== 0 && empty($latitude) && empty($longitude)){
+                    else if($_FILES[$file]['size'] !== 0 && $_FILES[$file]['error'] === 0 && empty($latitude) && empty($longitude)){
                         $tmp_name = $_FILES[$file]['tmp_name'];
                         $csv_array = array_map('str_getcsv', file($tmp_name));
+
+                        $file_extensions = ['csv'];
+                        $file_extension = strtolower(end(explode('.', $file_name)));
+    
+                        if($_FILES[$file]['error'] === 1 || $_FILES[$file]['error'] === 2 ){
+                            $data['error'] = "The chosen file is larger than 2MB. Please upload a file smaller than 2MB.";
+                        }
+                        else if(!in_array($file_extension, $file_extensions)) {
+                            $data['error'] = "The file has an extension which is not allowed. Please upload an csv file.";
+                        }
 
                         foreach($csv_array as $row) {
                             $row = explode(';', $row[0]);
@@ -372,9 +377,63 @@
                 $data =[
                     'reports' => $this->user_model->get_reports(),
                 ];
+                $_SESSION['message_modal'] = true;
 
                 //Sanitize POST data
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                $shp = 'shp';
+                $shx = 'shx';
+                $dbf = 'dbf';
+                $sbn = 'sbn';
+                $sbx = 'sbx';
+                $prj = 'prj';
+                $name = trim(ucwords($_POST['name']));
+                
+                // if($_FILES[$file]['size'] == 0 && empty($latitude) && empty($longitude)){
+                //     set_message('Please enter either a csv or the latitude and longitude.');
+                //     $this->view('users/ornithologist_dashboard', $data);
+                // }
+                // else{
+                //     if($_FILES[$file]['size'] == 0 && !empty($latitude) && empty($longitude) || empty($file) && empty($latitude) && !empty($longitude)){
+                //         set_message('Please full in both latitude and longitude.');
+                //         $this->view('users/ornithologist_dashboard', $data);
+                //     }
+                //     else if($_FILES[$file]['size'] == 0 && !empty($latitude) && !empty($longitude)){
+                //         $this->user_model->add_pin($role, $latitude, $longitude, $name);
+
+                //         set_message("Your pin was successfully uploaded.");
+                //         redirect('users/ornithologist_dashboard', $data);
+                //     }
+                //     else if($_FILES[$file]['size'] !== 0 && $_FILES[$file]['error'] === 0 && empty($latitude) && empty($longitude)){
+                //         $tmp_name = $_FILES[$file]['tmp_name'];
+                //         $csv_array = array_map('str_getcsv', file($tmp_name));
+
+                //         $file_extensions = ['csv'];
+                //         $file_extension = strtolower(end(explode('.', $file_name)));
+    
+                //         if($_FILES[$file]['error'] === 1 || $_FILES[$file]['error'] === 2 ){
+                //             $data['error'] = "The chosen file is larger than 2MB. Please upload a file smaller than 2MB.";
+                //         }
+                //         else if(!in_array($file_extension, $file_extensions)) {
+                //             $data['error'] = "The file has an extension which is not allowed. Please upload an csv file.";
+                //         }
+
+                //         foreach($csv_array as $row) {
+                //             $row = explode(';', $row[0]);
+                //             if(strtolower($row[0]) != 'latitude' && strtolower($row[1]) != 'longitude'){
+                //                 $this->user_model->add_pin($role, $row[0], $row[1], $name);
+                //             }
+                //         }
+
+                //         set_message("Your pins were successfully uploaded.");
+                //         redirect('users/ornithologist_dashboard', $data);
+                //     }  
+                //     else{
+                //         set_message('Please input only a csv or latitude and longitude, not all at once.');
+                //         $this->view('users/ornithologist_dashboard', $data);
+                //     }
+                // }
             }
             else{
                 $data =[
@@ -400,7 +459,7 @@
                     $email = $data['email'];
 
                     //check email does exist in db already
-                    if(empty($data['error']) && !$this->user_model->find_user_by_email($email)){
+                    if(!$this->user_model->find_user_by_email($email)){
                         $data['error'] = "The entered email does not exist.";
                     }
 

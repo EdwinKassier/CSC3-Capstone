@@ -1,27 +1,23 @@
 <style>
-    .fileUpload {
+    .btn-file {
         position: relative;
         overflow: hidden;
-        margin: 10px;
     }
 
-    .fileUpload input.upload {
+    .btn-file input[type=file] {
         position: absolute;
         top: 0;
         right: 0;
-        margin: 0;
-        padding: 0;
-        font-size: 20px;
-        cursor: pointer;
-        background-color: transparent;
-    }
-
-    input {
-        color: black;
-        border-radius: 5px;
-        background-color: white;
-
-
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
     }
 
 </style>
@@ -88,12 +84,16 @@
     <hr>
     <h2>Update the model</h2>
     <hr>
-    <h4 class="alert-danger" style="text-align:center;">WARNING: Every time you upload a new model the previous one will be overwritten</h4>
+    <h4 class="alert-danger" style="text-align:center;">WARNING: Every time you upload a new model the previous one will
+        be overwritten</h4>
     <form action="<?php echo URLROOT; ?>/admins/dashboard_content" method="post" enctype="multipart/form-data">
-        <input id="model" name="model" placeholder="Choosen File..." disabled="disabled"/>
-        <div class="fileUpload btn btn-primary">
-            <span>Browse</span>
-            <input id="model" name="model" accept=".rds" type="file" class="upload"/>
+        <div class="input-group">
+            <label class="input-group-btn">
+                    <span class="btn btn-primary">
+                        Browse&hellip; <input type="file" style="display: none;" multiple>
+                    </span>
+            </label>
+            <input type="text" id="model" class="form-control" readonly>
         </div>
         <br>
         <div>
@@ -104,7 +104,31 @@
 
 
 <script>
-    document.getElementById("model").onchange = function () {
-        document.getElementById("model").value = this.value;
-    };
+    $(function () {
+
+        // We can attach the `fileselect` event to all file inputs on the page
+        $(document).on('change', ':file', function () {
+            var input = $(this),
+                numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.trigger('fileselect', [numFiles, label]);
+        });
+
+        // We can watch for our custom `fileselect` event like this
+        $(document).ready(function () {
+            $(':file').on('fileselect', function (event, numFiles, label) {
+
+                var input = $(this).parents('.input-group').find(':text'),
+                    log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+                if (input.length) {
+                    input.val(log);
+                } else {
+                    if (log) alert(log);
+                }
+
+            });
+        });
+
+    });
 </script>

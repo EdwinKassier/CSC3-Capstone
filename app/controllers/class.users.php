@@ -52,14 +52,16 @@
 
                     //Register user
                     if($this->user_model->register($data)){
-                        $row = $this->user_model->get_next_id();
-                        $id = $row->Auto_increment - 1;
+                        if($data['role'] == '0'){
+                            $row = $this->user_model->get_next_id();
+                            $id = $row->Auto_increment - 1;
 
-                        $upload_directory = UPLOAD_DIRECTORY . DS . $id . DS;
+                            $upload_directory = UPLOAD_DIRECTORY . DS . $id . DS;
 
-                        if(!is_dir($upload_directory)){
-                            mkdir($upload_directory);
-                        }  
+                            if(!is_dir($upload_directory)){
+                                mkdir($upload_directory);
+                            }  
+                        }
 
                         $len = 50;
                         $email = $data['email'];

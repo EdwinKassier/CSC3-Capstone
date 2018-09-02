@@ -84,27 +84,27 @@
         <h4><strong>Registered ornothologists: <?php echo $data['amount_ornothologists']; ?></strong></h4>
     </div>
 </div>
-
-<h2>Update the model</h2>
-<hr>
-<ol class="breadcrumb">
-    <li class="active">WARNING: Every time you upload a new model the previous one will be overwritten</li>
-</ol>
-<form action="">
-    <input id="uploadFile" placeholder="Choose File..." disabled="disabled"/>
-    <div class="fileUpload btn btn-primary">
-        <span>Browse</span>
-        <input id="uploadBtn" type="file" class="upload"/>
-    </div>
-    <br>
-    <div>
-        <button type="submit" class="btn btn-success" style="width:10%;">Upload</button>
-    </div>
-</form>
+<div class="row">
+    <hr>
+    <h2>Update the model</h2>
+    <hr>
+    <h4 class="alert-danger" style="text-align:center;">WARNING: Every time you upload a new model the previous one will be overwritten</h4>
+    <form action="<?php echo URLROOT; ?>/admins/dashboard_content" method="post" enctype="multipart/form-data">
+        <input id="model" name="model" placeholder="Choosen File..." disabled="disabled"/>
+        <div class="fileUpload btn btn-primary">
+            <span>Browse</span>
+            <input id="model" name="model" accept=".rds" type="file" class="upload"/>
+        </div>
+        <br>
+        <div>
+            <button type="submit" class="btn btn-success" style="width:10%;">Upload</button>
+        </div>
+    </form>
+</div>
 
 
 <script>
-    document.getElementById("uploadBtn").onchange = function () {
-        document.getElementById("uploadFile").value = this.value;
+    document.getElementById("model").onchange = function () {
+        document.getElementById("model").value = this.value;
     };
 </script>

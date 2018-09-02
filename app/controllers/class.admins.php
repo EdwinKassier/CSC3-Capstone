@@ -211,7 +211,7 @@
                         $file_name = $_FILES['model']["name"];
                         $file_tmp_name = $_FILES['model']["tmp_name"];
                         $file_extension = strtolower(end(explode('.', $file_name)));
-                        $upload = URLROOT . DS . "resources/user_files/model/model." . $file_extension;
+                        $upload = URLROOT . DS . "resources/user_files/model/riskmod." . $file_extension;
 
                         if(file_exists($upload)){
                             unlink($upload);

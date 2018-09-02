@@ -115,8 +115,8 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <br><br>
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" name="name" placeholder="Site name" style="width:100%;" required>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="name" placeholder="Site name" style="width:100%;" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">

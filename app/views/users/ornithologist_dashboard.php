@@ -27,6 +27,11 @@
         <br>
         <main role="main" class="row" id="body">
             <div class="col-md-3" style="padding-left:50px;">
+                <h3>Add sites</h3>
+                <hr>
+                <button type="button" style="margin-bottom:10px;" class="col-md-12 btn btn-custom" data-toggle="modal" data-target="#ScoutModal">Add scouting site <i class="fas fa-flag" style="color:red;"></i></button>
+                <button type="button" style="margin-bottom:10px;" class="col-md-12 btn btn-custom" data-toggle="modal" data-target="#NestModal">Add nest site <i class="fa fa-map-pin" style="color:red;"></i></button>
+                <hr>
                     <input type="text" id="myInput" onkeyup="tableFilter()" placeholder="Search for names.." title="Type in a name">
                     <table class="table table-striped" id="siteTable">
                         <thead>
@@ -49,10 +54,6 @@
                         </tbody>
                     </table>
                 <hr>
-                <h3>Add sites</h3>
-                <hr>
-                <button type="button" style="margin-bottom:10px;" class="col-md-12 btn btn-custom" data-toggle="modal" data-target="#ScoutModal">Add scouting site <i class="fas fa-flag" style="color:red;"></i></button>
-                <button type="button" style="margin-bottom:10px;" class="col-md-12 btn btn-custom" data-toggle="modal" data-target="#NestModal">Add nest site <i class="fa fa-map-pin" style="color:red;"></i></button>
             </div>
             <div class="col-md-9" style="padding-right:30px;">
                 <div id="googleMap" style="height:90%;"></div>

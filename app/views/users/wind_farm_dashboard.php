@@ -4,17 +4,17 @@
 </head>
 <style>
     table {
-        display:block;
-        height:70%;
-        overflow:auto;
+        display: block;
+        height: 70%;
+        overflow: auto;
     }
 </style>
 <body style="overflow-y:hidden">
 
 <?php
-    if(!is_user_logged_in()){
-        redirect('');
-    }
+if (!is_user_logged_in()) {
+    redirect('');
+}
 ?>
 
 <div id="wrapper">
@@ -25,13 +25,15 @@
     <!-- Main Body -->
     <br>
     <main role="main" class="container" id="body">
-        
+
         <div class="row">
             <div class="col-md-8">
-                <input type="text" id="myInput" onkeyup="tableFilter()" placeholder="Search for names.." title="Type in a name">
+                <input type="text" id="myInput" onkeyup="tableFilter()" placeholder="Search for names.."
+                       title="Type in a name">
             </div>
             <div class="col-md-4">
-                <button type="button" class="col-md-4 btn btn-custom" data-toggle="modal" data-target="#Modal" style="float:right;">Add <i class="fas fa-plus"></i></button>
+                <button type="button" class="col-md-4 btn btn-custom" data-toggle="modal" data-target="#Modal"
+                        style="float:right;">Add <i class="fas fa-plus"></i></button>
             </div>
         </div>
         <br>
@@ -39,25 +41,28 @@
         <div class="container">
             <table class="table table-striped" id="siteTable">
                 <thead>
-                    <tr class="header">
-                        <td><h4>Site name</h4></td>
-                        <td></td>
-                    </tr>
+                <tr class="header">
+                    <td><h4>Site name</h4></td>
+                    <td></td>
+                </tr>
                 </thead>
                 <tbody>
-                <?php 
-                if(!empty($data['reports'])):
+                <?php
+                if (!empty($data['reports'])):
                     foreach ($data['reports'] as $row):
-                ?>
-                    <tr>
-                        <td><?php echo $row->report_name; ?></td>
-                        <td>
-                            <button onclick="location.href='<?php echo URLROOT; ?>/users/download_report/<?php echo $row->report_id; ?>'" type="button" class="btn btn-custom" data-toggle="modal" data-target="#alertModal" style="float:right;">Generate report</button>
-                        </td>
-                    </tr>
-                <?php 
+                        ?>
+                        <tr>
+                            <td><?php echo $row->report_name; ?></td>
+                            <td>
+                                <button onclick="location.href='<?php echo URLROOT; ?>/users/download_report/<?php echo $row->report_id; ?>'"
+                                        type="button" class="btn btn-custom" data-toggle="modal"
+                                        data-target="#alertModal" style="float:right;">Generate report
+                                </button>
+                            </td>
+                        </tr>
+                    <?php
                     endforeach;
-                endif;    
+                endif;
                 ?>
                 </tbody>
             </table>
@@ -76,48 +81,65 @@
 
                     <div class="modal-body">
                         <div class="row modal-container">
-                            <div class="col-md-6">
-                                <div class="custom-file" style="padding: 30px;">
-                                    <input id="file1" type="file" class="custom-file-input">
-                                    <label for="file1" class="custom-file-label text-truncate">Choose file...(.shp,.shx,.sbn)</label>
-                                </div>
 
-                                <div class="custom-file" style="padding: 30px;">
-                                    <input id="file2" type="file" class="custom-file-input">
-                                    <label for="file2" class="custom-file-label text-truncate">Choose file...(.shp,.shx,.sbn)</label>
+                            <div class="row" style="width:100%;">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="site_name" placeholder="Site name"
+                                           style="left:20;width:105%;">
                                 </div>
-
-                                <div class="custom-file" style="padding: 30px;">
-                                    <input id="file3" type="file" class="custom-file-input">
-                                    <label for="file3" class="custom-file-label text-truncate">Choose file...(.shp,.shx,.sbn)</label>
-                                </div>
-
-                                <div class="custom-file" style="padding: 30px;">
-                                    <input id="file4" type="file" class="custom-file-input">
-                                    <label for="file4" class="custom-file-label text-truncate">Choose file...(.shp,.shx,.sbn)</label>
-                                </div>
-
-                                <div class="custom-file" style="padding: 30px;">
-                                    <input id="file5" type="file" class="custom-file-input">
-                                    <label for="file5" class="custom-file-label text-truncate">Choose file...(.shp,.shx,.sbn)</label>
-                                </div>
-                                <br><br>
-                                </form>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="lat" placeholder="Site name"
-                                           style="width:100%;">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="custom-file" style="padding: 30px;">
+                                        <input id="file1" type="file" accept=".shp" class="custom-file-input">
+                                        <label for="file1" class="custom-file-label text-truncate">Choose
+                                            file...(.shp) *Required</label>
+                                    </div>
+
+                                    <div class="custom-file" style="padding: 30px;">
+                                        <input id="file2" type="file" accept=".shx" class="custom-file-input">
+                                        <label for="file2" class="custom-file-label text-truncate">Choose
+                                            file...(.shx) *Required</label>
+                                    </div>
+
+                                    <div class="custom-file" style="padding: 30px;">
+                                        <input id="file3" type="file" accept=".dbf" class="custom-file-input">
+                                        <label for="file3" class="custom-file-label text-truncate">Choose
+                                            file...(.dbf) *Required</label>
+                                    </div>
+                                    </form>
                                 </div>
 
+                                <div class="col-md-6">
+                                    <div class="custom-file" style="padding: 30px;">
+                                        <input id="file4" type="file" accept=".sbn" class="custom-file-input">
+                                        <label for="file4" class="custom-file-label text-truncate">Choose
+                                            file...(.sbn) *Optional</label>
+                                    </div>
+
+                                    <div class="custom-file" style="padding: 30px;">
+                                        <input id="file5" type="file" accept=".sbx" class="custom-file-input">
+                                        <label for="file5" class="custom-file-label text-truncate">Choose
+                                            file...(.sbx) *Optional</label>
+                                    </div>
+
+                                    <div class="custom-file" style="padding: 30px;">
+                                        <input id="file5" type="file" accept=".prj" class="custom-file-input">
+                                        <label for="file5" class="custom-file-label text-truncate">Choose
+                                            file...(.prj) *Optional</label>
+                                    </div>
+
+                                </div>
                             </div>
 
                         </div>
                     </div>
 
                     <div class="modal-footer" style="height: 100%;">
-                        <i class="fas fa-info-circle" data-toggle="tooltip" title="Need some help? You can find it in the FAQ section!" id='example' style=" position: absolute; left: 30;"></i>
+                        <i class="fas fa-info-circle" data-toggle="tooltip"
+                           title="Need some help? You can find it in the FAQ section!" id='example'
+                           style=" position: absolute; left: 30;"></i>
                         <button type="button" class="btn btn-custom" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-custom" data-dismiss="modal">Upload</button>
                     </div>
@@ -132,15 +154,12 @@
                 <div class="modal-content" style="height:70vh;">
 
                     <div class="modal-header">
-                        <h2 class="modal-title">Black Eagle Project</h2>
+                        <h2 class="modal-title">Black Eagle Project Report</h2>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
 
                     <div class="modal-body">
-                        <div class="row modal-container">
-                            <p>Your risk report is currently being processed, it could take awhile(up to five minutes) to finish, so please be patient.The download  will automatically commence when it has finished.</p>
-                            <p>If you would like to learn more about the model used to generate the report you can see that <a href="http://blackeagleproject.blogspot.com/" target="_blank">here.</a></p>
-                        </div>
+                        <div id="googleMap" style="width:100%;height:100%;"></div>
                     </div>
 
                 </div>
@@ -156,7 +175,7 @@
 </div>
 <!-- Javascript -->
 <script>
-    $('.custom-file-input').on('change', function() {
+    $('.custom-file-input').on('change', function () {
         let fileName = $(this).val().split('\\').pop();
         $(this).next('.custom-file-label').addClass("selected").html(fileName);
     });
@@ -179,9 +198,23 @@
         }
     }
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
+
+    var map;
+
+    function myMap() {
+        var var_location = new google.maps.LatLng(-33.958732, 18.460068);
+
+        var var_mapoptions = {
+            center: var_location,
+            zoom: 8,
+            mapTypeId: 'satellite'
+        };
+
+        map = new google.maps.Map(document.getElementById("googleMap"), var_mapoptions);
+    }
 </script>
 </body>
 </html>

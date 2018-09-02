@@ -72,7 +72,7 @@ if (!is_user_logged_in()) {
 
         <div class="modal fade" id="Modal">
             <div class="modal-dialog modal-lg">
-                <div class="modal-content" style="height:70vh;">
+                <div class="modal-content" style="height:80vh;">
 
                     <div class="modal-header" style="height: 100%;">
                         <h4 class="modal-title">Add site</h4>

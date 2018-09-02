@@ -1,4 +1,11 @@
+<style>
+    .table td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
 
+    }
+</style>
     <div class="row">
         <div class="col-md-6">
             <h1>Admins</h1>

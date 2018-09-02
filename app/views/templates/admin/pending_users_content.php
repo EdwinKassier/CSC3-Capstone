@@ -1,3 +1,19 @@
+<style>
+    .table td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+    }
+
+    .table th {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+    }
+</style>
+
 <div class="row">
     <div class="col-md-6">
         <h1>Pending Users</h1>

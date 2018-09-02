@@ -10,7 +10,7 @@
         overflow:auto;
     }
     </style>
-    <body style="overflow-y:hidden">
+    <body style="overflow-x:hidden">
 
     <?php
         if(!is_user_logged_in()){
@@ -40,7 +40,7 @@
                             foreach ($data['sites'] as $row):
                         ?>
                             <tr>
-                                <td><button class="button-table"><?php echo $row->name; ?></button></td>
+                                <td><button class="button-table" onclick="setLocation(<?php echo $row->latitude; ?>, <?php echo $row->longitude; ?>)"><?php echo $row->name; ?></button></td>
                             </tr>
                         <?php 
                             endforeach;
@@ -112,24 +112,14 @@
                             <div class="modal-body">
                                 <div class="modal-container">
                                     <div class="row">
-                                        <div class="col">
-                                            <h5>Site name</h5>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="name" placeholder="Site name" style="width:100%;" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-md-6">
-                                            <h5>Many</h5>
-                                            <div class="custom-file" style="padding: 30px;">
-                                                <input name="pins" id="pins" type="file" accept=".csv" class="custom-file-input">
-                                                <label for="pins" class="custom-file-label text-truncate">Choose file...(.csv)</label>
-                                            </div>
                                             <br><br>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="name" placeholder="Site name" style="width:100%;" required>
+                                            </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <h5>One</h5>
+                                            <br><br>
                                             <div class="form-group">
                                                 <input type="text" class="form-control" name="latitude" placeholder="Latitude" style="width:100%;">
                                             </div>
@@ -164,6 +154,8 @@
             $(this).next('.custom-file-label').addClass("selected").html(fileName);
         });
 
+        var map;
+
         function myMap() {
             var var_location = new google.maps.LatLng(-33.958732, 18.460068);
 
@@ -173,7 +165,7 @@
                 mapTypeId: 'satellite'
             };
 
-            var map = new google.maps.Map(document.getElementById("googleMap"),var_mapoptions);
+            map = new google.maps.Map(document.getElementById("googleMap"),var_mapoptions);
 
             <?php
             if(!empty($data['nests'])) {
@@ -182,6 +174,10 @@
                 }
             }
             ?>
+        }
+
+        function setLocation(newLat, newLng) {
+            map.setCenter({lat: newLat, lng: newLng});
         }
 
         function tableFilter() {

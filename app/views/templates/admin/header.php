@@ -4,7 +4,7 @@
     <meta name="author" content="Charl Ritter, Edwin Kassier & Josh Redelinghuys">
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo URLROOT; ?>/resources/images/favicon.ico" />
     <link href="<?php echo URLROOT; ?>/resources/admin/css/bootstrap.css" rel="stylesheet">
-    <link href="<?php echo URLROOT; ?>/resources/admin/css/sb-admin.css" rel="stylesheet">    
+    <link href="<?php echo URLROOT; ?>/resources/admin/css/sb-admin.css" rel="stylesheet">
     <link href="<?php echo URLROOT; ?>/resources/css/blackeagle.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>

@@ -219,6 +219,11 @@
             $('[data-toggle="tooltip"]').tooltip();
         });
 
+        function openAlert(){
+                $('#alertModal').modal('show');
+        }
+
+
     </script>
     </body>
 </html>

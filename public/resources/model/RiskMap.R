@@ -10,7 +10,7 @@
 
 ##### Set working directory to locate files #####
 #set this path to wherever 
-setwd("c:/Users/Josh/Documents/UCT/Second Semester/CSC3003S/EAGLEWEB") # where the model and all files need to be
+setwd("C:\\xampp\\htdocs\\CSC3-Capstone\\public\\resources\\model") # where the model and all files need to be
 
 ##### Load Megan's model "riskmod.rds" #####
 require(effects)
@@ -22,14 +22,14 @@ require(rgdal)
 require(raster)
 
 ##Read in shapefile
-filename <- list.files(path="shapefile/",pattern="+.*shp")
+filename <- list.files(path="user_outputs\\11\\",pattern="+.*shp")
 
 ##Find the name of the shapefiles
 shapefile <- strsplit(filename, ".shp" )[[1]]
 shapefile
 
 #Load shapefile
-region = readOGR("shapefile",shapefile) 
+region = readOGR("user_outputs\\11",shapefile) 
 
 ##### Determine which elevation maps are needed #####
 
@@ -93,24 +93,33 @@ if(N>1){
 } else {
   map.merged <- maps[[1]]
 }
+print("Maps merged")
 
 #visulaise the development region with the shape file area overlayed
 #elevation <- crop(map.merged, region)
 elevation <- map.merged
+print("1")
 plot(elevation)
+print("2")
 plot(region, add=T)
+print("3")
 
 #remove the trash
 rm(map.files, map.names, maps)
+print("4")
 
 ##### Extract data from the elevation map: THE SLOW PART #####
 
 #Extract the info needed for the model:
 slope<-terrain(elevation, opt=c('slope'), unit='degrees', neighbors=8)
+print("5")
 aspect<-terrain(elevation, opt=c('aspect'), unit='degrees')
+print("6")
 slope_sd3=focal(slope, w=matrix(1,3,3), fun=sd) ##NB this layer take 5min+ to make. It is taking each grid cell and finding the standard deviation of the altitude of it and the cells around it on a 3x3 grid (i.e. SD of 9 cells)
 #make a terrain.stack of these layers:
+print("7")
 terrain.stack_pen<-stack(list(slope=slope,  aspect=aspect, slope_sd3=slope_sd3, alt=elevation)) 
+print("Calc finished")
 
 #Crop the terrain.stack by the development boundaries:
 crs(region)=crs(elevation)
@@ -134,21 +143,21 @@ head(region.terrain) #view first lines of region.terrain
 coords=data.frame(long=region.terrain$longitude, lat=region.terrain$latitude)
 
 #Open and read in the Nest Data and user input data
-filename <- paste("input/",list.files(path="input/",pattern="+.*csv"), sep="")
+#filename <- paste("input/",list.files(path="input/",pattern="+.*csv"), sep="")
 
-userNestData <- as.data.frame(read.table(filename, sep = ",", header=TRUE)) #user input nests
+#userNestData <- as.data.frame(read.table(filename, sep = ",", header=TRUE)) #user input nests
 
 #create names for the user input nests
-nest.names <- list()
-for(i in 1:dim(userNestData)[1]){
-  new_str <- paste("Nst_", round(userNestData$LONG[i],2), "_", abs(round(userNestData$LAT[i],2)), sep="")
-  print(new_str)
-  nest.names[[i]] <- new_str
-}
-rownames(userNestData) <- nest.names
+# nest.names <- list()
+# for(i in 1:dim(userNestData)[1]){
+#   new_str <- paste("Nst_", round(userNestData$LONG[i],2), "_", abs(round(userNestData$LAT[i],2)), sep="")
+#   print(new_str)
+#   nest.names[[i]] <- new_str
+# }
+# rownames(userNestData) <- nest.names
 
 #Add user input nests to NESDATA.csv
-write.table(userNestData, "NESTDATA.csv", sep = ",", col.names = F, append = T) 
+# write.table(userNestData, "NESTDATA.csv", sep = ",", col.names = F, append = T) 
 
 #Create a dataframe for each nest in NESTDATA.csv
 nestData <- read.table("NESTDATA.csv", sep = ",", header=TRUE) #big list of all nests
@@ -159,6 +168,7 @@ for(i in 1:dim(nestData)[1]){
   if(nestData$Nest[i] == "") break
   nests[[i]] <- eval(parse(text = new_str))
 }
+print("Read nestdata")
 
 #create list of vector distances from each nest to each point in the region
 distances <- vector('list', length(nests)) 
@@ -202,15 +212,16 @@ summary(pred$pred)
 #### RISK PLOT: ####
 toplot=cbind(long= region.terrain$longitude, lat=region.terrain$latitude, pred=pred$pred)
 head(toplot)
-write.csv(toplot, file = "output/risk.csv",row.names=FALSE)
+write.csv(toplot, file = "user_outputs\\11\\risk.csv",row.names=FALSE)
 risk_plot=rasterFromXYZ(toplot)
 
 # Open a pdf file
-pdf("output/risk.pdf") 
+pdf("user_outputs\\11\\risk.pdf") 
 # 2. Create a plot
 colours=c("darkseagreen1","darkorange","red")
 plot(risk_plot, col=colours)
 plot(region, add=T)
 # Close the pdf file
+print("Map printed")
 dev.off() 
 

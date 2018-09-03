@@ -279,5 +279,33 @@
                 return false;
             }
         }
+
+        //get all reports of a user
+        public function get_report($report_id){
+            $this->db->query('SELECT * FROM reports WHERE report_id = :id');
+            $this->db->bind(':id', $report_id);
+
+            if($row = $this->db->single()){
+                return $row;
+            }
+            else{
+                return false;
+            }
+        }
+
+        //add a report to the database
+        public function add_report($path, $name){
+            $this->db->query('INSERT INTO reports (user_id, report_name, report_path) VALUES(:id,:name,:path)');
+            $this->db->bind(':id', $_SESSION['user_id']);
+            $this->db->bind(':name', $name);
+            $this->db->bind(':path', $path);
+
+            if($this->db->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
     }
 ?>

@@ -399,14 +399,17 @@
                     $file_extensions = array('shp', 'shx', 'dbf', 'sbn', 'sbx', 'prj', 'no_extension_here');
 
                     $shp_name = $_FILES[$shp]['name'];
+                    $shp_tmp_name = $_FILES[$shp]["tmp_name"];
                     $tmp = explode('.', $shp_name);
                     $shp_extension = strtolower(end($tmp));
 
                     $shx_name = $_FILES[$shx]['name'];
+                    $shx_tmp_name = $_FILES[$shx]["tmp_name"];
                     $tmp = explode('.', $shx_name);
                     $shx_extension = strtolower(end($tmp));
 
                     $dbf_name = $_FILES[$dbf]['name'];
+                    $dbf_tmp_name = $_FILES[$dbf]["tmp_name"];
                     $tmp = explode('.', $dbf_name);
                     $dbf_extension = strtolower(end($tmp));
 
@@ -415,16 +418,19 @@
                     $prj_extension = 'no_extension_here';
                     if($_FILES[$sbn]['size'] !== 0){
                         $sbn_name = $_FILES[$sbn]['name'];
+                        $sbn_tmp_name = $_FILES[$sbn]["tmp_name"];
                         $tmp = explode('.', $sbn_name);
                         $sbn_extension = strtolower(end($tmp));
                     }
                     if($_FILES[$sbx]['size'] !== 0){
                         $sbx_name = $_FILES[$sbx]['name'];
+                        $sbx_tmp_name = $_FILES[$sbx]["tmp_name"];
                         $tmp = explode('.', $sbx_name);
                         $sbx_extension = strtolower(end($tmp));
                     }
                     if($_FILES[$prj]['size'] !== 0){
                         $prj_name = $_FILES[$prj]['name'];
+                        $prj_tmp_name = $_FILES[$prj]["tmp_name"];
                         $tmp = explode('.', $prj_name);
                         $prj_extension = strtolower(end($tmp));
                     }
@@ -437,11 +443,24 @@
                         set_message("One/muiltiple of the files have an extension which is not allowed. Please only upload .shp, .shx, .dbf, .sbn, .sbx or .prj files.");
                         redirect('users/wind_farm_dashboard');
                     }
-                    else{
-                        if(file_exists(UPLOAD_DIRECTORY . DS . "NESTDATA.csv")){
-                            unlink(UPLOAD_DIRECTORY . DS . "NESTDATA.csv");
+                    else{                        
+                        $upload_directory = UPLOAD_DIRECTORY . DS . "user_outputs" . DS . $_SESSION['user_id'] . DS;
+
+                        //Create shape files
+                        move_uploaded_file($shp_tmp_name, $upload_directory . "shape.shp");
+                        move_uploaded_file($shx_tmp_name, $upload_directory . "shape.shx");
+                        move_uploaded_file($dbf_tmp_name, $upload_directory . "shape.dbf");
+                        if(isset($sbn_tmp_name)){
+                            move_uploaded_file($sbn_tmp_name, $upload_directory . "shape.sbn");
+                        }    
+                        if(isset($sbx_tmp_name)){
+                            move_uploaded_file($sbx_tmp_name, $upload_directory . "shape.sbx");
+                        }
+                        if(isset($prj_tmp_name)){
+                            move_uploaded_file($prj_tmp_name, $upload_directory . "shape.prj");
                         }
 
+                        //Create nest data
                         $rows = $this->user_model->get_nests();
 
                         $csv_array = array('Nest,LONG,LAT');
@@ -455,7 +474,45 @@
                         }
                         fclose($file);
 
-                        exec(UPLOAD_DIRECTORY . DS . "riskmod.rds");
+                        $param = UPLOAD_DIRECTORY . " user_outputs/11/";
+                        // exec(UPLOAD_DIRECTORY . DS . "RiskMap.R $param");
+                        exec("\"C:\\Program Files\\R\\R-3.5.1\\bin\\Rscript.exe\"C:\\xampp\\htdocs\\CSC3-Capstone\\public\\resources\\model\\RiskMap.R");
+                        // die(exec("\"C:\\Program Files\\R\\R-3.5.1\\bin\\Rscript.exe\"C:\\xampp\\htdocs\\CSC3-Capstone\\public\\resources\\model\\RiskMap.R"));
+
+                        //Make a db entry
+                        // $path = str_replace("\\","\\\\", str_replace("/","\\",$upload_directory)) . 'risk_map';
+                        // $rows = $this->user_model->add_report($path, $name);
+
+                        //Delete nest data
+                        if(file_exists(UPLOAD_DIRECTORY . DS . "NESTDATA.csv")){
+                            unlink(UPLOAD_DIRECTORY . DS . "NESTDATA.csv");
+                        }
+
+                        //Delete shape files
+                        if(file_exists($upload_directory . "shape.shp")){
+                            unlink($upload_directory . "shape.shp");
+                        }
+                        if(file_exists($upload_directory . "shape.shx")){
+                            unlink($upload_directory . "shape.shx");
+                        }
+                        if(file_exists($upload_directory . "shape.dbf")){
+                            unlink($upload_directory . "shape.dbf");
+                        }
+                        if(isset($sbn_tmp_name)){
+                            if(file_exists($upload_directory . "shape.sbn")){
+                                unlink($upload_directory . "shape.sbn");
+                            }
+                        }
+                        if(isset($sbx_tmp_name)){
+                            if(file_exists($upload_directory . "shape.sbx")){
+                                unlink($upload_directory . "shape.sbx");
+                            }
+                        }
+                        if(isset($prj_tmp_name)){
+                            if(file_exists($upload_directory . "shape.prj")){
+                                unlink($upload_directory . "shape.prj");
+                            }
+                        }
 
                         set_message("Your site is being added. This process will take some time, please come back in 10-15 minutes and your site will have been added.");
                         redirect('users/wind_farm_dashboard');
@@ -467,6 +524,31 @@
                     'reports' => $this->user_model->get_reports(),
                 ];
                 $this->view('users/wind_farm_dashboard');
+            }
+        }
+
+        public function download_report($report_id = null){
+            if(isset($report_id)){
+                $row = $this->user_model->get_report($report_id);
+
+                $file_url = $row->report_path . '.html';
+                header('Content-Type: application/octet-stream');
+                header("Content-Transfer-Encoding: Binary"); 
+                header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\""); 
+                readfile($file_url);
+
+                $file_url = $row->report_path . '.png';
+                header('Content-Type: application/octet-stream');
+                header("Content-Transfer-Encoding: Binary"); 
+                header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\""); 
+                readfile($file_url);
+
+                //Load view
+                redirect('users/wind_farm_dashboard');
+            }
+            else{
+                //Load view
+                redirect('users/wind_farm_dashboard');
             }
         }
 

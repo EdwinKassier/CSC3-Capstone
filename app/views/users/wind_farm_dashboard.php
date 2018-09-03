@@ -58,10 +58,7 @@ if (!is_user_logged_in()) {
                         <tr>
                             <td><?php echo $row->report_name; ?></td>
                             <td>
-                                <button onclick="location.href='<?php echo URLROOT; ?>/users/download_report/<?php echo $row->report_id; ?>'"
-                                        type="button" class="btn btn-custom" data-toggle="modal"
-                                        data-target="#alertModal" style="float:right;">Generate report
-                                </button>
+                                <button onclick="location.href='<?php echo URLROOT; ?>/users/download_report/<?php echo $row->report_id; ?>'" type="button" class="btn btn-custom" style="float:right;">Generate report </button>
                             </td>
                         </tr>
                     <?php

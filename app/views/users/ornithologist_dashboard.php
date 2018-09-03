@@ -62,7 +62,7 @@
             <div class="modal fade" id="NestModal">
                 <div class="modal-dialog modal-lg">
                     <form action="<?php echo URLROOT; ?>/users/ornithologist_dashboard/0" method="post" enctype="multipart/form-data">
-                        <div class="modal-content" style="height:70vh;">
+                        <div class="modal-content" style="height:45%;">
                             <div class="modal-header" style="height: 100%;">
                                 <h4 class="modal-title">Add nest site</h4>
                                 <button type="reset" class="close" data-dismiss="modal">&times;</button>
@@ -104,7 +104,7 @@
             <div class="modal fade" id="ScoutModal">
                 <div class="modal-dialog modal-lg">
                     <form action="<?php echo URLROOT; ?>/users/ornithologist_dashboard/1" method="post" enctype="multipart/form-data">
-                        <div class="modal-content" style="height:70vh;">
+                        <div class="modal-content" style="height:45%;">
                             <div class="modal-header" style="height: 100%;">
                                 <h4 class="modal-title">Add scouting site</h4>
                                 <button type="reset" class="close" data-dismiss="modal">&times;</button>
@@ -142,13 +142,15 @@
 
             <div class="modal fade" id="alertModal">
                 <div class="modal-dialog modal-lg">
-                    <div class="modal-content" style="height:70vh;">
+                    <div class="modal-content">
                         <div class="modal-header">
-                            <h2 class="modal-title">Black Eagle Project Report</h2>
+                            <h2 class="modal-title">Message</h2>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body">
                             <p><?php display_message(); ?></p>
+                            <hr>
+                            <button style="float:right;" type="reset" class="btn btn-custom" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>

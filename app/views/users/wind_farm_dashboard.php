@@ -130,9 +130,9 @@
 
                 <div class="modal fade" id="alertModal">
                     <div class="modal-dialog modal-lg">
-                        <div class="modal-content" style="height:70vh;">
+                        <div class="modal-content" style="height:50;">
                             <div class="modal-header">
-                                <h2 class="modal-title">Black Eagle Project Report</h2>
+                                <h2 class="modal-title">Message</h2>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body">

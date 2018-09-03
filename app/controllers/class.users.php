@@ -389,64 +389,54 @@
                 $sbx = 'sbx';
                 $prj = 'prj';
                 $name = trim(ucwords($_POST['name']));
-
-
-
-
-
-
                 
-                // if($_FILES[$file]['size'] == 0 && empty($latitude) && empty($longitude)){
-                //     set_message('Please enter either a csv or the latitude and longitude.');
-                //     redirect('users/wind_farm_dashboard');
-                // }
-                // else{
-                //     if($_FILES[$file]['size'] == 0 && !empty($latitude) && empty($longitude) || empty($file) && empty($latitude) && !empty($longitude)){
-                //         set_message('Please full in both latitude and longitude.');
-                //         redirect('users/wind_farm_dashboard');
-                //     }
-                //     else if($_FILES[$file]['size'] == 0 && !empty($latitude) && !empty($longitude)){
-                //         $this->user_model->add_pin($role, $latitude, $longitude, $name);
+                if($_FILES[$shp]['size'] == 0 && $_FILES[$shp]['error'] == 0 && $_FILES[$shx]['size'] == 0 && $_FILES[$shx]['error'] == 0 && $_FILES[$dbf]['size'] == 0 && $_FILES[$dbf]['error'] == 0){
+                    set_message('Please upload all the required files. (.shp, .shx, .dbf)');
+                    redirect('users/wind_farm_dashboard');
+                }
+                else{
+                    $file_extensions = ['shp, shx, dbf, sbn, sbx, prj, no_extension_here'];
 
-                //         set_message("Your pin was successfully uploaded.");
-                //         redirect('users/wind_farm_dashboard');
-                //     }
-                //     else if($_FILES[$file]['size'] !== 0 && $_FILES[$file]['error'] === 0 && empty($latitude) && empty($longitude)){
-                //         $tmp_name = $_FILES[$file]['tmp_name'];
-                //         $csv_array = array_map('str_getcsv', file($tmp_name));
+                    $shp_name = $_FILES[$shp]['tmp_name'];
+                    $shp_extension = strtolower(end(explode('.', $shp_name)));
 
-                //         $file_extensions = ['csv'];
-                //         $file_extension = strtolower(end(explode('.', $file_name)));
-    
-                //         if($_FILES[$file]['error'] === 1 || $_FILES[$file]['error'] === 2 ){
-                //             set_message("The chosen file is larger than 2MB. Please upload a file smaller than 2MB.");
-                //         }
-                //         else if(!in_array($file_extension, $file_extensions)) {
-                //             set_message("The file has an extension which is not allowed. Please upload an csv file.");
-                //         }
+                    $shx_name = $_FILES[$shx]['tmp_name'];
+                    $shx_extension = strtolower(end(explode('.', $shx_name)));
 
-                //         foreach($csv_array as $row) {
-                //             $row = explode(';', $row[0]);
-                //             if(strtolower($row[0]) != 'latitude' && strtolower($row[1]) != 'longitude'){
-                //                 $this->user_model->add_pin($role, $row[0], $row[1], $name);
-                //             }
-                //         }
+                    $dbf_name = $_FILES[$dbf]['tmp_name'];
+                    $dbf_extension = strtolower(end(explode('.', $dbf_name)));
 
-                //         set_message("Your pins were successfully uploaded.");
-                //         redirect('users/wind_farm_dashboard');
-                //     }  
-                //     else{
-                //         set_message('Please input only a csv or latitude and longitude, not all at once.');
-                //         redirect('users/wind_farm_dashboard');
-                //     }
-                // }
+                    $sbn_extension = 'no_extension_here';
+                    $sbx_extension = 'no_extension_here';
+                    $prj_extension = 'no_extension_here';
+                    if($_FILES[$sbn]['size'] !== 0){
+                        $sbn_name = $_FILES[$sbn]['tmp_name'];
+                        $sbn_extension = strtolower(end(explode('.', $sbn_name)));
+                    }
+                    if($_FILES[$sbx]['size'] !== 0){
+                        $sbx_name = $_FILES[$sbx]['tmp_name'];
+                        $sbx_extension = strtolower(end(explode('.', $sbx_name)));
+                    }
+                    if($_FILES[$prj]['size'] !== 0){
+                        $prj_name = $_FILES[$prj]['tmp_name'];
+                        $prj_extension = strtolower(end(explode('.', $prj_name)));
+                    }
+                
+                    if(($_FILES[$shp]['error'] === 1 || $_FILES[$shp]['error'] === 2) || ($_FILES[$shx]['error'] === 1 || $_FILES[$shx]['error'] === 2) || ($_FILES[$dbf]['error'] === 1 || $_FILES[$dbf]['error'] === 2) || ($_FILES[$sbn]['error'] === 1 || $_FILES[$sbn]['error'] === 2) || ($_FILES[$sbx]['error'] === 1 || $_FILES[$sbx]['error'] === 2) || ($_FILES[$prj]['error'] === 1 || $_FILES[$prj]['error'] === 2)){
+                        set_message("One/muiltiple of the files are larger than 2MB. Please upload files smaller than 2MB.");
+                        redirect('users/wind_farm_dashboard');
+                    }
+                    else if((!in_array($shp_extension, $file_extensions)) || (!in_array($shx_extension, $file_extensions)) || (!in_array($dbf_extension, $file_extensions)) || (!in_array($sbn_extension, $file_extensions)) || (!in_array($sbx_extension, $file_extensions)) || (!in_array($prj_extension, $file_extensions))) {
+                        set_message("One/muiltiple of the files have an extension which is not allowed. Please only upload .shp, .shx, .dbf, .sbn, .sbx or .prj files.");
+                        redirect('users/wind_farm_dashboard');
+                    }
+                    else{
+                        
 
-
-
-
-
-
-
+                        set_message("Your site is being added. This process will take some time, please come back in 10-15 minutes and your site will have been added.");
+                        redirect('users/wind_farm_dashboard');
+                    }
+                }
             }
             else{
                 $data =[

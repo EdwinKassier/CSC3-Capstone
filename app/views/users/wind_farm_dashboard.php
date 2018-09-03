@@ -153,6 +153,7 @@ if (!is_user_logged_in()) {
         </div>
 
 
+<<<<<<< HEAD
         <div class="modal fade" id="alertModal">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -162,6 +163,19 @@ if (!is_user_logged_in()) {
                     </div>
                     <div class="modal-body">
                         <p><?php display_message(); ?></p>
+=======
+                <div class="modal fade" id="alertModal">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content" style="height:40%;">
+                            <div class="modal-header">
+                                <h2 class="modal-title">Message</h2>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <p><?php display_message(); ?></p>
+                            </div>
+                        </div>
+>>>>>>> 87f12cb8ee6a18aed29a6bf1307a6373c79437c0
                     </div>
                 </div>
             </div>

@@ -140,6 +140,20 @@
                 </div>
             </div>
 
+            <div class="modal fade" id="alertModal">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content" style="height:70vh;">
+                        <div class="modal-header">
+                            <h2 class="modal-title">Black Eagle Project Report</h2>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="googleMap" style="width:100%;height:100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
         <br>
 

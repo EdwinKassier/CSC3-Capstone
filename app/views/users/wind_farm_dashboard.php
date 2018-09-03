@@ -191,6 +191,10 @@
 
             map = new google.maps.Map(document.getElementById("googleMap"), var_mapoptions);
         }
+
+        function openAlert(){
+            $('#alertModal').modal('show');
+        }
     </script>
     </body>
 </html>

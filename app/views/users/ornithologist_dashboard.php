@@ -9,6 +9,11 @@
         height:55%;
         overflow:auto;
     }
+    .divider{
+        width:2px;
+        height:auto;
+        display:inline-block;
+    }
     </style>
     <body style="overflow-x:hidden" onload="<?php if(isset($_SESSION['message_modal']) && $_SESSION['message_modal'] === true){echo "openAlert()"; unset($_SESSION['message_modal']);} ?>">
 
@@ -62,13 +67,13 @@
             <div class="modal fade" id="NestModal">
                 <div class="modal-dialog modal-lg">
                     <form action="<?php echo URLROOT; ?>/users/ornithologist_dashboard/0" method="post" enctype="multipart/form-data">
-                        <div class="modal-content" style="height:45%;">
-                            <div class="modal-header" style="height: 100%;">
-                                <h4 class="modal-title">Add nest site</h4>
-                                <button type="reset" class="close" data-dismiss="modal">&times;</button>
-                            </div>
+                        <div class="modal-content">
                             <div class="modal-body">
                                 <div class="modal-container">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Add nest site</h4>
+                                        <button type="reset" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <h5>Many</h5>
@@ -88,12 +93,13 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <hr>
                                 </div>
-                            </div>
-                            <div class="modal-footer" style="height: 100%;">
                                 <i class="fas fa-info-circle" data-toggle="tooltip" title="Need some help? You can find it in the FAQ section!" id='example' style=" position: absolute; left: 30;"></i>
-                                <button type="reset" class="btn btn-custom" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-custom">Upload</button>
+                                <div style="float: right;">
+                                    <button type="reset" class="btn btn-custom" data-dismiss="modal" >Close</button>
+                                    <button type="submit" class="btn btn-custom" >Upload</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -104,13 +110,13 @@
             <div class="modal fade" id="ScoutModal">
                 <div class="modal-dialog modal-lg">
                     <form action="<?php echo URLROOT; ?>/users/ornithologist_dashboard/1" method="post" enctype="multipart/form-data">
-                        <div class="modal-content" style="height:45%;">
-                            <div class="modal-header" style="height: 100%;">
-                                <h4 class="modal-title">Add scouting site</h4>
-                                <button type="reset" class="close" data-dismiss="modal">&times;</button>
-                            </div>
+                        <div class="modal-content">
                             <div class="modal-body">
                                 <div class="modal-container">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Add scouting site</h4>
+                                        <button type="reset" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <br><br>
@@ -129,11 +135,14 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="modal-footer" style="height: 100%;">
-                                <i class="fas fa-info-circle" data-toggle="tooltip" title="Need some help? You can find it in the FAQ section!" id='example' style=" position: absolute; left: 30;"></i>
-                                <button type="reset" class="btn btn-custom" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-custom">Upload</button>
+                                <hr>
+                                <div >
+                                    <i class="fas fa-info-circle" data-toggle="tooltip" title="Need some help? You can find it in the FAQ section!" id='example' style=" position: absolute; left: 30;"></i>
+                                    <div style="float: right;">
+                                    <button type="reset" class="btn btn-custom" data-dismiss="modal" >Close</button>
+                                    <button type="submit" class="btn btn-custom" >Upload</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form> 

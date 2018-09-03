@@ -319,18 +319,18 @@
                 
                 if($_FILES[$file]['size'] == 0 && empty($latitude) && empty($longitude)){
                     set_message('Please enter either a csv or the latitude and longitude.');
-                    $this->view('users/ornithologist_dashboard', $data);
+                    redirect('users/ornithologist_dashboard');
                 }
                 else{
                     if($_FILES[$file]['size'] == 0 && !empty($latitude) && empty($longitude) || empty($file) && empty($latitude) && !empty($longitude)){
                         set_message('Please full in both latitude and longitude.');
-                        $this->view('users/ornithologist_dashboard', $data);
+                        redirect('users/ornithologist_dashboard');
                     }
                     else if($_FILES[$file]['size'] == 0 && !empty($latitude) && !empty($longitude)){
                         $this->user_model->add_pin($role, $latitude, $longitude, $name);
 
                         set_message("Your pin was successfully uploaded.");
-                        redirect('users/ornithologist_dashboard', $data);
+                        redirect('users/ornithologist_dashboard');
                     }
                     else if($_FILES[$file]['size'] !== 0 && $_FILES[$file]['error'] === 0 && empty($latitude) && empty($longitude)){
                         $tmp_name = $_FILES[$file]['tmp_name'];
@@ -340,10 +340,10 @@
                         $file_extension = strtolower(end(explode('.', $file_name)));
     
                         if($_FILES[$file]['error'] === 1 || $_FILES[$file]['error'] === 2 ){
-                            $data['error'] = "The chosen file is larger than 2MB. Please upload a file smaller than 2MB.";
+                            set_message("The chosen file is larger than 2MB. Please upload a file smaller than 2MB.");
                         }
                         else if(!in_array($file_extension, $file_extensions)) {
-                            $data['error'] = "The file has an extension which is not allowed. Please upload an csv file.";
+                            set_message("The file has an extension which is not allowed. Please upload an csv file.");
                         }
 
                         foreach($csv_array as $row) {
@@ -354,11 +354,11 @@
                         }
 
                         set_message("Your pins were successfully uploaded.");
-                        redirect('users/ornithologist_dashboard', $data);
+                        redirect('users/ornithologist_dashboard');
                     }  
                     else{
                         set_message('Please input only a csv or latitude and longitude, not all at once.');
-                        $this->view('users/ornithologist_dashboard', $data);
+                        redirect('users/ornithologist_dashboard');
                     }
                 }
             }
@@ -389,21 +389,27 @@
                 $sbx = 'sbx';
                 $prj = 'prj';
                 $name = trim(ucwords($_POST['name']));
+
+
+
+
+
+
                 
                 // if($_FILES[$file]['size'] == 0 && empty($latitude) && empty($longitude)){
                 //     set_message('Please enter either a csv or the latitude and longitude.');
-                //     $this->view('users/ornithologist_dashboard', $data);
+                //     redirect('users/wind_farm_dashboard');
                 // }
                 // else{
                 //     if($_FILES[$file]['size'] == 0 && !empty($latitude) && empty($longitude) || empty($file) && empty($latitude) && !empty($longitude)){
                 //         set_message('Please full in both latitude and longitude.');
-                //         $this->view('users/ornithologist_dashboard', $data);
+                //         redirect('users/wind_farm_dashboard');
                 //     }
                 //     else if($_FILES[$file]['size'] == 0 && !empty($latitude) && !empty($longitude)){
                 //         $this->user_model->add_pin($role, $latitude, $longitude, $name);
 
                 //         set_message("Your pin was successfully uploaded.");
-                //         redirect('users/ornithologist_dashboard', $data);
+                //         redirect('users/wind_farm_dashboard');
                 //     }
                 //     else if($_FILES[$file]['size'] !== 0 && $_FILES[$file]['error'] === 0 && empty($latitude) && empty($longitude)){
                 //         $tmp_name = $_FILES[$file]['tmp_name'];
@@ -413,10 +419,10 @@
                 //         $file_extension = strtolower(end(explode('.', $file_name)));
     
                 //         if($_FILES[$file]['error'] === 1 || $_FILES[$file]['error'] === 2 ){
-                //             $data['error'] = "The chosen file is larger than 2MB. Please upload a file smaller than 2MB.";
+                //             set_message("The chosen file is larger than 2MB. Please upload a file smaller than 2MB.");
                 //         }
                 //         else if(!in_array($file_extension, $file_extensions)) {
-                //             $data['error'] = "The file has an extension which is not allowed. Please upload an csv file.";
+                //             set_message("The file has an extension which is not allowed. Please upload an csv file.");
                 //         }
 
                 //         foreach($csv_array as $row) {
@@ -427,13 +433,20 @@
                 //         }
 
                 //         set_message("Your pins were successfully uploaded.");
-                //         redirect('users/ornithologist_dashboard', $data);
+                //         redirect('users/wind_farm_dashboard');
                 //     }  
                 //     else{
                 //         set_message('Please input only a csv or latitude and longitude, not all at once.');
-                //         $this->view('users/ornithologist_dashboard', $data);
+                //         redirect('users/wind_farm_dashboard');
                 //     }
                 // }
+
+
+
+
+
+
+
             }
             else{
                 $data =[

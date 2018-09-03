@@ -189,18 +189,22 @@
     
                     //Init data
                     $data =[
-                        'view' => $view,
+                        'view' => '',
                         'amount_pending_users' => $this->admin_model->amount_pending_users(),
                         'amount_nests' => $this->admin_model->amount_nests(),
                         'amount_ornothologists' => $this->admin_model->amount_ornothologists(),
                         'amount_wind_farms' => $this->admin_model->amount_wind_farms(),
                         'amount_admins' => $this->admin_model->amount_admins(),
+                        'error' => '',
+                        'success' => '',
                     ];
 
-                    $file_extensions = ['rdt'];
+                    $file_extensions = ['rds'];
 
                     if($_FILES[$file]['size'] !== 0 && $_FILES[$file]['error'] === 0){
-                        $file_extension = strtolower(end(explode('.', $file_name)));
+                        $file_name = $_FILES[$file]["name"];
+                        $tmp = explode('.', $file_name);
+                        $file_extension = strtolower(end($tmp));
                     }
 
                     if($_FILES[$file]['size'] == 0){
@@ -210,32 +214,33 @@
                         $data['error'] = "The chosen file is larger than 2MB. Please upload a file smaller than 2MB.";
                     }
                     else if(!in_array($file_extension, $file_extensions)) {
-                        $data['error'] = "The file has an extension which is not allowed. Please upload an rdt file.";
+                        $data['error'] = "The file has an extension which is not allowed. Please upload an rds file.";
                     }
                     
                     if(empty($data['error'])){   
-                        $file_name = $_FILES['model']["name"];
-                        $file_tmp_name = $_FILES['model']["tmp_name"];
-                        $upload = URLROOT . DS . "resources/user_files/model/riskmod." . $file_extension;
+                        $file_tmp_name = $_FILES[$file]["tmp_name"];
+                        $upload_directory = UPLOAD_DIRECTORY . DS . "riskmod.rds";
 
-                        if(file_exists($upload)){
-                            unlink($upload);
+                        
+                        if(file_exists($upload_directory)){
+                            unlink($upload_directory);
                         }
-                        move_uploaded_file($file_tmp_name, $upload);
+                        move_uploaded_file($file_tmp_name, $upload_directory);
 
-                        set_message("The model has been changed succesfully.");
-                        redirect('admins/admin');
+                        $data['success'] = "The model has been changed succesfully.";
                     }
                 }
                 else{
                     //Init data
                     $data =[
-                        'view' => $view,
+                        'view' => '',
                         'amount_pending_users' => $this->admin_model->amount_pending_users(),
                         'amount_nests' => $this->admin_model->amount_nests(),
                         'amount_ornothologists' => $this->admin_model->amount_ornothologists(),
                         'amount_wind_farms' => $this->admin_model->amount_wind_farms(),
                         'amount_admins' => $this->admin_model->amount_admins(),
+                        'error' => '',
+                        'success' => '',
                     ];
                 }
             }

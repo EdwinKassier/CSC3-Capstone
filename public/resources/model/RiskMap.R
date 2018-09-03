@@ -2,37 +2,34 @@
 # Josh Redelinghuys
 # EAGLEWEB CAPSTONE 14/8/18
 
-#packages you need to install to run (you only need to do this strp the first time):
-install.packages("effects")
-install.packages("lme4")
-install.packages("rgdal")
-install.packages("raster")
-install.packages("geosphere")
-
 ##### VARIABLES #####
-#shapefile name
-#array of nests
-#elevation maps
 
 #region = dev.terrain = the shapefile
 #finalArea = elevation + shpefile cropped
 #region.terrain = dev.terrain = the dataframe of all data pertaining to the finalArea
 
-
 ##### Set working directory to locate files #####
 #set this path to wherever 
-setwd("c:/Users/Josh/Desktop/EAGLEWEB draft") # where the model and all files need to be
+setwd("c:/Users/Josh/Documents/UCT/Second Semester/CSC3003S/EAGLEWEB") # where the model and all files need to be
 
 ##### Load Megan's model "riskmod.rds" #####
 require(effects)
 riskmod <- readRDS("riskmod.rds") #this is the file that Megan is likely to change
 #summary(riskmod)
 
-##### Load user shapeFile !NOTE! Load any named shapefile? #####
+##### Load user shapeFile #####
 require(rgdal)
 require(raster)
 
-region = readOGR(".","penninsula") #penninsula will have a different shapefile name
+##Read in shapefile
+filename <- list.files(path="shapefile/",pattern="+.*shp")
+
+##Find the name of the shapefiles
+shapefile <- strsplit(filename, ".shp" )[[1]]
+shapefile
+
+#Load shapefile
+region = readOGR("shapefile",shapefile) 
 
 ##### Determine which elevation maps are needed #####
 
@@ -63,17 +60,10 @@ ymax = floor(abs(spread@ymax[[1]]))
 #    ------------------
 
 #loop through all x values and all y values and load x*y srtms
-
-#DEBUG TEST
-#  17 18 
-#34
-#35
-
 ##Determine number of maps required
 x.required = xmax-xmin + 1 #Num of x maps needed
 y.required = ymin-ymax + 1 #Num of y maps needed
 N = x.required*y.required #total num of maps needed
-
 
 ##Generate the map files and file names needed
 map.files <- list()
@@ -92,7 +82,7 @@ for(a in xmin:xmax){
 #3rd Load the maps (all .hgt files needed)
 maps <- list()
 for(i in 1:N){
-  filepath = paste(map.files[[i]], sep = "") #THIS DIRECTORY IS HARDCODED
+  filepath = paste("srtm_dems/",map.files[[i]], sep = "") #THIS DIRECTORY IS HARDCODED
   print(filepath)
   maps[[i]] <- (assign(map.names[[i]], raster(filepath))) #assign the raster layer its name
 }
@@ -105,7 +95,8 @@ if(N>1){
 }
 
 #visulaise the development region with the shape file area overlayed
-elevation <- crop(map.merged, region)
+#elevation <- crop(map.merged, region)
+elevation <- map.merged
 plot(elevation)
 plot(region, add=T)
 
@@ -130,34 +121,65 @@ rar <- mask(finalArea, region)
 rarToP <- rasterToPoints(rar, byid=TRUE, id=rar$nests)
 rm(rar)
 region.terrain <- as.data.frame(rarToP)
-#head(region.terrain) #view first lines of terrain
 
 #change x y column names:
 names(region.terrain)[names(region.terrain) == "x"] <- "longitude"
 names(region.terrain)[names(region.terrain) == "y"] <- "latitude"
 
-##### Add nests to the map #####
+head(region.terrain) #view first lines of region.terrain
+
+##### Add nest data #####
 
 #Define the coords of the region
 coords=data.frame(long=region.terrain$longitude, lat=region.terrain$latitude)
 
-#Read in csv files each containing a nest coord: LONG, LAT
-temp = list.files(pattern = "*.csv")
-List = lapply(temp, read.csv) # put each coord set in a list
+#Open and read in the Nest Data and user input data
+filename <- paste("input/",list.files(path="input/",pattern="+.*csv"), sep="")
 
-distances <- vector('list', length(List)) #create list of vector distances
+userNestData <- as.data.frame(read.table(filename, sep = ",", header=TRUE)) #user input nests
+
+#create names for the user input nests
+nest.names <- list()
+for(i in 1:dim(userNestData)[1]){
+  new_str <- paste("Nst_", round(userNestData$LONG[i],2), "_", abs(round(userNestData$LAT[i],2)), sep="")
+  print(new_str)
+  nest.names[[i]] <- new_str
+}
+rownames(userNestData) <- nest.names
+
+#Add user input nests to NESDATA.csv
+write.table(userNestData, "NESTDATA.csv", sep = ",", col.names = F, append = T) 
+
+#Create a dataframe for each nest in NESTDATA.csv
+nestData <- read.table("NESTDATA.csv", sep = ",", header=TRUE) #big list of all nests
+nests <- list()
+for(i in 1:dim(nestData)[1]){
+  new_str <- paste(as.character(nestData$Nest[i]), " <- data.frame(long = ", nestData$LONG[i], ",lat = ", nestData$LAT[i], ")")
+  print(new_str)
+  if(nestData$Nest[i] == "") break
+  nests[[i]] <- eval(parse(text = new_str))
+}
+
+#create list of vector distances from each nest to each point in the region
+distances <- vector('list', length(nests)) 
+
 #calculate the distance from each nest
-for(i in seq_along(List)){
-  distance = distGeo(coords, List[[i]])/1000
+require(geosphere)
+for(i in seq_along(nests)){
+  distance = distGeo(coords, nests[[i]])/1000
   distances[[i]] <- as.data.frame(distance)
 }
 
+#find the closest nest but selecteing the smallest distances
 dists = data.frame(distances) #distNest1 | distNest2 | distNest3
-#head(dists)
-min.dists = apply(dists,1, FUN=min) #find the closest nest but selecteing the smallest distances
+head(dists)
+min.dists = apply(dists,1, FUN=min) 
 
 #Set the closest nest and add to dataframe
-region.terrain$nest_dist=min.dist
+region.terrain$nest_dist=min.dists
+
+#remove trash
+rm(nests)
 
 ##### Add categorical vars and produce risk map #####
 #add categorical aspect to dataframe:
@@ -169,7 +191,7 @@ region.terrain$asp4<-
 region.terrain$asp4=as.factor(region.terrain$asp4)
 
 
-####Data frame in now ready to run the model over:
+#### Data frame in now ready to run the model over: ####
 pred<-predict(riskmod, region.terrain, re.form = NA, type = "response", na.action = na.fail)
 
 pred=as.data.frame(pred)
@@ -177,11 +199,18 @@ pred=as.data.frame(pred)
 #you now have probablities 0 -1 which need plotting / converting to tiff / raster:
 summary(pred$pred)
 
-#RISK PLOT:
+#### RISK PLOT: ####
 toplot=cbind(long= region.terrain$longitude, lat=region.terrain$latitude, pred=pred$pred)
 head(toplot)
+write.csv(toplot, file = "output/risk.csv",row.names=FALSE)
 risk_plot=rasterFromXYZ(toplot)
 
+# Open a pdf file
+pdf("output/risk.pdf") 
+# 2. Create a plot
 colours=c("darkseagreen1","darkorange","red")
 plot(risk_plot, col=colours)
-plot(dev, add=T)
+plot(region, add=T)
+# Close the pdf file
+dev.off() 
+

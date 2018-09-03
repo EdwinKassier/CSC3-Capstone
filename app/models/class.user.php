@@ -254,6 +254,19 @@
             }
         }
 
+        //get all nests
+        public function get_nests(){
+            $this->db->query('SELECT * FROM pins WHERE role= :role');
+            $this->db->bind(':role', '0');
+
+            if($row = $this->db->result_set()){
+                return $row;
+            }
+            else{
+                return false;
+            }
+        }
+
         //get all reports of a user
         public function get_reports(){
             $this->db->query('SELECT * FROM reports WHERE user_id= :id');

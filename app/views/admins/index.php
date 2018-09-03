@@ -20,7 +20,7 @@
         <?php include(TEMPLATE_ADMIN . DS ."side_nav.php") ?>
 
         </nav>
-        <div id="inMessage" class="bg-success text-center"><?php display_message(); ?></div>
+        <div class="alert-success text-center"><?php display_message(); ?></div>
         <div id="page-wrapper">
             <div class="container-fluid">
                 <?php

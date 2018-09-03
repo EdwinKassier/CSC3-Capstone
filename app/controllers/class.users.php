@@ -54,7 +54,7 @@
                             $row = $this->user_model->get_next_id();
                             $id = $row->Auto_increment - 1;
 
-                            $upload_directory = UPLOAD_DIRECTORY . DS . $id . DS;
+                            $upload_directory = UPLOAD_DIRECTORY . DS . 'user_outputs' . DS . $id . DS;
 
                             if(!is_dir($upload_directory)){
                                 mkdir($upload_directory);
@@ -337,7 +337,8 @@
                         $csv_array = array_map('str_getcsv', file($tmp_name));
 
                         $file_extensions = ['csv'];
-                        $file_extension = strtolower(end(explode('.', $file_name)));
+                        $tmp = explode('.', $file_name);
+                        $file_extension = strtolower(end($tmp));
     
                         if($_FILES[$file]['error'] === 1 || $_FILES[$file]['error'] === 2 ){
                             set_message("The chosen file is larger than 2MB. Please upload a file smaller than 2MB.");
@@ -395,31 +396,37 @@
                     redirect('users/wind_farm_dashboard');
                 }
                 else{
-                    $file_extensions = ['shp, shx, dbf, sbn, sbx, prj, no_extension_here'];
+                    $file_extensions = array('shp', 'shx', 'dbf', 'sbn', 'sbx', 'prj', 'no_extension_here');
 
-                    $shp_name = $_FILES[$shp]['tmp_name'];
-                    $shp_extension = strtolower(end(explode('.', $shp_name)));
+                    $shp_name = $_FILES[$shp]['name'];
+                    $tmp = explode('.', $shp_name);
+                    $shp_extension = strtolower(end($tmp));
 
-                    $shx_name = $_FILES[$shx]['tmp_name'];
-                    $shx_extension = strtolower(end(explode('.', $shx_name)));
+                    $shx_name = $_FILES[$shx]['name'];
+                    $tmp = explode('.', $shx_name);
+                    $shx_extension = strtolower(end($tmp));
 
-                    $dbf_name = $_FILES[$dbf]['tmp_name'];
-                    $dbf_extension = strtolower(end(explode('.', $dbf_name)));
+                    $dbf_name = $_FILES[$dbf]['name'];
+                    $tmp = explode('.', $dbf_name);
+                    $dbf_extension = strtolower(end($tmp));
 
                     $sbn_extension = 'no_extension_here';
                     $sbx_extension = 'no_extension_here';
                     $prj_extension = 'no_extension_here';
                     if($_FILES[$sbn]['size'] !== 0){
-                        $sbn_name = $_FILES[$sbn]['tmp_name'];
-                        $sbn_extension = strtolower(end(explode('.', $sbn_name)));
+                        $sbn_name = $_FILES[$sbn]['name'];
+                        $tmp = explode('.', $sbn_name);
+                        $sbn_extension = strtolower(end($tmp));
                     }
                     if($_FILES[$sbx]['size'] !== 0){
-                        $sbx_name = $_FILES[$sbx]['tmp_name'];
-                        $sbx_extension = strtolower(end(explode('.', $sbx_name)));
+                        $sbx_name = $_FILES[$sbx]['name'];
+                        $tmp = explode('.', $sbx_name);
+                        $sbx_extension = strtolower(end($tmp));
                     }
                     if($_FILES[$prj]['size'] !== 0){
-                        $prj_name = $_FILES[$prj]['tmp_name'];
-                        $prj_extension = strtolower(end(explode('.', $prj_name)));
+                        $prj_name = $_FILES[$prj]['name'];
+                        $tmp = explode('.', $prj_name);
+                        $prj_extension = strtolower(end($tmp));
                     }
                 
                     if(($_FILES[$shp]['error'] === 1 || $_FILES[$shp]['error'] === 2) || ($_FILES[$shx]['error'] === 1 || $_FILES[$shx]['error'] === 2) || ($_FILES[$dbf]['error'] === 1 || $_FILES[$dbf]['error'] === 2) || ($_FILES[$sbn]['error'] === 1 || $_FILES[$sbn]['error'] === 2) || ($_FILES[$sbx]['error'] === 1 || $_FILES[$sbx]['error'] === 2) || ($_FILES[$prj]['error'] === 1 || $_FILES[$prj]['error'] === 2)){
@@ -431,7 +438,24 @@
                         redirect('users/wind_farm_dashboard');
                     }
                     else{
-                        
+                        if(file_exists(UPLOAD_DIRECTORY . DS . "NESTDATA.csv")){
+                            unlink(UPLOAD_DIRECTORY . DS . "NESTDATA.csv");
+                        }
+
+                        $rows = $this->user_model->get_nests();
+
+                        $csv_array = array('Nest,LONG,LAT');
+                        foreach($rows as $row){
+                            array_push($csv_array, 'Nst_' . $row->pin_id . "," . $row->longitude . "," .$row->latitude);
+                        }
+
+                        $file = fopen(UPLOAD_DIRECTORY . DS . "NESTDATA.csv", "w");
+                        foreach ($csv_array as $line){
+                            fputcsv($file, (array) $line);
+                        }
+                        fclose($file);
+
+                        exec(UPLOAD_DIRECTORY . DS . "riskmod.rds");
 
                         set_message("Your site is being added. This process will take some time, please come back in 10-15 minutes and your site will have been added.");
                         redirect('users/wind_farm_dashboard');

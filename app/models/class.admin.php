@@ -1,7 +1,8 @@
 <?php
     class Admin{
         private $db;
-
+        
+        //Creates a new Database object
         public function __construct(){
             $this->db = new Database;
         }

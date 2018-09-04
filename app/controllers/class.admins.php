@@ -1,9 +1,11 @@
 <?php
     class Admins extends Controller{
+        //Sets the model to use
         public function __construct(){
             $this->admin_model = $this->model('admin');
         }
 
+        //Loads the index view, sends through any data it needs & executes all index related processes
         public function index($view = null, $admin_id = null){
             if($view == 'map'){
                 //Init data
@@ -248,6 +250,7 @@
             $this->view('admins/index', $data);
         }
 
+        //Used to log in an admin
         public function login(){
             $data = $_SESSION['data'];
             unset($_SESSION['data']);
@@ -277,6 +280,7 @@
             }
         }
 
+        //creates session variables for admin
         public function create_admin_session($admin){
             $_SESSION['admin_id'] = $admin->admin_id;
             $_SESSION['admin_name'] = $admin->admin_name;
@@ -324,13 +328,6 @@
             
             set_message('Admin removed succesfully.');
             redirect('/admins/admin');
-        }
-
-        //Changes the saved model
-        public function change_model(){
-            
-            set_message('Model changed succesfully.');
-            redirect('/admins');
         }
     }
 ?>

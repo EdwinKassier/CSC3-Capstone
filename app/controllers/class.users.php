@@ -1,10 +1,12 @@
 <?php
     class Users extends Controller{
             
+        //Sets the model to use
         public function __construct(){
             $this->user_model = $this->model('user');
         }
 
+        //Loads the register view, sends through any data it needs & executes all index related processes
         public function register(){
             //Check for post
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -109,6 +111,7 @@
             }
         }
 
+        //Loads the index view, sends through any data it needs & executes all index related processes
         public function index(){
             //Check for post
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -175,7 +178,7 @@
             }
         }
 
-        //Edits user details
+        //Loads the edit_user view, sends through any data it needs & executes all index related processes
         public function edit_user(){
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 //Sanitize POST data
@@ -274,6 +277,7 @@
             }
         }
 
+        //Sets the session variables
         public function create_user_session($user){
             $_SESSION['user_id'] = $user->user_id;
             $_SESSION['user_role'] = $user->user_role;
@@ -295,6 +299,7 @@
             redirect('');
         }
       
+        //Loads the ornithologist_dashboard view, sends through any data it needs & executes all index related processes
         public function ornithologist_dashboard($role = null){
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 
@@ -372,6 +377,7 @@
             } 
         }
 
+        //Loads the wind_farm_dashboard view, sends through any data it needs & executes all index related processes
         public function wind_farm_dashboard(){
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 
@@ -476,8 +482,10 @@
 
                         $param = UPLOAD_DIRECTORY . " user_outputs/11/";
                         // exec(UPLOAD_DIRECTORY . DS . "RiskMap.R $param");
-                        exec("\"C:\\Program Files\\R\\R-3.5.1\\bin\\Rscript.exe\"C:\\xampp\\htdocs\\CSC3-Capstone\\public\\resources\\model\\RiskMap.R");
+                        // exec("\"C:\\Program Files\\R\\R-3.5.1\\bin\\Rscript.exe\"C:\\xampp\\htdocs\\CSC3-Capstone\\public\\resources\\model\\RiskMap.R");
                         // die(exec("\"C:\\Program Files\\R\\R-3.5.1\\bin\\Rscript.exe\"C:\\xampp\\htdocs\\CSC3-Capstone\\public\\resources\\model\\RiskMap.R"));
+
+                        die(exec("\"C:\\Program Files\\R\\R-3.5.1\\bin\\Rscript.exe\" C:\\xampp\\htdocs\\CSC3-Capstone\\public\\resources\\model\\test.R"));
 
                         //Make a db entry
                         // $path = str_replace("\\","\\\\", str_replace("/","\\",$upload_directory)) . 'risk_map';
@@ -527,6 +535,7 @@
             }
         }
 
+        //downloads the html and png files
         public function download_report($report_id = null){
             if(isset($report_id)){
                 $row = $this->user_model->get_report($report_id);
@@ -552,6 +561,7 @@
             }
         }
 
+        //Loads the forgot_password view, sends through any data it needs & executes all index related processes
         public function forgot_password($code = null){
             if(isset($code) && $code == $_SESSION['code']){
                 //Check for post
@@ -677,6 +687,7 @@
             }
         }
 
+        //Loads the email_verified view, sends through any data it needs & executes all index related processes
         public function email_verified($email = null, $token = null){
             if(isset($email) && isset($token) && $this->user_model->check_token($token, $email)){
                 if($this->user_model->email_verified($email)){
@@ -693,6 +704,7 @@
             }
         }
 
+        //Loads the registered view
         public function registered(){
             $this->view('users/registered');
         }

@@ -36,6 +36,7 @@
             call_user_func_array([$this->current_controller, $this->current_method], $this->params);
         }
 
+        //Gets the URL, sanitizes it and breaks it into parts
         public function get_url(){
             if(isset($_GET['url'])){
                 $url = rtrim($_GET['url'], '/');

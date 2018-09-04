@@ -53,7 +53,7 @@
                     //Register user
                     if($this->user_model->register($data)){
                         if($data['role'] == '0'){
-                            $row = $this->user_model->get_next_id();
+                            $row = $this->user_model->get_next_id('users');
                             $id = $row->Auto_increment - 1;
 
                             $upload_directory = UPLOAD_DIRECTORY . DS . 'user_outputs' . DS . $id . DS;
@@ -450,20 +450,54 @@
                         redirect('users/wind_farm_dashboard');
                     }
                     else{                        
-                        $upload_directory = UPLOAD_DIRECTORY . DS . "user_outputs" . DS . $_SESSION['user_id'] . DS;
+                        $row = $this->user_model->get_next_id('reports');
+                        $id = $row->Auto_increment;
 
-                        //Create shape files
-                        move_uploaded_file($shp_tmp_name, $upload_directory . "shape.shp");
-                        move_uploaded_file($shx_tmp_name, $upload_directory . "shape.shx");
-                        move_uploaded_file($dbf_tmp_name, $upload_directory . "shape.dbf");
+                        $upload_directory = UPLOAD_DIRECTORY . DS . "user_outputs" . DS . $_SESSION['user_id'] . DS . $id . DS;
+                        $shp_directory = UPLOAD_DIRECTORY . DS . "user_outputs" . DS . $_SESSION['user_id'] . DS;
+
+                        if(!is_dir($upload_directory)){
+                            mkdir($upload_directory);
+                        }  
+
+                        //Delete shape files
+                        if(file_exists($shp_directory . "shape.shp")){
+                            unlink($shp_directory . "shape.shp");
+                        }
+                        if(file_exists($shp_directory . "shape.shx")){
+                            unlink($shp_directory . "shape.shx");
+                        }
+                        if(file_exists($shp_directory . "shape.dbf")){
+                            unlink($shp_directory . "shape.dbf");
+                        }
                         if(isset($sbn_tmp_name)){
-                            move_uploaded_file($sbn_tmp_name, $upload_directory . "shape.sbn");
-                        }    
+                            if(file_exists($shp_directory . "shape.sbn")){
+                                unlink($shp_directory . "shape.sbn");
+                            }
+                        }
                         if(isset($sbx_tmp_name)){
-                            move_uploaded_file($sbx_tmp_name, $upload_directory . "shape.sbx");
+                            if(file_exists($shp_directory . "shape.sbx")){
+                                unlink($shp_directory . "shape.sbx");
+                            }
                         }
                         if(isset($prj_tmp_name)){
-                            move_uploaded_file($prj_tmp_name, $upload_directory . "shape.prj");
+                            if(file_exists($shp_directory . "shape.prj")){
+                                unlink($shp_directory . "shape.prj");
+                            }
+                        }
+
+                        //Create shape files
+                        move_uploaded_file($shp_tmp_name, $shp_directory . "shape.shp");
+                        move_uploaded_file($shx_tmp_name, $shp_directory . "shape.shx");
+                        move_uploaded_file($dbf_tmp_name, $shp_directory . "shape.dbf");
+                        if(isset($sbn_tmp_name)){
+                            move_uploaded_file($sbn_tmp_name, $shp_directory . "shape.sbn");
+                        }    
+                        if(isset($sbx_tmp_name)){
+                            move_uploaded_file($sbx_tmp_name, $shp_directory . "shape.sbx");
+                        }
+                        if(isset($prj_tmp_name)){
+                            move_uploaded_file($prj_tmp_name, $shp_directory . "shape.prj");
                         }
 
                         //Create nest data
@@ -474,55 +508,29 @@
                             array_push($csv_array, 'Nst_' . $row->pin_id . "," . $row->longitude . "," .$row->latitude);
                         }
 
+                        //Delete old nest data
+                        if(file_exists(UPLOAD_DIRECTORY . DS . "NESTDATA.csv")){
+                            unlink(UPLOAD_DIRECTORY . DS . "NESTDATA.csv");
+                        }
+
+                        //Write nest data
                         $file = fopen(UPLOAD_DIRECTORY . DS . "NESTDATA.csv", "w");
                         foreach ($csv_array as $line){
                             fputcsv($file, (array) $line);
                         }
                         fclose($file);
 
-                        $param = UPLOAD_DIRECTORY . " user_outputs/11/";
-                        // exec(UPLOAD_DIRECTORY . DS . "RiskMap.R $param");
-                        // exec("\"C:\\Program Files\\R\\R-3.5.1\\bin\\Rscript.exe\"C:\\xampp\\htdocs\\CSC3-Capstone\\public\\resources\\model\\RiskMap.R");
-                        // die(exec("\"C:\\Program Files\\R\\R-3.5.1\\bin\\Rscript.exe\"C:\\xampp\\htdocs\\CSC3-Capstone\\public\\resources\\model\\RiskMap.R"));
-
-                        die(exec("\"C:\\Program Files\\R\\R-3.5.1\\bin\\Rscript.exe\" C:\\xampp\\htdocs\\CSC3-Capstone\\public\\resources\\model\\test.R"));
+                        $r_path = "C:\\Program Files\\R\\R-3.5.1\\bin\\Rscript.exe";
+                        $model_path = str_replace("\\","\\\\", str_replace("/","\\",UPLOAD_DIRECTORY)) . "\\RiskMap.R";
+                        $param = str_replace("\\","\\\\", str_replace("/","\\",UPLOAD_DIRECTORY)) . " user_outputs/" . $_SESSION['user_id'] . " /" . $id;
+                        ini_set('max_execution_time', 300); //300 seconds = 5 minutes
+                        exec("\"$r_path\" $model_path $param");
 
                         //Make a db entry
-                        // $path = str_replace("\\","\\\\", str_replace("/","\\",$upload_directory)) . 'risk_map';
-                        // $rows = $this->user_model->add_report($path, $name);
+                        $path = str_replace("/","\\",$upload_directory) . 'risk_map';
+                        $rows = $this->user_model->add_report($path, $name);
 
-                        //Delete nest data
-                        if(file_exists(UPLOAD_DIRECTORY . DS . "NESTDATA.csv")){
-                            unlink(UPLOAD_DIRECTORY . DS . "NESTDATA.csv");
-                        }
-
-                        //Delete shape files
-                        if(file_exists($upload_directory . "shape.shp")){
-                            unlink($upload_directory . "shape.shp");
-                        }
-                        if(file_exists($upload_directory . "shape.shx")){
-                            unlink($upload_directory . "shape.shx");
-                        }
-                        if(file_exists($upload_directory . "shape.dbf")){
-                            unlink($upload_directory . "shape.dbf");
-                        }
-                        if(isset($sbn_tmp_name)){
-                            if(file_exists($upload_directory . "shape.sbn")){
-                                unlink($upload_directory . "shape.sbn");
-                            }
-                        }
-                        if(isset($sbx_tmp_name)){
-                            if(file_exists($upload_directory . "shape.sbx")){
-                                unlink($upload_directory . "shape.sbx");
-                            }
-                        }
-                        if(isset($prj_tmp_name)){
-                            if(file_exists($upload_directory . "shape.prj")){
-                                unlink($upload_directory . "shape.prj");
-                            }
-                        }
-
-                        set_message("Your site is being added. This process will take some time, please come back in 10-15 minutes and your site will have been added.");
+                        set_message("Your site has been added.");
                         redirect('users/wind_farm_dashboard');
                     }
                 }
@@ -531,7 +539,7 @@
                 $data =[
                     'reports' => $this->user_model->get_reports(),
                 ];
-                $this->view('users/wind_farm_dashboard');
+                $this->view('users/wind_farm_dashboard', $data);
             }
         }
 
@@ -542,14 +550,16 @@
 
                 $file_url = $row->report_path . '.html';
                 header('Content-Type: application/octet-stream');
-                header("Content-Transfer-Encoding: Binary"); 
-                header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\""); 
+                header('Content-Type: application/octet-stream');
+                header('Content-Disposition: attachment; filename="'.basename($file_url).'"'); 
+                flush();
                 readfile($file_url);
 
                 $file_url = $row->report_path . '.png';
                 header('Content-Type: application/octet-stream');
-                header("Content-Transfer-Encoding: Binary"); 
-                header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\""); 
+                header('Content-Type: application/octet-stream');
+                header('Content-Disposition: attachment; filename="'.basename($file_url).'"'); 
+                flush();
                 readfile($file_url);
 
                 //Load view

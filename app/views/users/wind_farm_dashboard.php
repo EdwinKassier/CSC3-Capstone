@@ -52,7 +52,7 @@ if (!is_user_logged_in()) {
                 </thead>
                 <tbody>
                 <?php
-                if (!empty($data['reports'])):
+                if(!empty($data['reports'])):
                     foreach ($data['reports'] as $row):
                         ?>
                         <tr>

@@ -109,8 +109,9 @@
         }
 
         //Get next id
-        public function get_next_id(){
-            $this->db->query('SHOW TABLE STATUS LIKE "users"');
+        public function get_next_id($db){
+            $this->db->query('SHOW TABLE STATUS LIKE :db');
+            $this->db->bind(':db', $db);
             return $this->db->single();
         }
 

@@ -339,6 +339,7 @@
                     }
                     else if($_FILES[$file]['size'] !== 0 && $_FILES[$file]['error'] === 0 && empty($latitude) && empty($longitude)){
                         $tmp_name = $_FILES[$file]['tmp_name'];
+                        $file_name = $_FILES[$file]['name'];
                         $csv_array = array_map('str_getcsv', file($tmp_name));
 
                         $file_extensions = ['csv'];

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 01, 2018 at 03:34 PM
+-- Generation Time: Sep 05, 2018 at 06:31 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -66,15 +66,14 @@ CREATE TABLE `pins` (
 --
 
 INSERT INTO `pins` (`pin_id`, `user_id`, `latitude`, `longitude`, `role`, `name`) VALUES
-(1, 4, '51.3000', '-0.120850', 0, NULL),
-(2, 4, '52.3000', '-0.120850', 0, NULL),
-(3, 4, '53.3000', '-0.120850', 0, NULL),
-(4, 4, '54.3000', '-0.120850', 0, NULL),
-(5, 4, '54.5000', '-0.120850', 0, NULL),
-(6, 4, '54.5000', '-0.120850', 0, NULL),
-(7, 4, '52.3000', '-0.120850', 1, 'England'),
-(12, 4, '54.5000', '-0.120850', 1, 'England 2'),
-(14, 4, '54.5000', '-0.120850', 1, 'England 3');
+(1, 4, '-34.0719', '18.37995', 0, NULL),
+(2, 4, '-34.0720', '18.37995', 0, NULL),
+(3, 4, '-34.0721', '18.37995', 0, NULL),
+(4, 4, '-34.0722', '18.37995', 0, NULL),
+(5, 4, '-34.0723', '18.37995', 0, NULL),
+(6, 4, '-34.0724', '18.37995', 0, NULL),
+(7, 4, '52.3000', '0.120850', 1, 'England'),
+(12, 4, '54.5000', '18.37995', 1, 'Cape Town');
 
 -- --------------------------------------------------------
 
@@ -105,6 +104,13 @@ CREATE TABLE `reports` (
   `report_name` varchar(255) NOT NULL,
   `report_path` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `reports`
+--
+
+INSERT INTO `reports` (`report_id`, `user_id`, `report_name`, `report_path`) VALUES
+(8, 11, 'Test', '..\\public\\resources\\model\\user_outputs\\11\\8\\risk_map');
 
 -- --------------------------------------------------------
 
@@ -151,13 +157,15 @@ ALTER TABLE `admins`
 -- Indexes for table `pins`
 --
 ALTER TABLE `pins`
-  ADD PRIMARY KEY (`pin_id`);
+  ADD PRIMARY KEY (`pin_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `reports`
 --
 ALTER TABLE `reports`
-  ADD PRIMARY KEY (`report_id`);
+  ADD PRIMARY KEY (`report_id`),
+  ADD KEY `reports_ibfk_1` (`user_id`);
 
 --
 -- Indexes for table `users`
@@ -185,13 +193,29 @@ ALTER TABLE `pins`
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `pins`
+--
+ALTER TABLE `pins`
+  ADD CONSTRAINT `pins_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `reports`
+--
+ALTER TABLE `reports`
+  ADD CONSTRAINT `reports_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

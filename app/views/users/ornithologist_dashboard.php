@@ -74,6 +74,7 @@
                                         <h4 class="modal-title">Add nest site</h4>
                                         <button type="reset" class="close" data-dismiss="modal">&times;</button>
                                     </div>
+                                    <br>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <h5>Many</h5>
@@ -93,8 +94,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <hr>
                                 </div>
+                                <hr>
                                 <i class="fas fa-info-circle" data-toggle="tooltip" title="Need some help? You can find it in the FAQ section!" id='example' style=" position: absolute; left: 30;"></i>
                                 <div style="float: right;">
                                     <button type="reset" class="btn btn-custom" data-dismiss="modal" >Close</button>

@@ -8,6 +8,7 @@
         }
 
         //Register admin
+        //$data is an array containing all the data that needs to be written to the database
         public function register($data){
             $this->db->query("INSERT INTO admins (admin_name, admin_surname, admin_password, admin_email, admin_mobile_number, admin_username) VALUES(:name, :surname, :password, :email, :mobile_number, :username)");
             $this->db->bind(':name', $data['name']);
@@ -27,6 +28,7 @@
         }
         
         //Edit admin
+        //$data is an array containing all the data that needs to be written to the database
         public function edit_admin($data){
             $this->db->query("UPDATE admins SET admin_name = :name, admin_surname = :surname, admin_mobile_number = :mobile_number, admin_email = :email, admin_username = :username WHERE admin_id = :id");
             $this->db->bind(':name', $data['name']);
@@ -46,6 +48,8 @@
         }
 
         //Update the admin's password
+        //$username is a string, containing the admin username that needs to be compared to the database
+        //$password is an array containing the password that needs to be written to the database
         public function update_password($password, $username){
             $this->db->query('UPDATE admins SET admin_password= :password WHERE admin_username= :username');
             $this->db->bind(':password', $password);
@@ -60,6 +64,7 @@
         }
 
         //Get a admin data
+        //$admin_id is a string, containing the admin id that needs to be compared to the database
         public function get_admin_data($admin_id){
             $this->db->query('SELECT * FROM admins WHERE admin_id = :id');
             $this->db->bind(':id', $admin_id);
@@ -73,6 +78,7 @@
         }
 
         //Login admin
+        //$data is an array containing all the data that compared to the data in the database
         public function login($data){
             $this->db->query('SELECT * FROM admins WHERE admin_username = :email');
             $this->db->bind(':email', $data['email']);
@@ -88,6 +94,7 @@
         }
 
         //Find admin by username
+        //$username is a string, containing the admin username that needs to be compared to the database
         public function find_admin_by_username($username){
             $this->db->query('SELECT * FROM admins WHERE admin_username = :username');
             $this->db->bind(':username', $username);
@@ -102,6 +109,8 @@
         }
 
         //Check if the new username is the same as the old username.
+        //$admin_id is a string, containing the admin id that needs to be compared to the database
+        //$username is a string, containing the username that needs to be compared to the relevant admin's username
         public function check_new_username_vs_old_username($username, $admin_id){
             $this->db->query('SELECT * FROM admins WHERE admin_id = :id');
             $this->db->bind(':id', $admin_id);
@@ -229,6 +238,7 @@
         }
 
         //validates a user
+        //$user is a string, containing the user id that needs to be compared to the database
         public function validate_user($user){
             $this->db->query("UPDATE users SET approved = :approved WHERE user_id = :id");
             $this->db->bind(':approved', '1');
@@ -244,6 +254,7 @@
         }
 
         //rejects a user
+        //$user is a string, containing the user id that needs to be deleted from the database
         public function reject_user($user){
             $this->db->query("DELETE FROM users WHERE user_id = :id");
             $this->db->bind(':id', $user);
@@ -258,6 +269,7 @@
         }
 
         //removes a user
+        //$user is a string, containing the user id that needs to be compared to the database
         public function remove_user($user){
             $this->db->query("UPDATE users SET removed = :removed WHERE user_id = :id");
             $this->db->bind(':removed', '1');
@@ -273,6 +285,7 @@
         }
 
         //removes a admin
+        //$admin is a string, containing the admin id that needs to be compared to the database
         public function remove_admin($admin){
             $this->db->query("DELETE FROM admins WHERE admin_id = :id");
             $this->db->bind(':id', $admin);

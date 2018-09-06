@@ -1,3 +1,4 @@
+<!--This is the pages controller class, it inherits from the main controller class-->
 <?php
     class Pages extends Controller{
         //Loads the about view

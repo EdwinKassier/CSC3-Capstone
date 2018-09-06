@@ -1,3 +1,4 @@
+<!--This is the dashboard content page, it shows the admin all the numbers and alerts they need to know as well as allowing them to update the backend model-->
 <style>
     .btn-file {
         position: relative;
@@ -84,14 +85,16 @@
     <hr>
     <h2>Update the model</h2>
     <hr>
-    <h4 class="alert-danger" style="text-align:center;">WARNING: Every time you upload a new model the previous one will be overwritten</h4>
+    <h4 class="alert-danger" style="text-align:center;">WARNING: Every time you upload a new model the previous one will
+        be overwritten</h4>
     <div class="alert-danger text-center"><?php echo $data['error']; ?></div>
     <div class="alert-success text-center"><?php echo $data['success']; ?></div>
     <br>
     <form action="<?php echo URLROOT; ?>/admins/dashboard_content" method="post" enctype="multipart/form-data">
         <div class="col-md-6 input-group">
             <label class="input-group-btn">
-                    <span class="btn btn-primary">Browse&hellip; <input type="file" accept=".rds" name="model" style="display: none;" multiple></span>
+                <span class="btn btn-primary">Browse&hellip; <input type="file" accept=".rds" name="model"
+                                                                    style="display: none;" multiple></span>
             </label>
             <input type="text" id="model" class="form-control" readonly>
         </div>

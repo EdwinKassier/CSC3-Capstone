@@ -1,3 +1,4 @@
+<!--This is the about us page, it gives users information about the site-->
 <html lang="en">
 <head>
     <?php include(TEMPLATE_FRONT . DS . "header.php"); ?>
@@ -14,7 +15,7 @@
     <main role="main" class="container" id="body">
         <h4>About the Black Eagle Project</h4>
         <hr>
-        <div style="text-align: justify;">              
+        <div style="text-align: justify;">
             <p>
                 The Black Eagle Project was established in 2011 in collaboration with the Animal
                 Demography Unit at the University of Cape Town. The CLT provided a 2year scholarship to PhD
@@ -48,10 +49,12 @@
                 from former breeding grounds. For example on the Cape Peninsula the number of breeding pairs has
                 gone from at least five to just one in the last 20 years (Jenkins & van Zyl 2009; Rodrigues).
             </p>
-            <p>For more information, please visit our <a href="http://blackeagleproject.blogspot.com/" target="_blank">blogspot website.</a></p>
+            <p>For more information, please visit our <a href="http://blackeagleproject.blogspot.com/" target="_blank">blogspot
+                    website.</a></p>
         </div>
         <hr>
-        <button class="btn btn-custom" style="float:right" onclick="location.href='<?php echo URLROOT; ?>'">Back</button>
+        <button class="btn btn-custom" style="float:right" onclick="location.href='<?php echo URLROOT; ?>'">Back
+        </button>
     </main>
     <br>
 

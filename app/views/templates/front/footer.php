@@ -1,4 +1,4 @@
-
+<!--This is the footer for the admin pages-->
 <footer class="row footer">
     <div class="col" style="padding-top:5px;">
         <p><a style="padding-right:10px" href="<?php echo URLROOT; ?>/pages/about"><font color="white">About us</font></a>&emsp;<a href="<?php echo URLROOT; ?>/pages/FAQ"><font color="white">FAQ</font></a></p>

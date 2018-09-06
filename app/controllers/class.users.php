@@ -1,3 +1,4 @@
+<!--This is the users controller class, it inherits from the main controller class-->
 <?php
     class Users extends Controller{
             
@@ -327,7 +328,7 @@
                     redirect('users/ornithologist_dashboard');
                 }
                 else{
-                    if($_FILES[$file]['size'] == 0 && !empty($latitude) && empty($longitude) || empty($file) && empty($latitude) && !empty($longitude)){
+                    if($_FILES[$file]['size'] == 0 && !empty($latitude) && empty($longitude) || $_FILES[$file]['size'] == 0 && empty($latitude) && !empty($longitude)){
                         set_message('Please full in both latitude and longitude.');
                         redirect('users/ornithologist_dashboard');
                     }
@@ -352,15 +353,16 @@
                         else if(!in_array($file_extension, $file_extensions)) {
                             set_message("The file has an extension which is not allowed. Please upload an csv file.");
                         }
-
-                        foreach($csv_array as $row) {
-                            $row = explode(';', $row[0]);
-                            if(strtolower($row[0]) != 'latitude' && strtolower($row[1]) != 'longitude'){
-                                $this->user_model->add_pin($role, $row[0], $row[1], $name);
+                        else{
+                            foreach($csv_array as $row) {
+                                $row = explode(';', $row[0]);
+                                if(strtolower($row[0]) != 'latitude' && strtolower($row[1]) != 'longitude'){
+                                    $this->user_model->add_pin($role, $row[0], $row[1], $name);
+                                }
                             }
+                            set_message("Your pins were successfully uploaded.");
                         }
 
-                        set_message("Your pins were successfully uploaded.");
                         redirect('users/ornithologist_dashboard');
                     }  
                     else{
@@ -549,10 +551,12 @@
             if(isset($report_id)){
                 $row = $this->user_model->get_report($report_id);
 
+
+
                 $file_url = $row->report_path . '.html';
                 header('Content-Type: application/octet-stream');
                 header('Content-Type: application/octet-stream');
-                header('Content-Disposition: attachment; filename="'.basename($file_url).'"'); 
+                header('Content-Disposition: attachment; filename="'.basename($file_url).'"');
                 flush();
                 readfile($file_url);
 

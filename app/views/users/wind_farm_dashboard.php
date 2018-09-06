@@ -1,3 +1,4 @@
+<!--This is the wind farm dashboard, this screen will be the first screen displayed when a wind farm user logs in-->
 <html lang="en">
 <head>
     <?php include(TEMPLATE_FRONT . DS . "header.php"); ?>
@@ -10,11 +11,13 @@
     }
 </style>
 <body style="overflow-y:hidden"
-      onload="<?php if (isset($_SESSION['message_modal']) && $_SESSION['message_modal'] === true) {
-          echo "openAlert()";
-          unset($_SESSION['message_modal']);
-      } ?>">
+<!--This will open a message modal if there is some error on the page-->
+onload="<?php if (isset($_SESSION['message_modal']) && $_SESSION['message_modal'] === true) {
+    echo "openAlert()";
+    unset($_SESSION['message_modal']);
+} ?>">
 
+<!--This checks if the user is logged in-->
 <?php
 if (!is_user_logged_in()) {
     redirect('');
@@ -51,14 +54,17 @@ if (!is_user_logged_in()) {
                 </tr>
                 </thead>
                 <tbody>
+                <!--This checks if there are any reports in the database to be downloaded-->
                 <?php
-                if(!empty($data['reports'])):
+                if (!empty($data['reports'])):
                     foreach ($data['reports'] as $row):
                         ?>
                         <tr>
                             <td><?php echo $row->report_name; ?></td>
                             <td>
-                                <button onclick="location.href='<?php echo URLROOT; ?>/users/download_report/<?php echo $row->report_id; ?>'" type="button" class="btn btn-custom" style="float:right;">Generate report </button>
+                                <button onclick="location.href='<?php echo URLROOT; ?>/users/download_report/<?php echo $row->report_id; ?>'"
+                                        type="button" class="btn btn-custom" style="float:right;">Generate report
+                                </button>
                             </td>
                         </tr>
                     <?php
@@ -139,8 +145,8 @@ if (!is_user_logged_in()) {
                                    title="Need some help? You can find it in the FAQ section!" id='example'
                                    style=" position: absolute; left: 30;"></i>
                                 <div style="float: right;">
-                                    <button type="reset" class="btn btn-custom" data-dismiss="modal" >Close</button>
-                                    <button type="submit" class="btn btn-custom" >Upload</button>
+                                    <button type="reset" class="btn btn-custom" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-custom">Upload</button>
                                 </div>
                             </div>
                         </div>
@@ -159,13 +165,14 @@ if (!is_user_logged_in()) {
                     <div class="modal-body">
                         <p><?php display_message(); ?></p>
                         <hr>
-                        <button style="float:right;" type="reset" class="btn btn-custom" data-dismiss="modal">Close</button>
+                        <button style="float:right;" type="reset" class="btn btn-custom" data-dismiss="modal">Close
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
 
-    </div>
+</div>
 </main>
 <br>
 
@@ -175,11 +182,13 @@ if (!is_user_logged_in()) {
 </div>
 <!-- Javascript -->
 <script>
+    //Set the text in the file input box to the uploaded files name
     $('.custom-file-input').on('change', function () {
         let fileName = $(this).val().split('\\').pop();
         $(this).next('.custom-file-label').addClass("selected").html(fileName);
     });
 
+    //Table filter function used by the search bar to filter the table on screen
     function tableFilter() {
         var input, filter, table, tr, td, i;
         input = document.getElementById("myInput");
@@ -198,12 +207,14 @@ if (!is_user_logged_in()) {
         }
     }
 
+    //Initialisng the tool tip to open on hover
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
 
     var map;
 
+    //Initialising the google maps
     function myMap() {
         var var_location = new google.maps.LatLng(-33.958732, 18.460068);
 
@@ -216,6 +227,7 @@ if (!is_user_logged_in()) {
         map = new google.maps.Map(document.getElementById("googleMap"), var_mapoptions);
     }
 
+    //Open the alert modal showing people a message
     function openAlert() {
         $('#alertModal').modal('show');
     }

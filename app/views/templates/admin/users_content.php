@@ -1,3 +1,4 @@
+<!--This is the users content page, it will showcase a table of all current users on the database to admins-->
 <style>
     .table td {
         white-space: nowrap;
@@ -5,6 +6,7 @@
         text-overflow: ellipsis;
 
     }
+
     .table th {
         white-space: nowrap;
         overflow: hidden;
@@ -19,7 +21,8 @@
     </div>
     <div class="col-md-6">
         <br>
-        <input type="text" id="myInput" onkeyup="users_filter()" placeholder="Search for names.." title="Type in a name">
+        <input type="text" id="myInput" onkeyup="users_filter()" placeholder="Search for names.."
+               title="Type in a name">
     </div>
 
 </div>
@@ -36,27 +39,30 @@
         <th>Company/organization number</th>
         <th></th>
     </tr>
-    </thead> 
+    </thead>
     <tbody>
-    <?php 
-    if(!empty($data['users'])):
-        foreach ($data['users'] as $row):
-    ?>
-    <tr>
-        <td><?php echo $row->user_id; ?></td>
-        <td><?php echo $row->user_name; ?></td>
-        <td><?php echo $row->user_surname; ?></td>
-        <td><?php echo $row->user_email; ?></td>
-        <td><?php echo $row->user_mobile_number; ?></td>
-        <td><?php echo $row->user_organization_name; ?></td>
-        <td><?php echo $row->user_organization_number; ?></td>
-        <td>
-            <div class="col" style="float:right;padding-bottom:5px;">
-                <button type="button" class="btn btn-danger" onclick="location.href='<?php echo URLROOT; ?>/admins/remove_user/<?php echo $row->user_id; ?>'">Remove</button>
-            </div>
-        </td>
-    </tr>
     <?php
+    if (!empty($data['users'])):
+        foreach ($data['users'] as $row):
+            ?>
+            <tr>
+                <td><?php echo $row->user_id; ?></td>
+                <td><?php echo $row->user_name; ?></td>
+                <td><?php echo $row->user_surname; ?></td>
+                <td><?php echo $row->user_email; ?></td>
+                <td><?php echo $row->user_mobile_number; ?></td>
+                <td><?php echo $row->user_organization_name; ?></td>
+                <td><?php echo $row->user_organization_number; ?></td>
+                <td>
+                    <div class="col" style="float:right;padding-bottom:5px;">
+                        <button type="button" class="btn btn-danger"
+                                onclick="location.href='<?php echo URLROOT; ?>/admins/remove_user/<?php echo $row->user_id; ?>'">
+                            Remove
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        <?php
         endforeach;
     endif;
     ?>
@@ -64,6 +70,7 @@
 </table>
 
 <script>
+    /*Filter function used by the search bar to filter the user table*/
     function users_filter() {
         var input, filter, table, tr, td, i;
         input = document.getElementById("myInput");

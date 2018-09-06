@@ -1,3 +1,4 @@
+<!--This is the pending users page, it will show admins all users who are awaiting their validation in a table-->
 <style>
     .table td {
         white-space: nowrap;
@@ -20,45 +21,52 @@
     </div>
     <div class="col-md-6">
         <br>
-        <input type="text" id="myInput" onkeyup="pending_filter()" placeholder="Search for names.." title="Type in a name">
+        <input type="text" id="myInput" onkeyup="pending_filter()" placeholder="Search for names.."
+               title="Type in a name">
     </div>
 
 </div>
 <hr>
 <table class="table table-striped" id="pending_Table">
     <thead style="background-color:lightgray">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Email</th>
-            <th>Mobile number</th>
-            <th>Company/organization name</th>
-            <th>Company/organization number</th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Email</th>
+        <th>Mobile number</th>
+        <th>Company/organization name</th>
+        <th>Company/organization number</th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-    <?php 
-    if(!empty($data['pending_users'])):
-        foreach ($data['pending_users'] as $row):
-    ?>
-    <tr>
-        <td><?php echo $row->user_id; ?></td>
-        <td><?php echo $row->user_name; ?></td>
-        <td><?php echo $row->user_surname; ?></td>
-        <td><?php echo $row->user_email; ?></td>
-        <td><?php echo $row->user_mobile_number; ?></td>
-        <td><?php echo $row->user_organization_name; ?></td>
-        <td><?php echo $row->user_organization_number; ?></td>
-        <td>
-            <div class="col" style="float:right;padding-bottom:5px;">
-                <button type="submit" class="btn btn-primary" onclick="location.href='<?php echo URLROOT; ?>/admins/validate_user/<?php echo $row->user_id; ?>'">Validate</button>
-                <button type="button" class="btn btn-danger" onclick="location.href='<?php echo URLROOT; ?>/admins/reject_user/<?php echo $row->user_id; ?>'">Remove</button>
-            </div>
-        </td>
-    </tr>
     <?php
+    if (!empty($data['pending_users'])):
+        foreach ($data['pending_users'] as $row):
+            ?>
+            <tr>
+                <td><?php echo $row->user_id; ?></td>
+                <td><?php echo $row->user_name; ?></td>
+                <td><?php echo $row->user_surname; ?></td>
+                <td><?php echo $row->user_email; ?></td>
+                <td><?php echo $row->user_mobile_number; ?></td>
+                <td><?php echo $row->user_organization_name; ?></td>
+                <td><?php echo $row->user_organization_number; ?></td>
+                <td>
+                    <div class="col" style="float:right;padding-bottom:5px;">
+                        <button type="submit" class="btn btn-primary"
+                                onclick="location.href='<?php echo URLROOT; ?>/admins/validate_user/<?php echo $row->user_id; ?>'">
+                            Validate
+                        </button>
+                        <button type="button" class="btn btn-danger"
+                                onclick="location.href='<?php echo URLROOT; ?>/admins/reject_user/<?php echo $row->user_id; ?>'">
+                            Remove
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        <?php
         endforeach;
     endif;
     ?>
@@ -66,6 +74,7 @@
 </table>
 
 <script>
+    /*Filter function used by the search bar to filter the table according to a search term*/
     function pending_filter() {
         var input, filter, table, tr, td, i;
         input = document.getElementById("myInput");

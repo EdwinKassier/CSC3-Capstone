@@ -13,6 +13,9 @@
 #finalArea = elevation + shpefile cropped
 #region.terrain = dev.terrain = the dataframe of all data pertaining to the finalArea
 
+##### START debug output text #####
+sink('report.txt')
+
 ##### Load Packages & Add-ins #####
 shhh <- suppressPackageStartupMessages # surpress warning messages when loading packages!
 shhh(require(effects))
@@ -27,6 +30,8 @@ mainPAth <- args[1]
 modelPAth <- args[2]
 savePAth <- args[3]
 
+print(mainPAth)
+
 ##### Set working directory to locate files #####
 #set this path to wherever 
 setwd(mainPAth) # where the model and all files need to be
@@ -37,7 +42,7 @@ riskmod <- readRDS("riskmod.rds") #this is the file that Megan is likely to chan
 ##### Load user shapeFile #####
 
 #Find the name of the shapefiles
-filename <- list.files(path=paste(modelPAth, "/", sep=""), pattern="+.*shp")
+filename <- list.files(path=paste0(modelPAth, "/"), pattern="+.*shp")
 shapefile <- strsplit(filename, ".shp" )[[1]]
 print(paste("Loading user input shapefiles:" , shapefile, "..."))
 
@@ -123,7 +128,7 @@ print("Aspect successfully calcualted.")
 
 #load in precaluclated values
 for(j in 1:N){
-  filepath = paste("slopes/",map.names[[j]],".tif" ,sep = "") #THIS DIRECTORY IS HARDCODED
+  filepath = paste0("slopes/",map.names[[j]],".tif") #THIS DIRECTORY IS HARDCODED
   maps[[j]] <- (assign(map.names[[j]], raster(filepath))) #assign the raster layer its name
 }
 
@@ -233,14 +238,21 @@ risk_plot=rasterFromXYZ(toplot)
 crs(risk_plot) <- sp::CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
 
 #DEBUG:view plot
-spplot(risk_plot)
+#spplot(risk_plot)
 print("Producing map...")
 map <- mapview(risk_plot, alpha.regions = 0.50, na.color = "transparent", map.types = "Esri.WorldImagery")
-map
+#map
+
 mapshot(map, file = paste0(getwd(),"/", modelPAth, savePAth, "/risk_map.png"))
 print("Map png printed.")
 mapshot(map, url = paste0(getwd(),"/", modelPAth, savePAth, "/risk_map.html"))
 print("Map html generated.")
 
+# source("https://install-github.me/gaborcsardi/zip")
+# library(zip)
+# zip("risk_map.zip", c("risk_map.png", "risk_map.html", "risk_map_files"))
+
 dev.off() 
 
+#End writing report
+sink()

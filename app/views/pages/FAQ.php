@@ -1,3 +1,4 @@
+<!--This is the FAQ page and allows users to find answers to any questions/errors they might have-->
 <html lang="en">
 <head>
     <?php include(TEMPLATE_FRONT . DS . "header.php"); ?>
@@ -48,16 +49,19 @@
             <img src="<?php echo URLROOT; ?>/resources/images/site_example.png" alt="Modal example">
             <hr>
             <p>
-               When uploading a set of shape files for an area that you want to learn more about, you will need to follow these steps:
+                When uploading a set of shape files for an area that you want to learn more about, you will need to
+                follow these steps:
             </p>
             <p>
                 1. Ensure that all uploaded files have the same name (eg myshapefile.extension)
             </p>
             <p>
-                2. There are three types of shape files you are required to uploaded to make the model work(.shp,.shx and .dbf files)
+                2. There are three types of shape files you are required to uploaded to make the model work(.shp,.shx
+                and .dbf files)
             </p>
             <p>
-                3. There are three types of optional shape files you can upload in addition to the ones mentioned above(.prj, .sbn and .sbx)
+                3. There are three types of optional shape files you can upload in addition to the ones mentioned
+                above(.prj, .sbn and .sbx)
             </p>
             <p>
                 4. You must choose a name for your site by entering its name in the top name bar
@@ -67,8 +71,13 @@
             </p>
 
 
-
         </div>
+        <br>
+        <hr>
+        <h3>You can also find the full user manual here</h3>
+
+       <a href="<?php echo URLROOT; ?>\resources\files\BE_Manual.pdf" target="_blank"><font color="#6495ed" style="font-size: 24px;">User manual</font></a>
+
     </main>
     <br>
 

@@ -1,3 +1,4 @@
+<!--This is the admin controller class, it inherits from the main controller class-->
 <?php
     class Admins extends Controller{
         //Sets the model to use

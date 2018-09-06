@@ -1,3 +1,4 @@
+<!--This is the index page, it is the first page users see and is in charge of redirecting them after they successfully log in-->
 <html lang="en">
   <head>
     <?php include(TEMPLATE_FRONT . DS . "header.php"); ?>
@@ -43,7 +44,7 @@
       <main class="row" id="body">
         <div class="col-md-7" ></div>
         <div class="col-md-4" style="margin: auto; padding: 0;">
-          <div class="text-block" id="rcorners"> 
+          <div class="text-block" id="rcorners">
             <!-- Login -->
             <form action="<?php echo URLROOT; ?>/users/index"  method="post">
               <div class="container">

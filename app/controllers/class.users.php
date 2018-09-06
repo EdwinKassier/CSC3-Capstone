@@ -551,23 +551,12 @@
             if(isset($report_id)){
                 $row = $this->user_model->get_report($report_id);
 
-<<<<<<< HEAD
                 // $file_url = $row->report_path . '.html';
                 // header('Content-Type: application/octet-stream');
                 // header('Content-Type: application/octet-stream');
                 // header('Content-Disposition: attachment; filename="'.basename($file_url).'"'); 
                 // flush();
                 // readfile($file_url);
-=======
-
-
-                $file_url = $row->report_path . '.html';
-                header('Content-Type: application/octet-stream');
-                header('Content-Type: application/octet-stream');
-                header('Content-Disposition: attachment; filename="'.basename($file_url).'"');
-                flush();
-                readfile($file_url);
->>>>>>> 2bace29635000e5d88c8f5811731a3d4a40c95ad
 
                 $file_url = $row->report_path . '.png';
                 header('Content-Type: application/octet-stream');

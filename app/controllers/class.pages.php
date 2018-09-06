@@ -33,6 +33,7 @@
                 $errorMessage = 'There was an error while submitting the form. Please try again later';
                 $recaptchaSecret = 'ENTER SECRET KEY HERE';
 
+                //Checking if recaptcha is set
                 try {
                     if (!isset($_POST['g-recaptcha-response'])) {
                         throw new \Exception('ReCaptcha is not set.');

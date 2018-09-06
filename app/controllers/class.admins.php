@@ -7,6 +7,9 @@
         }
 
         //Loads the index view, sends through any data it needs & executes all index related processes
+        //view is the view the admin is currently looking at
+        //admin_id is the id of the admin accessing the index function
+        //the index method is used to redirect admins to different pages
         public function index($view = null, $admin_id = null){
             if($view == 'map'){
                 //Init data
@@ -129,17 +132,20 @@
                     $password = $data['password'];
                     $confirm_password = $data['confirm_password'];
                     $username = $data['username'];
-        
+
+                    //Checking mobile number length
                     if(strlen($mobile_number) != 10){
                         $data['error'] = "Mobile number must be an actual number.";
                     }
+                    //Checking password length
                     else if($password !== $confirm_password){
                         $data['error'] = "The entered passwords do not match.";
                         if(strlen($password) < 6){
                             $data['error'] = "Your password is too short. Passwords must at least be 6 characters long.";
                         }
                     }
-    
+
+                    //Comparing new and old passwords
                     $row = $this->admin_model->check_new_username_vs_old_username($username, $data['id']);
                     if($row != 'true' && $this->admin_model->find_admin_by_username($username)){
                         $data['error'] = "Your new username address is already registered.";
@@ -185,6 +191,7 @@
                 }
             }
             else{
+                //Posting data to the server
                 if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     //Sanitize POST data
                     $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -252,6 +259,7 @@
         }
 
         //Used to log in an admin
+        //Outputs an error if the login is unsuccessful
         public function login(){
             $data = $_SESSION['data'];
             unset($_SESSION['data']);
@@ -282,6 +290,7 @@
         }
 
         //creates session variables for admin
+        //gets passed a user object as a param
         public function create_admin_session($admin){
             $_SESSION['admin_id'] = $admin->admin_id;
             $_SESSION['admin_name'] = $admin->admin_name;
@@ -300,6 +309,7 @@
         }
 
         //validates a user
+        //gets passed a user object as a param
         public function validate_user($user){
             $this->admin_model->validate_user($user);
             
@@ -308,6 +318,7 @@
         }
 
         //rejects a user
+        //gets passed a user object as a param
         public function reject_user($user){
             $this->admin_model->reject_user($user);
             
@@ -316,6 +327,7 @@
         }
 
         //remove a user
+        //gets passed a user object as a param
         public function remove_user($user){
             $this->admin_model->remove_user($user);
             
@@ -323,7 +335,8 @@
             redirect('/admins/users_content');
         }
 
-        //remove a user
+        //remove an admin
+        //gets passed an admin object as a param
         public function remove_admin($admin){
             $this->admin_model->remove_admin($admin);
             

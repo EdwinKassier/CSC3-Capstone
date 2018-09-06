@@ -185,7 +185,7 @@
                 //Sanitize POST data
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-                //Init data
+                //Init data-fetching data from text boxes
                 $data =[
                     'name' => ucwords(trim($_POST['update_first_name'])),
                     'surname' => ucwords(trim($_POST['update_last_name'])),
@@ -313,6 +313,7 @@
                 //Sanitize POST data
                 $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
+                //sanitising data
                 $file = 'pins';
                 $latitude = trim($_POST['latitude']);
                 $longitude = trim($_POST['longitude']);
@@ -338,6 +339,7 @@
                         set_message("Your pin was successfully uploaded.");
                         redirect('users/ornithologist_dashboard');
                     }
+                    //Uploading csv and reading value to database
                     else if($_FILES[$file]['size'] !== 0 && $_FILES[$file]['error'] === 0 && empty($latitude) && empty($longitude)){
                         $tmp_name = $_FILES[$file]['tmp_name'];
                         $file_name = $_FILES[$file]['name'];
@@ -523,6 +525,8 @@
                         }
                         fclose($file);
 
+                        //used to execute the r script used to generate the model
+
                         $r_path = "C:\\Program Files\\R\\R-3.5.1\\bin\\Rscript.exe";
                         $model_path = str_replace("\\","\\\\", str_replace("/","\\",UPLOAD_DIRECTORY)) . "\\RiskMap.R";
                         $param = str_replace("\\","\\\\", str_replace("/","\\",UPLOAD_DIRECTORY)) . " user_outputs/" . $_SESSION['user_id'] . " /" . $id;
@@ -547,6 +551,7 @@
         }
 
         //downloads the html and png files
+        //report id is passed as a param
         public function download_report($report_id = null){
             if(isset($report_id)){
                 $row = $this->user_model->get_report($report_id);
@@ -575,6 +580,7 @@
         }
 
         //Loads the forgot_password view, sends through any data it needs & executes all index related processes
+        //is passed a forget password code as a param
         public function forgot_password($code = null){
             if(isset($code) && $code == $_SESSION['code']){
                 //Check for post

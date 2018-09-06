@@ -72,6 +72,12 @@
 
 
         </div>
+        <br>
+        <hr>
+        <h3>You can also find the full user manual here</h3>
+
+       <a href="<?php echo URLROOT; ?>\resources\files\BE_Manual.pdf" target="_blank"><font color="#6495ed" style="font-size: 24px;">User manual</font></a>
+
     </main>
     <br>
 

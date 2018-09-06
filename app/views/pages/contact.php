@@ -23,32 +23,14 @@
 </head>
 <body>
 <div id="wrapper">
-<<<<<<< HEAD
->>>>>>> 2bace29635000e5d88c8f5811731a3d4a40c95ad
-=======
->>>>>>> 2bace29635000e5d88c8f5811731a3d4a40c95ad
 
     <!-- Navbar -->
     <?php include(TEMPLATE_FRONT . DS . "navbar.php"); ?>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         <br>
       <!-- Main Body -->
       <div class="container" id="body" >
         <form id="contact-form" method="post" action="<?php echo URLROOT; ?>/pages/contact" role="form" novalidate="true">
-=======
-=======
->>>>>>> 2bace29635000e5d88c8f5811731a3d4a40c95ad
-    <br>
-    <!-- Main Body -->
-    <div class="container" id="body">
-        <form id="contact-form" method="post" action="<?php echo URLROOT; ?>/resources/recaptcha/contact.php"
-              role="form" novalidate="true">
-<<<<<<< HEAD
->>>>>>> 2bace29635000e5d88c8f5811731a3d4a40c95ad
-=======
->>>>>>> 2bace29635000e5d88c8f5811731a3d4a40c95ad
             <div class="container customContainer">
                 <h4>Contact Us</h4>
                 <hr>

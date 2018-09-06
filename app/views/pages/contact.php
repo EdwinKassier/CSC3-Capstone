@@ -29,13 +29,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="form_name">First name</label>
-                            <input id="form_name" type="text" name="name" class="form-control" value="<? echo $data['name']; ?>" placeholder="Please enter your first name *" data-error="Firstname is required." required>
+                            <input id="form_name" type="text" name="name" class="form-control" placeholder="Please enter your first name *" data-error="Firstname is required." required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="form_lastname">Last name</label>
-                            <input id="form_lastname" type="text" name="surname" class="form-control" value="<? echo $data['surname']; ?>" placeholder="Please enter your last name *" data-error="Lastname is required." required>
+                            <input id="form_lastname" type="text" name="surname" class="form-control" placeholder="Please enter your last name *" data-error="Lastname is required." required>
                         </div>
                     </div>
                 </div>
@@ -43,13 +43,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="form_email">Email</label>
-                            <input id="form_email" type="email" name="email" class="form-control" value="<? echo $data['email']; ?>" placeholder="Please enter your email *" data-error="Valid email is required." required>
+                            <input id="form_email" type="email" name="email" class="form-control" placeholder="Please enter your email *" data-error="Valid email is required." required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="form_phone">Mobile number</label>
-                            <input id="form_phone" type="tel" name="phone" class="form-control" value="<? echo $data['phone']; ?>" placeholder="Please enter your phone number" >
+                            <input id="form_phone" type="tel" name="phone" class="form-control" placeholder="Please enter your phone number" >
                         </div>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                     <div class="col-md-12" id="messagecol">
                         <div class="form-group">
                             <label for="form_message">Message</label>
-                            <textarea id="form_message" name="message" class="form-control" value="<? echo $data['message']; ?>" placeholder="" rows="4" data-error="Please leave us a message." required></textarea>
+                            <textarea id="form_message" name="message" class="form-control" placeholder="" rows="4" data-error="Please leave us a message." required></textarea>
                         </div>
                     </div>
 

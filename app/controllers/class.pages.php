@@ -83,15 +83,6 @@
                 $this->view('pages/contact');
             }
             else{
-                //Init data
-                $data =[
-                    'name' => '',
-                    'surname' => '',
-                    'phone' => '',
-                    'mobile_number' => '',
-                    'email' => '',
-                ];
-
                 $this->view('pages/contact');
             }
         }

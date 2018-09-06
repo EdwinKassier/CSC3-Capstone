@@ -6,23 +6,12 @@
     <?php include(TEMPLATE_FRONT . DS . "header.php"); ?>
 
     <script src="https://www.google.com/recaptcha/api.js"></script>
-<<<<<<< HEAD
     <script src="<?php echo URLROOT; ?>/resources/js/validator.js"></script>
     <script src="<?php echo URLROOT; ?>/resources/js/contact.js"></script>
 
   </head>
   <body>
     <div id="wrapper">
-=======
-    <script src="<?php echo URLROOT; ?>/resources/recaptcha/validator.js"></script>
-    <script src="<?php echo URLROOT; ?>/resources/recaptcha/contact.js"></script>
-
-    <style>
-
-    </style>
-</head>
-<body>
-<div id="wrapper">
 
     <!-- Navbar -->
     <?php include(TEMPLATE_FRONT . DS . "navbar.php"); ?>

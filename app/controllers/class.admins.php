@@ -144,7 +144,6 @@
                             $data['error'] = "Your password is too short. Passwords must at least be 6 characters long.";
                         }
                     }
-
                     //Comparing new and old passwords
                     $row = $this->admin_model->check_new_username_vs_old_username($username, $data['id']);
                     if($row != 'true' && $this->admin_model->find_admin_by_username($username)){
@@ -161,9 +160,9 @@
     
                                 $this->admin_model->update_password($password, $username);
                             }
-                            set_message("Admin details have been updated.");
                             $data['password'] = '';
                             $data['confirm_password'] = '';
+                            set_message("Admin details have been updated.");
                             redirect('admins/admin');
                         }
                         else{

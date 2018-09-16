@@ -31,7 +31,7 @@ if (is_user_logged_in()) {
                 <div class="form-group">
                     <label for="register_email"><b>Email:</b></label>
                     <input type="email" class="form-control" name="register_email" value="<?php echo $data['email']; ?>"
-                           placeholder="Enter email(must contain an '@' and a '.' )" required>
+                           placeholder="Enter email (must contain an '@' and a '.' )" required>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6 mb-3">
@@ -49,19 +49,19 @@ if (is_user_logged_in()) {
                     <div class="form-group col-md-6 mb-3">
                         <label for="register_password"><b>Password:</b></label>
                         <input type="password" class="form-control" name="register_password"
-                               value="<?php echo $data['password']; ?>" placeholder="Enter password(minimum length: 6 characters)" required>
+                               value="<?php echo $data['password']; ?>" placeholder="Enter password (minimum 6 characters)" required>
                     </div>
                     <div class="form-group col-md-6 mb-3">
                         <label for="register_confirm_password"><b>Confirm password:</b></label>
                         <input type="password" class="form-control" name="register_confirm_password"
-                               value="<?php echo $data['confirm_password']; ?>" placeholder="Enter password(minimum length: 6 characters)" required>
+                               value="<?php echo $data['confirm_password']; ?>" placeholder="Re-enter password (minimum 6 characters)" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6 mb-3">
                         <label for="register_mobile_number"><b>Mobile number</b></label>
                         <input type="text" class="form-control" name="register_mobile_number"
-                               value="<?php echo $data['mobile_number']; ?>" placeholder="012 345 6789" required>
+                               value="<?php echo $data['mobile_number']; ?>" placeholder="012 345 6789 (10 digit number required)" required>
                     </div>
                     <div class="form-group col-md-6 mb-3">
                         <label for="register_role"><b>Your role</b></label>

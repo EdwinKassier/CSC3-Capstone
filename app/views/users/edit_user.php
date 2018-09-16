@@ -45,12 +45,12 @@ if (!is_user_logged_in()) {
                 <div class="form-group col-md-6 mb-3">
                     <label for="update_password"><b>Password:</b></label>
                     <input type="password" class="form-control" name="update_password"
-                           value="<?php echo $data['password']; ?>" placeholder="Enter password">
+                           value="<?php echo $data['password']; ?>" placeholder="Enter new password (minimum 6 characters)">
                 </div>
                 <div class="form-group col-md-6 mb-3">
                     <label for="update_confirm_password"><b>Confirm password:</b></label>
                     <input type="password" class="form-control" name="update_confirm_password"
-                           value="<?php echo $data['confirm_password']; ?>" placeholder="Re-enter password">
+                           value="<?php echo $data['confirm_password']; ?>" placeholder="Re-enter new password (minimum 6 characters)">
                 </div>
             </div>
             <div class="row">
@@ -58,12 +58,12 @@ if (!is_user_logged_in()) {
                     <label for="update_mobile_number"><b>Mobile number</b></label>
                     <input type="text" class="form-control" name="update_mobile_number"
                            value="<?php echo substr_replace(substr_replace($data['mobile_number'], ' ', 6, 0), ' ', 3, 0); ?>"
-                           placeholder="012 345 6789" required>
+                           placeholder="012 345 6789 (10 digit number required)" required>
                 </div>
                 <div class="form-group col-md-6 mb-3">
                     <label for="update_email"><b>Email:</b></label>
                     <input type="email" class="form-control" name="update_email" value="<?php echo $data['email']; ?>"
-                           placeholder="Enter email" required>
+                           placeholder="Enter email (must contain an '@' and a '.' )" required>
                 </div>
             </div>
             <div style="float:right;">

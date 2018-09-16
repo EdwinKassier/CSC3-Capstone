@@ -20,12 +20,12 @@
         <div class="col-md-6 form-group">
             <label for="register_password"><b>Password:</b></label>
             <input type="password" class="form-control" name="register_password"
-                   value="<?php echo $data['password']; ?>" placeholder="Enter password(minimum length: 6 characters)" required>
+                   value="<?php echo $data['password']; ?>" placeholder="Enter password (minimum 6 characters)" required>
         </div>
         <div class="col-md-6 form-group">
             <label for="register_confirm_password"><b>Confirm Password:</b></label>
             <input type="password" class="form-control" name="register_confirm_password"
-                   value="<?php echo $data['confirm_password']; ?>" placeholder="Enter password(minimum length: 6 characters)" required>
+                   value="<?php echo $data['confirm_password']; ?>" placeholder="Re-enter password (minimum length: 6 characters)" required>
         </div>
     </div>
     <div class="row">
@@ -37,7 +37,7 @@
         <div class="col-md-6 form-group">
             <label for="register_mobile_number"><b>Mobile number</b></label>
             <input type="text" class="form-control" name="register_mobile_number"
-                   value="<?php echo $data['mobile_number']; ?>" placeholder="012 345 6789" required>
+                   value="<?php echo $data['mobile_number']; ?>" placeholder="012 345 6789 (10 digit number required)" required>
         </div>
     </div>
     <div class="row" style="float:right;">

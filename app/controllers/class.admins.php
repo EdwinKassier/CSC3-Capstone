@@ -83,8 +83,11 @@
 
                         //Register admin
                         if($this->admin_model->register($data)){
-                           set_message('Admin added succesfully.');
-                           redirect('admins/admin');
+                            set_message('Admin added succesfully.');
+                            $data =[
+                                'view' => "admin",
+                                'admins' => $this->admin_model->get_all_admins(),
+                            ];  
                         }
                         else{
                             die('Something went wrong');
@@ -163,7 +166,10 @@
                             $data['password'] = '';
                             $data['confirm_password'] = '';
                             set_message("Admin details have been updated.");
-                            redirect('admins/admin');
+                            $data =[
+                                'view' => "admin",
+                                'admins' => $this->admin_model->get_all_admins(),
+                            ];  
                         }
                         else{
                             die('Something went wrong.');

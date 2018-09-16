@@ -531,7 +531,7 @@
                         $model_path = str_replace("\\","\\\\", str_replace("/","\\",UPLOAD_DIRECTORY)) . "\\RiskMap.R";
                         $param = str_replace("\\","\\\\", str_replace("/","\\",UPLOAD_DIRECTORY)) . " user_outputs/" . $_SESSION['user_id'] . " /" . $id;
                         ini_set('max_execution_time', 300); //300 seconds = 5 minutes
-                        die(exec("\"$r_path\" $model_path $param"));
+                        exec("\"$r_path\" $model_path $param");
 
                         //Make a db entry
                         $path = str_replace("/","\\",$upload_directory) . 'risk_map';

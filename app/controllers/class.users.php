@@ -280,10 +280,10 @@
         public function create_user_session($user){
             $_SESSION['user_id'] = $user->user_id;
             $_SESSION['user_role'] = $user->user_role;
-            if($user->user_role == 0){
+            if($_SESSION['user_role'] == 0){
                 redirect('users/wind_farm_dashboard');
             }
-            else if($user->user_role == 1){
+            else if($_SESSION['user_role'] == 1){
                 redirect('users/ornithologist_dashboard');
             }
         }
@@ -555,11 +555,27 @@
                 $row = $this->user_model->get_report($report_id);
 
                 $file_url = $row->report_path . '.zip';
+
+
+                header('Content-Description: File Transfer');
                 header('Content-Type: application/octet-stream');
-                header('Content-Type: application/octet-stream');
-                header('Content-Disposition: attachment; filename="'.basename($file_url).'"'); 
-                flush();
+                header('Content-Disposition: attachment; filename='.basename($file_url));
+                header('Content-Transfer-Encoding: binary');
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate');
+                header('Pragma: public');
+                header('Content-Length: ' . filesize($file_url));
+                ob_clean();
+                ob_end_flush();
                 readfile($file_url);
+
+
+
+                // header('Content-Type: application/octet-stream');
+                // header('Content-Type: application/octet-stream');
+                // header('Content-Disposition: attachment; filename="'.basename($file_url).'"'); 
+                // flush();
+                // readfile($file_url);
 
                 //Load view
                 redirect('users/wind_farm_dashboard');

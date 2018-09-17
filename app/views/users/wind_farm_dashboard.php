@@ -10,15 +10,15 @@
         overflow: auto;
     }
 </style>
-<body style="overflow-y:hidden"
 <!--This will open a message modal if there is some error on the page-->
+<body style="overflow-y:hidden"
 onload="<?php if (isset($_SESSION['message_modal']) && $_SESSION['message_modal'] === true) {
     echo "openAlert()";
     unset($_SESSION['message_modal']);
 } ?>">
 
 <!--This checks if the user is logged in-->
-<?php
+<?php 
 if (!is_user_logged_in()) {
     redirect('');
 }

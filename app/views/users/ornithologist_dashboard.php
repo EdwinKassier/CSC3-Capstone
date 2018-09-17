@@ -23,9 +23,9 @@
           unset($_SESSION['message_modal']);
       } ?>">
 
-<!--Check if user has logged in-->
+<!--Check if user has logged in and an ornitoligist-->
 <?php
-if (!is_user_logged_in()) {
+if (!is_user_logged_in() || $_SESSION['user_role'] != 1) {
     redirect('');
 }
 ?>

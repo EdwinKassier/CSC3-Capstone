@@ -104,11 +104,11 @@ if (!is_user_logged_in()) {
                                         <h5>One</h5>
                                         <div class="form-group">
                                             <input type="text" class="form-control" name="latitude"
-                                                   placeholder="Latitude(eg. 34.123456)" style="width:100%;">
+                                                   placeholder="Latitude (eg. 34.123456)" style="width:100%;">
                                         </div>
                                         <div class="form-group">
                                             <input type="text" class="form-control" name="longitude"
-                                                   placeholder="Longitude(eg. 34.123456)" style="width:100%;">
+                                                   placeholder="Longitude (eg. 34.123456)" style="width:100%;">
                                         </div>
                                     </div>
                                 </div>
@@ -151,11 +151,11 @@ if (!is_user_logged_in()) {
                                         <br><br>
                                         <div class="form-group">
                                             <input type="text" class="form-control" name="latitude"
-                                                   placeholder="Latitude(eg. 34.123456)" style="width:100%;">
+                                                   placeholder="Latitude (eg. 34.123456)" style="width:100%;">
                                         </div>
                                         <div class="form-group">
                                             <input type="text" class="form-control" name="longitude"
-                                                   placeholder="Longitude(eg. 34.123456)" style="width:100%;">
+                                                   placeholder="Longitude (eg. 34.123456)" style="width:100%;">
                                         </div>
                                     </div>
                                 </div>

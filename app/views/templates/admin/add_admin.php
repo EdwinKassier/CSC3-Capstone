@@ -32,7 +32,7 @@
         <div class="col-md-6 form-group">
             <label for="register_email"><b>Email:</b></label>
             <input type="email" class="form-control" name="register_email" value="<?php echo $data['email']; ?>"
-                   placeholder="Enter email(must contain an '@' and a '.' )" required>
+                   placeholder="Enter email (must contain an '@' and a '.' )" required>
         </div>
         <div class="col-md-6 form-group">
             <label for="register_mobile_number"><b>Mobile number</b></label>

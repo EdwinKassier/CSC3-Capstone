@@ -9,12 +9,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+            <?php if($_SESSION['user_role'] == 1): ?>
                 <li style="padding-top:10px; padding-left:10px;">
-        <?php if($_SESSION['user_role'] == 0): ?>
-                    <button type="button" class="btn <?php if(strpos($_SERVER['REQUEST_URI'], 'wind_farm_dashboard')){echo 'btn-active';}else{echo 'btn-outline-custom';} ?>"  onclick="location.href='<?php echo URLROOT; ?>/users/wind_farm_dashboard'">My Turbine Sites</button>
-        <?php elseif($_SESSION['user_role'] == 1): ?>
                     <button type="button" class="btn <?php if(strpos($_SERVER['REQUEST_URI'], 'ornithologist_dashboard')){echo 'btn-active';}else{echo 'btn-outline-custom';} ?>"  onclick="location.href='<?php echo URLROOT; ?>/users/ornithologist_dashboard'">My Nest Sites</button>
-        <?php endif; ?>
+                </li>
+            <?php endif; ?>
+                <li style="padding-top:10px; padding-left:10px;">
+                    <button type="button" class="btn <?php if(strpos($_SERVER['REQUEST_URI'], 'wind_farm_dashboard')){echo 'btn-active';}else{echo 'btn-outline-custom';} ?>"  onclick="location.href='<?php echo URLROOT; ?>/users/wind_farm_dashboard'">My Risk Reports</button>
                 </li>
                 <li style="padding-top:10px; padding-left:10px;">
                     <button type="button" class="btn <?php if(strpos($_SERVER['REQUEST_URI'], 'edit_user')){echo 'btn-active';}else{echo 'btn-outline-custom';} ?>" onclick="location.href='<?php echo URLROOT; ?>/users/edit_user'">Edit Account</button>

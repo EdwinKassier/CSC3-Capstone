@@ -555,8 +555,6 @@
                 $row = $this->user_model->get_report($report_id);
 
                 $file_url = $row->report_path . '.zip';
-
-
                 header('Content-Description: File Transfer');
                 header('Content-Type: application/octet-stream');
                 header('Content-Disposition: attachment; filename='.basename($file_url));
@@ -568,14 +566,6 @@
                 ob_clean();
                 ob_end_flush();
                 readfile($file_url);
-
-
-
-                // header('Content-Type: application/octet-stream');
-                // header('Content-Type: application/octet-stream');
-                // header('Content-Disposition: attachment; filename="'.basename($file_url).'"'); 
-                // flush();
-                // readfile($file_url);
 
                 //Load view
                 redirect('users/wind_farm_dashboard');

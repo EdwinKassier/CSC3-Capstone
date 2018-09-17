@@ -14,7 +14,7 @@
 #region.terrain = dev.terrain = the dataframe of all data pertaining to the finalArea
 
 ##### START debug output text #####
-sink('report.txt')
+#sink('report.txt')
 
 ##### Load Packages & Add-ins #####
 shhh <- suppressPackageStartupMessages # surpress warning messages when loading packages!
@@ -225,7 +225,7 @@ pred=as.data.frame(pred)
 
 #you now have probablities 0 -1 which need plotting / converting to tiff / raster:
 #summary(pred$pred)
-print(" Predicition complete.")
+print("Predicition complete.")
 
 #### RISK PLOT: ####
 toplot=cbind(long= region.terrain$longitude, lat=region.terrain$latitude, pred=pred$pred)
@@ -248,11 +248,12 @@ print("Map png printed.")
 mapshot(map, url = paste0(getwd(),"/", modelPAth, savePAth, "/risk_map.html"))
 print("Map html generated.")
 
-# source("https://install-github.me/gaborcsardi/zip")
-# library(zip)
-# zip("risk_map.zip", c("risk_map.png", "risk_map.html", "risk_map_files"))
+#Zip it up 
+#library(Rcompression)
+print("Start compression")
+d = paste0(getwd(),"/", modelPAth, savePAth)
+setwd(d)
+list.files()
+zip("risk_map.zip", c("risk_map.png", "risk_map.html", "risk_map_files"))
 
 dev.off() 
-
-#End writing report
-sink()

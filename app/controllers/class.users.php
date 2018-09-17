@@ -355,7 +355,17 @@
                         }
                         else{
                             foreach($csv_array as $row) {
-                                $row = explode(';', $row[0]);
+                                if(strpos($row, ';') !== false){
+                                    $row = explode(';', $row[0]);
+                                }
+                                else if(strpos($row, ',') !== false){
+                                    $row = explode(',', $row[0]);
+                                }
+                                else{
+                                    set_message('There is an error in the format of your CSV file. Neither a comma (,), nor a semi-colon (;) is used.');
+                                    redirect('users/ornithologist_dashboard');
+                                }
+                                
                                 if(strtolower($row[0]) != 'latitude' && strtolower($row[1]) != 'longitude'){
                                     $this->user_model->add_pin($role, $row[0], $row[1], $name);
                                 }
